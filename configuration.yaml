@@ -1,0 +1,7 @@
+# ...
+
+multiscrape: !include idokep_multiscrape.yaml
+
+weather idokep: !include idokep_weather.yaml
+
+# ...

@@ -1,0 +1,278 @@
+# https://developers.home-assistant.io/docs/core/entity/weather/
+# clear-night     Clear night
+# cloudy          Many clouds
+# exceptional     Exceptional
+# fog             Fog
+# hail            Hail
+# lightning       Lightning/ thunderstorms
+# lightning-rainy Lightning/ thunderstorms and rain
+# partlycloudy    A few clouds
+# pouring         Pouring rain
+# rainy           Rain
+# snowy           Snow
+# snowy-rainy     Snow and Rain
+# sunny           Sunshine
+# windy           Wind
+# windy-variant   Wind and clouds
+#
+# Az időjárás típusát az ikonokból fejtem vissza. A lista NEM TELJES!
+# (Az első jegye ha 0 akkor nappal, ha 3 akkor éjszaka.)
+# Az ikonok kódjai:
+# 0xx - nappal; 3xx - éjszaka
+# 010 - Derült
+# 021 - Gyengén felhős
+# 022 - Közepesen felhős
+# 023 - Erősen felhős
+# 030 - Borult
+# 041 - Szitálás
+# 051 - Havas eső
+# 061 - Havazás (?)
+# 081 - Zápor
+#multiscrape:
+- resource: https://www.idokep.hu/idojaras/Buda%C3%B6rs
+  scan_interval: 1800 # 30 minutes; don't scan too frequently
+  sensor:
+    - unique_id: idokep_temperature
+      name: "Időkép, aktuális hőmérséklet"
+      select: ".current-temperature"
+      value_template: &valueToTemperature '{{ value | trim | trim("˚C") | float }}'
+      device_class: temperature
+      unit_of_measurement: °C
+    - unique_id: idokep_condition_hu
+      name: "Időkép, aktuális időjárás"
+      select: ".current-weather"
+    - unique_id: idokep_condition
+      name: "Időkép, aktuális időjárás (kategória)"
+      select: ".forecast-bigicon"
+      attribute: src
+      value_template: &iconToCondition >
+        {% if value == '/assets/forecast-icons/010.svg' %}
+          sunny
+        {% elif value == '/assets/forecast-icons/310.svg' %}
+          clear-night
+        {% elif value == '/assets/forecast-icons/021.svg' %}
+          partlycloudy
+        {% elif value == '/assets/forecast-icons/321.svg' %}
+          partlycloudy
+        {% elif value == '/assets/forecast-icons/022.svg' %}
+          partlycloudy
+        {% elif value == '/assets/forecast-icons/322.svg' %}
+          partlycloudy
+        {% elif value == '/assets/forecast-icons/023.svg' %}
+          cloudy
+        {% elif value == '/assets/forecast-icons/323.svg' %}
+          cloudy
+        {% elif value == '/assets/forecast-icons/030.svg' %}
+          cloudy
+        {% elif value == '/assets/forecast-icons/330.svg' %}
+          cloudy
+        {% elif value == '/assets/forecast-icons/051.svg' %}
+          snowy-rainy
+        {% elif value == '/assets/forecast-icons/351.svg' %}
+          snowy-rainy
+        {% elif value == '/assets/forecast-icons/061.svg' %}
+          snowy
+        {% elif value == '/assets/forecast-icons/361.svg' %}
+          snowy
+        {% elif value == '/assets/forecast-icons/081.svg' %}
+          rainy
+        {% elif value == '/assets/forecast-icons/381.svg' %}
+          rainy
+        {% else %}
+          unknown
+        {% endif %}
+
+    - unique_id: idokep_day1_date
+      name: "Időkép, nap1 dátum"
+      select: ".dailyForecastCol:nth-child(2) .dfDayNum"
+      value_template: >
+        {% if value | int == now().day %}
+          {{ now().isoformat() }}
+        {% else %}
+          {{ (now() + timedelta(days = 1)).isoformat() }}
+        {% endif %}
+    - unique_id: idokep_day1_dow
+      name: "Időkép, nap1 hét napja"
+      select: ".dailyForecastCol:nth-child(2) .dfDay"
+    - unique_id: idokep_day1_condition
+      name: "Időkép, nap1 időjárás (kategória)"
+      select: ".dailyForecastCol:nth-child(2) .forecast-icon"
+      attribute: src
+      value_template: *iconToCondition
+    - unique_id: idokep_day1_max
+      name: "Időkép, nap1 max"
+      select: ".dailyForecastCol:nth-child(2) .max a"
+      device_class: temperature
+      unit_of_measurement: °C
+      value_template: *valueToTemperature
+    - unique_id: idokep_day1_min
+      name: "Időkép, nap1 min"
+      select: ".dailyForecastCol:nth-child(2) .min a"
+      device_class: temperature
+      unit_of_measurement: °C
+      value_template: *valueToTemperature
+    - unique_id: idokep_day1_prec
+      name: "Időkép, nap1 csapadék"
+      select: ".dailyForecastCol:nth-child(2) .mm"
+      unit_of_measurement: mm
+      value_template: &valueToPrecipitation >
+        {% if value == "." %}
+          {{1}}
+        {% else %}
+          {{ value | trim("mm") | trim() | float }}
+        {% endif %}
+      on_error:
+        value: "default"
+        default: 0
+
+    - unique_id: idokep_day2_date
+      name: "Időkép, nap2 dátum"
+      select: ".dailyForecastCol:nth-child(3) .dfDayNum"
+      value_template: >
+        {% if value | int == (now() + timedelta(days = 1)).day %}
+          {{ (now() + timedelta(days = 1)).isoformat() }}
+        {% else %}
+          {{ (now() + timedelta(days = 2)).isoformat() }}
+        {% endif %}
+    - unique_id: idokep_day2_dow
+      name: "Időkép, nap2 hét napja"
+      select: ".dailyForecastCol:nth-child(3) .dfDay"
+    - unique_id: idokep_day2_condition
+      name: "Időkép, nap2 időjárás (kategória)"
+      select: ".dailyForecastCol:nth-child(3) .forecast-icon"
+      attribute: src
+      value_template: *iconToCondition
+    - unique_id: idokep_day2_max
+      name: "Időkép, nap2 max"
+      select: ".dailyForecastCol:nth-child(3) .max a"
+      device_class: temperature
+      unit_of_measurement: °C
+      value_template: *valueToTemperature
+    - unique_id: idokep_day2_min
+      name: "Időkép, nap2 min"
+      select: ".dailyForecastCol:nth-child(3) .min a"
+      device_class: temperature
+      unit_of_measurement: °C
+      value_template: *valueToTemperature
+    - unique_id: idokep_day2_prec
+      name: "Időkép, nap2 csapadék"
+      select: ".dailyForecastCol:nth-child(3) .mm"
+      unit_of_measurement: mm
+      value_template: *valueToPrecipitation
+      on_error:
+        value: "default"
+        default: 0
+
+    - unique_id: idokep_day3_date
+      name: "Időkép, nap3 dátum"
+      select: ".dailyForecastCol:nth-child(4) .dfDayNum"
+      value_template: >
+        {% if value | int == (now() + timedelta(days = 2)).day %}
+          {{ (now() + timedelta(days = 2)).isoformat() }}
+        {% else %}
+          {{ (now() + timedelta(days = 3)).isoformat() }}
+        {% endif %}
+    - unique_id: idokep_day3_dow
+      name: "Időkép, nap3 hét napja"
+      select: ".dailyForecastCol:nth-child(4) .dfDay"
+    - unique_id: idokep_day3_condition
+      name: "Időkép, nap3 időjárás (kategória)"
+      select: ".dailyForecastCol:nth-child(4) .forecast-icon"
+      attribute: src
+      value_template: *iconToCondition
+    - unique_id: idokep_day3_max
+      name: "Időkép, nap3 max"
+      select: ".dailyForecastCol:nth-child(4) .max a"
+      device_class: temperature
+      unit_of_measurement: °C
+      value_template: *valueToTemperature
+    - unique_id: idokep_day3_min
+      name: "Időkép, nap3 min"
+      select: ".dailyForecastCol:nth-child(4) .min a"
+      device_class: temperature
+      unit_of_measurement: °C
+      value_template: *valueToTemperature
+    - unique_id: idokep_day3_prec
+      name: "Időkép, nap3 csapadék"
+      select: ".dailyForecastCol:nth-child(4) .mm"
+      unit_of_measurement: mm
+      value_template: *valueToPrecipitation
+      on_error:
+        value: "default"
+        default: 0
+
+    - unique_id: idokep_day4_date
+      name: "Időkép, nap4 dátum"
+      select: ".dailyForecastCol:nth-child(5) .dfDayNum"
+      value_template: >
+        {% if value | int == (now() + timedelta(days = 3)).day %}
+          {{ (now() + timedelta(days = 3)).isoformat() }}
+        {% else %}
+          {{ (now() + timedelta(days = 4)).isoformat() }}
+        {% endif %}
+    - unique_id: idokep_day4_dow
+      name: "Időkép, nap4 hét napja"
+      select: ".dailyForecastCol:nth-child(5) .dfDay"
+    - unique_id: idokep_day4_condition
+      name: "Időkép, nap4 időjárás (kategória)"
+      select: ".dailyForecastCol:nth-child(5) .forecast-icon"
+      attribute: src
+      value_template: *iconToCondition
+    - unique_id: idokep_day4_max
+      name: "Időkép, nap4 max"
+      select: ".dailyForecastCol:nth-child(5) .max a"
+      device_class: temperature
+      unit_of_measurement: °C
+      value_template: *valueToTemperature
+    - unique_id: idokep_day4_min
+      name: "Időkép, nap4 min"
+      select: ".dailyForecastCol:nth-child(5) .min a"
+      device_class: temperature
+      unit_of_measurement: °C
+      value_template: *valueToTemperature
+    - unique_id: idokep_day4_prec
+      name: "Időkép, nap4 csapadék"
+      select: ".dailyForecastCol:nth-child(5) .mm"
+      unit_of_measurement: mm
+      value_template: *valueToPrecipitation
+      on_error:
+        value: "default"
+        default: 0
+
+    - unique_id: idokep_day5_date
+      name: "Időkép, nap5 dátum"
+      select: ".dailyForecastCol:nth-child(6) .dfDayNum"
+      value_template: >
+        {% if value | int == (now() + timedelta(days = 4)).day %}
+          {{ (now() + timedelta(days = 4)).isoformat() }}
+        {% else %}
+          {{ (now() + timedelta(days = 5)).isoformat() }}
+        {% endif %}
+    - unique_id: idokep_day5_dow
+      name: "Időkép, nap5 hét napja"
+      select: ".dailyForecastCol:nth-child(6) .dfDay"
+    - unique_id: idokep_day5_condition
+      name: "Időkép, nap5 időjárás (kategória)"
+      select: ".dailyForecastCol:nth-child(6) .forecast-icon"
+      attribute: src
+      value_template: *iconToCondition
+    - unique_id: idokep_day5_max
+      name: "Időkép, nap5 max"
+      select: ".dailyForecastCol:nth-child(6) .max a"
+      device_class: temperature
+      unit_of_measurement: °C
+      value_template: *valueToTemperature
+    - unique_id: idokep_day5_min
+      name: "Időkép, nap5 min"
+      select: ".dailyForecastCol:nth-child(6) .min a"
+      device_class: temperature
+      unit_of_measurement: °C
+      value_template: *valueToTemperature
+    - unique_id: idokep_day5_prec
+      name: "Időkép, nap5 csapadék"
+      select: ".dailyForecastCol:nth-child(6) .mm"
+      unit_of_measurement: mm
+      value_template: *valueToPrecipitation
+      on_error:
+        value: "default"
+        default: 0
