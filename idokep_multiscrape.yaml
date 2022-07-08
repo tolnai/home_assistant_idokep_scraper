@@ -26,8 +26,9 @@
 # 030 - Borult
 # 041 - Szitálás
 # 051 - Havas eső
-# 061 - Havazás (?)
+# 061 - Havazás
 # 081 - Zápor
+# 090 - Zivatar
 #multiscrape:
 - resource: https://www.idokep.hu/idojaras/Buda%C3%B6rs
   scan_interval: 1800 # 30 minutes; don't scan too frequently
@@ -78,6 +79,10 @@
           rainy
         {% elif value == '/assets/forecast-icons/381.svg' %}
           rainy
+        {% elif value == '/assets/forecast-icons/090.svg' %}
+          lightning-rainy
+        {% elif value == '/assets/forecast-icons/390.svg' %}
+          lightning-rainy
         {% else %}
           unknown
         {% endif %}
