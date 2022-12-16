@@ -25,10 +25,12 @@
 # 023 - Erősen felhős
 # 030 - Borult
 # 041 - Szitálás
+# 042 - Gyenge eső
 # 051 - Havas eső
 # 061 - Havazás
 # 081 - Zápor
 # 090 - Zivatar
+# 100 - Köd
 #multiscrape:
 - resource: https://www.idokep.hu/idojaras/Buda%C3%B6rs
   scan_interval: 1800 # 30 minutes; don't scan too frequently
@@ -67,6 +69,14 @@
           cloudy
         {% elif value == '/assets/forecast-icons/330.svg' %}
           cloudy
+        {% elif value == '/assets/forecast-icons/041.svg' %}
+          rainy
+        {% elif value == '/assets/forecast-icons/341.svg' %}
+          rainy
+        {% elif value == '/assets/forecast-icons/042.svg' %}
+          rainy
+        {% elif value == '/assets/forecast-icons/342.svg' %}
+          rainy
         {% elif value == '/assets/forecast-icons/051.svg' %}
           snowy-rainy
         {% elif value == '/assets/forecast-icons/351.svg' %}
@@ -83,6 +93,8 @@
           lightning-rainy
         {% elif value == '/assets/forecast-icons/390.svg' %}
           lightning-rainy
+        {% elif value == '/assets/forecast-icons/100.svg' %}
+          fog
         {% else %}
           unknown
         {% endif %}
@@ -106,13 +118,13 @@
       value_template: *iconToCondition
     - unique_id: idokep_day1_max
       name: "Időkép, nap1 max"
-      select: ".dailyForecastCol:nth-child(2) .max a"
+      select: ".dailyForecastCol:nth-child(2) .max a,.dailyForecastCol:nth-child(2) .min-max-closer a:nth(0)"
       device_class: temperature
       unit_of_measurement: °C
       value_template: *valueToTemperature
     - unique_id: idokep_day1_min
       name: "Időkép, nap1 min"
-      select: ".dailyForecastCol:nth-child(2) .min a"
+      select: ".dailyForecastCol:nth-child(2) .min a,.dailyForecastCol:nth-child(2) .min-max-closer a:nth(1)"
       device_class: temperature
       unit_of_measurement: °C
       value_template: *valueToTemperature
@@ -149,13 +161,13 @@
       value_template: *iconToCondition
     - unique_id: idokep_day2_max
       name: "Időkép, nap2 max"
-      select: ".dailyForecastCol:nth-child(3) .max a"
+      select: ".dailyForecastCol:nth-child(3) .max a,.dailyForecastCol:nth-child(3) .min-max-closer a:nth(0)"
       device_class: temperature
       unit_of_measurement: °C
       value_template: *valueToTemperature
     - unique_id: idokep_day2_min
       name: "Időkép, nap2 min"
-      select: ".dailyForecastCol:nth-child(3) .min a"
+      select: ".dailyForecastCol:nth-child(3) .min a,.dailyForecastCol:nth-child(3) .min-max-closer a:nth(0)"
       device_class: temperature
       unit_of_measurement: °C
       value_template: *valueToTemperature
@@ -187,13 +199,13 @@
       value_template: *iconToCondition
     - unique_id: idokep_day3_max
       name: "Időkép, nap3 max"
-      select: ".dailyForecastCol:nth-child(4) .max a"
+      select: ".dailyForecastCol:nth-child(4) .max a,.dailyForecastCol:nth-child(4) .min-max-closer a:nth(0)"
       device_class: temperature
       unit_of_measurement: °C
       value_template: *valueToTemperature
     - unique_id: idokep_day3_min
       name: "Időkép, nap3 min"
-      select: ".dailyForecastCol:nth-child(4) .min a"
+      select: ".dailyForecastCol:nth-child(4) .min a,.dailyForecastCol:nth-child(4) .min-max-closer a:nth(0)"
       device_class: temperature
       unit_of_measurement: °C
       value_template: *valueToTemperature
@@ -225,13 +237,13 @@
       value_template: *iconToCondition
     - unique_id: idokep_day4_max
       name: "Időkép, nap4 max"
-      select: ".dailyForecastCol:nth-child(5) .max a"
+      select: ".dailyForecastCol:nth-child(5) .max a,.dailyForecastCol:nth-child(5) .min-max-closer a:nth(0)"
       device_class: temperature
       unit_of_measurement: °C
       value_template: *valueToTemperature
     - unique_id: idokep_day4_min
       name: "Időkép, nap4 min"
-      select: ".dailyForecastCol:nth-child(5) .min a"
+      select: ".dailyForecastCol:nth-child(5) .min a,.dailyForecastCol:nth-child(5) .min-max-closer a:nth(0)"
       device_class: temperature
       unit_of_measurement: °C
       value_template: *valueToTemperature
@@ -263,13 +275,13 @@
       value_template: *iconToCondition
     - unique_id: idokep_day5_max
       name: "Időkép, nap5 max"
-      select: ".dailyForecastCol:nth-child(6) .max a"
+      select: ".dailyForecastCol:nth-child(6) .max a,.dailyForecastCol:nth-child(6) .min-max-closer a:nth(0)"
       device_class: temperature
       unit_of_measurement: °C
       value_template: *valueToTemperature
     - unique_id: idokep_day5_min
       name: "Időkép, nap5 min"
-      select: ".dailyForecastCol:nth-child(6) .min a"
+      select: ".dailyForecastCol:nth-child(6) .min a,.dailyForecastCol:nth-child(6) .min-max-closer a:nth(0)"
       device_class: temperature
       unit_of_measurement: °C
       value_template: *valueToTemperature
