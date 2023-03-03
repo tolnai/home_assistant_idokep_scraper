@@ -1,0 +1,11 @@
+#tts:
+- platform: google_cloud
+  key_file: google_assistant_service_account.json
+  language: hu-HU
+  gender: female
+  voice: hu-HU-Wavenet-A
+  encoding: mp3
+  speed: 1.2
+  #pitch: -2.5
+  #gain: -5.0
+  text_type: text # text/ssml

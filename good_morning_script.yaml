@@ -1,0 +1,31 @@
+#script:
+good_morning:
+  alias: Jó reggelt
+  sequence:
+    - service: media_player.volume_set
+      data_template:
+        entity_id: media_player.konyha
+        volume_level: 0.4
+    - service: tts.google_cloud_say
+      data:
+        entity_id: media_player.konyha
+        message: >-
+          {{ ['Jó reggelt, sziasztok!', states('sensor.idokep_condition_hu') + ' az idő, ' +
+          (states('sensor.idokep_temperature') | int | string) + ' fok van és ma ' + (states('sensor.idokep_day1_max') | int | string) + ' fok lesz.',
+          state_attr('calendar.nevnapok', 'message') + ' névnap van.',
+          'Az időjárásról bővebben.',
+          states('sensor.idokep_forecast_title'), '!',
+          states('sensor.idokep_forecast_details_1'), states('sensor.idokep_forecast_details_2'), states('sensor.idokep_forecast_details_3'),
+          'És most egy kis zene.'] | join(' ') }}
+        options:
+          speed: 1.2
+    - delay: 5
+    - wait_template: "{{ is_state('media_player.konyha', 'idle') }}"
+    - service: spotcast.start
+      data:
+        entity_id: media_player.konyha
+        uri: >-
+          {{ 'spotify:playlist:' + 
+          (['37i9dQZF1DWT3gM3xdPT0c', '4nQE6AY2YwnymjbGzH0wMs', '2edW9MUCdtzxFN77MVCCxO', '37i9dQZF1DXb5Mq0JeBbIw'] | random) }}
+        random_song: true
+        shuffle: true
