@@ -32,8 +32,9 @@
 # 090 - Zivatar
 # 100 - Köd
 #multiscrape:
+
 - resource: https://www.idokep.hu/idojaras/Buda%C3%B6rs
-  scan_interval: 1800 # 30 minutes; don't scan too frequently
+  scan_interval: 1800 # 30 percenként, hogy ne bombázzuk az oldalt
   sensor:
     - unique_id: idokep_temperature
       name: "Időkép, aktuális hőmérséklet"
@@ -293,3 +294,27 @@
       on_error:
         value: "default"
         default: 0
+
+# a value template-ekért köszi szat8-nak
+- resource: https://www.idokep.hu/elorejelzes/Buda%C3%B6rs
+  scan_interval: 3600 # 60 percenként, hogy ne bombázzuk az oldalt
+  sensor:
+    - unique_id: idokep_forecast_title
+      name: "Időkép, előrejelzés cím"
+      select: ".current-weather-short-desc"
+    - unique_id: idokep_forecast_details_1
+      name: "Időkép, előrejelzés 1"
+      select: ".hosszutavu-elorejelzes p:nth-of-type(1)"
+      value_template: >
+        {% set day = ('Ma' if (value | striptags)[:3] == ['Hét','Ked','Sze','Csü','Pén','Szo','Vas'][now().strftime('%w') | int - 1] else 'Holnap') %}
+        {{ day + ' ' + (value.split(' ', 1)[1]) | truncate(245, true, '') }}
+    - unique_id: idokep_forecast_details_2
+      name: "Időkép, előrejelzés 2"
+      select: ".hosszutavu-elorejelzes p:nth-of-type(1)"
+      value_template: >
+        {{ (value.split(' ', 1)[1])[245:] | truncate(255, true, '') }}
+    - unique_id: idokep_forecast_details_3
+      name: "Időkép, előrejelzés 3"
+      select: ".hosszutavu-elorejelzes p:nth-of-type(1)"
+      value_template: >
+        {{ (value.split(' ', 1)[1])[500:] | truncate(255, true, '') }}
