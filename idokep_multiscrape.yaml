@@ -117,6 +117,12 @@
       select: ".dailyForecastCol:nth-child(2) .forecast-icon"
       attribute: src
       value_template: *iconToCondition
+    - unique_id: idokep_day1_condition_hu
+      name: "Időkép, nap1 időjárás (kategória HU)"
+      select: ".dailyForecastCol:nth-child(2) .dfIconAlert a"
+      attribute: data-bs-content
+      value_template: &iconPopoverToConditionHu >
+        {{ value | regex_findall('.*<img[^<]+>([^<]+)<.*') | first | trim }}
     - unique_id: idokep_day1_max
       name: "Időkép, nap1 max"
       select: ".dailyForecastCol:nth-child(2) .max a,.dailyForecastCol:nth-child(2) .min-max-closer a:nth-child(1),.dailyForecastCol:nth-child(2) .min-max-close a:nth-child(1)"
@@ -160,6 +166,11 @@
       select: ".dailyForecastCol:nth-child(3) .forecast-icon"
       attribute: src
       value_template: *iconToCondition
+    - unique_id: idokep_day2_condition_hu
+      name: "Időkép, nap2 időjárás (kategória HU)"
+      select: ".dailyForecastCol:nth-child(3) .dfIconAlert a"
+      attribute: data-bs-content
+      value_template: *iconPopoverToConditionHu
     - unique_id: idokep_day2_max
       name: "Időkép, nap2 max"
       select: ".dailyForecastCol:nth-child(3) .max a,.dailyForecastCol:nth-child(3) .min-max-closer a:nth-child(1),.dailyForecastCol:nth-child(3) .min-max-close a:nth-child(1)"
@@ -198,6 +209,11 @@
       select: ".dailyForecastCol:nth-child(4) .forecast-icon"
       attribute: src
       value_template: *iconToCondition
+    - unique_id: idokep_day3_condition_hu
+      name: "Időkép, nap3 időjárás (kategória HU)"
+      select: ".dailyForecastCol:nth-child(4) .dfIconAlert a"
+      attribute: data-bs-content
+      value_template: *iconPopoverToConditionHu
     - unique_id: idokep_day3_max
       name: "Időkép, nap3 max"
       select: ".dailyForecastCol:nth-child(4) .max a,.dailyForecastCol:nth-child(4) .min-max-closer a:nth-child(1),.dailyForecastCol:nth-child(4) .min-max-close a:nth-child(1)"
@@ -236,6 +252,11 @@
       select: ".dailyForecastCol:nth-child(5) .forecast-icon"
       attribute: src
       value_template: *iconToCondition
+    - unique_id: idokep_day4_condition_hu
+      name: "Időkép, nap4 időjárás (kategória HU)"
+      select: ".dailyForecastCol:nth-child(5) .dfIconAlert a"
+      attribute: data-bs-content
+      value_template: *iconPopoverToConditionHu
     - unique_id: idokep_day4_max
       name: "Időkép, nap4 max"
       select: ".dailyForecastCol:nth-child(5) .max a,.dailyForecastCol:nth-child(5) .min-max-closer a:nth-child(1),.dailyForecastCol:nth-child(5) .min-max-close a:nth-child(1)"
@@ -274,6 +295,11 @@
       select: ".dailyForecastCol:nth-child(6) .forecast-icon"
       attribute: src
       value_template: *iconToCondition
+    - unique_id: idokep_day5_condition_hu
+      name: "Időkép, nap5 időjárás (kategória HU)"
+      select: ".dailyForecastCol:nth-child(6) .dfIconAlert a"
+      attribute: data-bs-content
+      value_template: *iconPopoverToConditionHu
     - unique_id: idokep_day5_max
       name: "Időkép, nap5 max"
       select: ".dailyForecastCol:nth-child(6) .max a,.dailyForecastCol:nth-child(6) .min-max-closer a:nth-child(1),.dailyForecastCol:nth-child(6) .min-max-close a:nth-child(1)"
