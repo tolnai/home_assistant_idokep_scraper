@@ -26,10 +26,14 @@
 # 030 - Borult
 # 041 - Szitálás
 # 042 - Gyenge eső
+# 043 - Eső
+# 043s - Eső viharos széllel
 # 051 - Havas eső
 # 061 - Havazás
 # 081 - Zápor
+# 088 - Jégeső
 # 090 - Zivatar
+# 092 - Száraz zivatar
 # 100 - Köd
 #multiscrape:
 
@@ -78,6 +82,14 @@
           rainy
         {% elif value == '/assets/forecast-icons/342.svg' %}
           rainy
+        {% elif value == '/assets/forecast-icons/043.svg' %}
+          rainy
+        {% elif value == '/assets/forecast-icons/343.svg' %}
+          rainy
+        {% elif value == '/assets/forecast-icons/043s.svg' %}
+          rainy
+        {% elif value == '/assets/forecast-icons/343s.svg' %}
+          rainy
         {% elif value == '/assets/forecast-icons/051.svg' %}
           snowy-rainy
         {% elif value == '/assets/forecast-icons/351.svg' %}
@@ -90,15 +102,28 @@
           rainy
         {% elif value == '/assets/forecast-icons/381.svg' %}
           rainy
+        {% elif value == '/assets/forecast-icons/088.svg' %}
+          hail
+        {% elif value == '/assets/forecast-icons/388.svg' %}
+          hail
         {% elif value == '/assets/forecast-icons/090.svg' %}
           lightning-rainy
         {% elif value == '/assets/forecast-icons/390.svg' %}
           lightning-rainy
+        {% elif value == '/assets/forecast-icons/092.svg' %}
+          lightning
+        {% elif value == '/assets/forecast-icons/392.svg' %}
+          lightning
         {% elif value == '/assets/forecast-icons/100.svg' %}
           fog
         {% else %}
           unknown
         {% endif %}
+    - unique_id: idokep_alert
+      name: "Időkép figyelmeztetés"
+      select: "#topalertbar > a:nth-child(1)"
+      on_error:
+        log: false
 
     - unique_id: idokep_day1_date
       name: "Időkép, nap1 dátum"
@@ -325,22 +350,10 @@
 - resource: https://www.idokep.hu/elorejelzes/Buda%C3%B6rs
   scan_interval: 3600 # 60 percenként, hogy ne bombázzuk az oldalt
   sensor:
-    - unique_id: idokep_forecast_title
-      name: "Időkép, előrejelzés cím"
+    - unique_id: idokep_forecast
+      name: "Időkép, előrejelzés"
       select: ".current-weather-short-desc"
-    - unique_id: idokep_forecast_details_1
-      name: "Időkép, előrejelzés 1"
-      select: ".hosszutavu-elorejelzes p:nth-of-type(1)"
-      value_template: >
-        {% set day = ('Ma' if (value | striptags)[:3] == ['Hét','Ked','Sze','Csü','Pén','Szo','Vas'][now().strftime('%w') | int - 1] else 'Holnap') %}
-        {{ day + ' ' + (value.split(' ', 1)[1]) | truncate(245, true, '') }}
-    - unique_id: idokep_forecast_details_2
-      name: "Időkép, előrejelzés 2"
-      select: ".hosszutavu-elorejelzes p:nth-of-type(1)"
-      value_template: >
-        {{ (value.split(' ', 1)[1])[245:] | truncate(255, true, '') }}
-    - unique_id: idokep_forecast_details_3
-      name: "Időkép, előrejelzés 3"
-      select: ".hosszutavu-elorejelzes p:nth-of-type(1)"
-      value_template: >
-        {{ (value.split(' ', 1)[1])[500:] | truncate(255, true, '') }}
+      attributes:
+        - name: "Részletek"
+          select: ".hosszutavu-elorejelzes p:nth-of-type(1)"
+          value_template: '{{ value | trim }}'
