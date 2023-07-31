@@ -35,10 +35,10 @@
 # 090 - Zivatar
 # 092 - Száraz zivatar
 # 100 - Köd
-#multiscrape:
 
-- resource: https://www.idokep.hu/idojaras/Buda%C3%B6rs
-  scan_interval: 1800 # 30 percenként, hogy ne bombázzuk az oldalt
+#multiscrape:
+- resource: https://www.idokep.hu/idojaras/T%C3%B6r%C3%B6kb%C3%A1lint
+  scan_interval: 900 # 15 percenként, hogy ne bombázzuk az oldalt
   sensor:
     - unique_id: idokep_temperature
       name: "Időkép, aktuális hőmérséklet"
@@ -125,230 +125,153 @@
       on_error:
         log: false
 
-    - unique_id: idokep_day1_date
-      name: "Időkép, nap1 dátum"
-      select: ".dailyForecastCol:nth-child(2) .dfDayNum"
-      value_template: >
-        {% if value | int == now().day %}
-          {{ now().isoformat() }}
-        {% else %}
-          {{ (now() + timedelta(days = 1)).isoformat() }}
-        {% endif %}
-    - unique_id: idokep_day1_dow
-      name: "Időkép, nap1 hét napja"
-      select: ".dailyForecastCol:nth-child(2) .dfDay"
-    - unique_id: idokep_day1_condition
-      name: "Időkép, nap1 időjárás (kategória)"
-      select: ".dailyForecastCol:nth-child(2) .forecast-icon"
-      attribute: src
-      value_template: *iconToCondition
-    - unique_id: idokep_day1_condition_hu
-      name: "Időkép, nap1 időjárás (kategória HU)"
-      select: ".dailyForecastCol:nth-child(2) .dfIconAlert a"
-      attribute: data-bs-content
-      value_template: &iconPopoverToConditionHu >
-        {{ value | regex_findall('.*<img[^<]+>([^<]+)<.*') | first | trim }}
-    - unique_id: idokep_day1_max
-      name: "Időkép, nap1 max"
-      select: ".dailyForecastCol:nth-child(2) .max a,.dailyForecastCol:nth-child(2) .min-max-closer a:nth-child(1),.dailyForecastCol:nth-child(2) .min-max-close a:nth-child(1)"
-      device_class: temperature
-      unit_of_measurement: °C
-      value_template: *valueToTemperature
-    - unique_id: idokep_day1_min
-      name: "Időkép, nap1 min"
-      select: ".dailyForecastCol:nth-child(2) .min a,.dailyForecastCol:nth-child(2) .min-max-closer a:nth-child(2),.dailyForecastCol:nth-child(2) .min-max-close a:nth-child(2)"
-      device_class: temperature
-      unit_of_measurement: °C
-      value_template: *valueToTemperature
-    - unique_id: idokep_day1_prec
-      name: "Időkép, nap1 csapadék"
-      select: ".dailyForecastCol:nth-child(2) .mm"
-      unit_of_measurement: mm
-      value_template: &valueToPrecipitation >
-        {% if value == "." %}
-          {{1}}
-        {% else %}
-          {{ value | trim("mm") | trim() | float }}
-        {% endif %}
-      on_error:
-        value: "default"
-        default: 0
+    - unique_id: idokep_daily_data
+      name: "Időkép, napi előrejelzés adatok"
+      value_template: "OK"
+      attributes:
+        # day1
+        - name: day1_date
+          select: ".dailyForecastCol:nth-child(2) .dfDayNum"
+          value_template: >
+            {% if value | int == now().day %}
+              {{ now().isoformat() }}
+            {% else %}
+              {{ (now() + timedelta(days = 1)).isoformat() }}
+            {% endif %}
+        - name: day1_dow
+          select: ".dailyForecastCol:nth-child(2) .dfDay"
+        - name: day1_condition
+          select: ".dailyForecastCol:nth-child(2) .forecast-icon"
+          attribute: src
+          value_template: *iconToCondition
+        - name: day1_max
+          select: ".dailyForecastCol:nth-child(2) .max a,.dailyForecastCol:nth-child(2) .min-max-closer a:nth-child(1),.dailyForecastCol:nth-child(2) .min-max-close a:nth-child(1)"
+          value_template: *valueToTemperature
+        - name: day1_min
+          select: ".dailyForecastCol:nth-child(2) .min a,.dailyForecastCol:nth-child(2) .min-max-closer a:nth-child(2),.dailyForecastCol:nth-child(2) .min-max-close a:nth-child(2)"
+          value_template: *valueToTemperature
+        - name: day1_prec_mm
+          select: ".dailyForecastCol:nth-child(2) .mm"
+          value_template: &valueToPrecipitation >
+            {% if value == "." %}
+              {{1}}
+            {% else %}
+              {{ value | trim("mm") | trim() | float }}
+            {% endif %}
+          on_error:
+            value: "default"
+            default: 0
+        # day2
+        - name: day2_date
+          select: ".dailyForecastCol:nth-child(3) .dfDayNum"
+          value_template: >
+            {% if value | int == (now() + timedelta(days = 1)).day %}
+              {{ (now() + timedelta(days = 1)).isoformat() }}
+            {% else %}
+              {{ (now() + timedelta(days = 2)).isoformat() }}
+            {% endif %}
+        - name: day2_dow
+          select: ".dailyForecastCol:nth-child(3) .dfDay"
+        - name: day2_condition
+          select: ".dailyForecastCol:nth-child(3) .forecast-icon"
+          attribute: src
+          value_template: *iconToCondition
+        - name: day2_max
+          select: ".dailyForecastCol:nth-child(3) .max a,.dailyForecastCol:nth-child(3) .min-max-closer a:nth-child(1),.dailyForecastCol:nth-child(3) .min-max-close a:nth-child(1)"
+          value_template: *valueToTemperature
+        - name: day2_min
+          select: ".dailyForecastCol:nth-child(3) .min a,.dailyForecastCol:nth-child(3) .min-max-closer a:nth-child(2),.dailyForecastCol:nth-child(3) .min-max-close a:nth-child(2)"
+          value_template: *valueToTemperature
+        - name: day2_prec_mm
+          select: ".dailyForecastCol:nth-child(3) .mm"
+          value_template: *valueToPrecipitation
+          on_error:
+            value: "default"
+            default: 0
+        # day3
+        - name: day3_date
+          select: ".dailyForecastCol:nth-child(4) .dfDayNum"
+          value_template: >
+            {% if value | int == (now() + timedelta(days = 2)).day %}
+              {{ (now() + timedelta(days = 2)).isoformat() }}
+            {% else %}
+              {{ (now() + timedelta(days = 3)).isoformat() }}
+            {% endif %}
+        - name: day3_dow
+          select: ".dailyForecastCol:nth-child(4) .dfDay"
+        - name: day3_condition
+          select: ".dailyForecastCol:nth-child(4) .forecast-icon"
+          attribute: src
+          value_template: *iconToCondition
+        - name: day3_max
+          select: ".dailyForecastCol:nth-child(4) .max a,.dailyForecastCol:nth-child(4) .min-max-closer a:nth-child(1),.dailyForecastCol:nth-child(4) .min-max-close a:nth-child(1)"
+          value_template: *valueToTemperature
+        - name: day3_min
+          select: ".dailyForecastCol:nth-child(4) .min a,.dailyForecastCol:nth-child(4) .min-max-closer a:nth-child(2),.dailyForecastCol:nth-child(4) .min-max-close a:nth-child(2)"
+          value_template: *valueToTemperature
+        - name: day3_prec_mm
+          select: ".dailyForecastCol:nth-child(4) .mm"
+          value_template: *valueToPrecipitation
+          on_error:
+            value: "default"
+            default: 0
+        # day4
+        - name: day4_date
+          select: ".dailyForecastCol:nth-child(5) .dfDayNum"
+          value_template: >
+            {% if value | int == (now() + timedelta(days = 3)).day %}
+              {{ (now() + timedelta(days = 3)).isoformat() }}
+            {% else %}
+              {{ (now() + timedelta(days = 4)).isoformat() }}
+            {% endif %}
+        - name: day4_dow
+          select: ".dailyForecastCol:nth-child(5) .dfDay"
+        - name: day4_condition
+          select: ".dailyForecastCol:nth-child(5) .forecast-icon"
+          attribute: src
+          value_template: *iconToCondition
+        - name: day4_max
+          select: ".dailyForecastCol:nth-child(5) .max a,.dailyForecastCol:nth-child(5) .min-max-closer a:nth-child(1),.dailyForecastCol:nth-child(5) .min-max-close a:nth-child(1)"
+          value_template: *valueToTemperature
+        - name: day4_min
+          select: ".dailyForecastCol:nth-child(5) .min a,.dailyForecastCol:nth-child(5) .min-max-closer a:nth-child(2),.dailyForecastCol:nth-child(5) .min-max-close a:nth-child(2)"
+          value_template: *valueToTemperature
+        - name: day4_prec_mm
+          select: ".dailyForecastCol:nth-child(5) .mm"
+          value_template: *valueToPrecipitation
+          on_error:
+            value: "default"
+            default: 0
+        # day5
+        - name: day5_date
+          select: ".dailyForecastCol:nth-child(6) .dfDayNum"
+          value_template: >
+            {% if value | int == (now() + timedelta(days = 4)).day %}
+              {{ (now() + timedelta(days = 4)).isoformat() }}
+            {% else %}
+              {{ (now() + timedelta(days = 5)).isoformat() }}
+            {% endif %}
+        - name: day5_dow
+          select: ".dailyForecastCol:nth-child(6) .dfDay"
+        - name: day5_condition
+          select: ".dailyForecastCol:nth-child(6) .forecast-icon"
+          attribute: src
+          value_template: *iconToCondition
+        - name: day5_max
+          select: ".dailyForecastCol:nth-child(6) .max a,.dailyForecastCol:nth-child(6) .min-max-closer a:nth-child(1),.dailyForecastCol:nth-child(6) .min-max-close a:nth-child(1)"
+          value_template: *valueToTemperature
+        - name: day5_min
+          select: ".dailyForecastCol:nth-child(6) .min a,.dailyForecastCol:nth-child(6) .min-max-closer a:nth-child(2),.dailyForecastCol:nth-child(6) .min-max-close a:nth-child(2)"
+          value_template: *valueToTemperature
+        - name: day5_prec_mm
+          select: ".dailyForecastCol:nth-child(6) .mm"
+          value_template: *valueToPrecipitation
+          on_error:
+            value: "default"
+            default: 0
 
-    - unique_id: idokep_day2_date
-      name: "Időkép, nap2 dátum"
-      select: ".dailyForecastCol:nth-child(3) .dfDayNum"
-      value_template: >
-        {% if value | int == (now() + timedelta(days = 1)).day %}
-          {{ (now() + timedelta(days = 1)).isoformat() }}
-        {% else %}
-          {{ (now() + timedelta(days = 2)).isoformat() }}
-        {% endif %}
-    - unique_id: idokep_day2_dow
-      name: "Időkép, nap2 hét napja"
-      select: ".dailyForecastCol:nth-child(3) .dfDay"
-    - unique_id: idokep_day2_condition
-      name: "Időkép, nap2 időjárás (kategória)"
-      select: ".dailyForecastCol:nth-child(3) .forecast-icon"
-      attribute: src
-      value_template: *iconToCondition
-    - unique_id: idokep_day2_condition_hu
-      name: "Időkép, nap2 időjárás (kategória HU)"
-      select: ".dailyForecastCol:nth-child(3) .dfIconAlert a"
-      attribute: data-bs-content
-      value_template: *iconPopoverToConditionHu
-    - unique_id: idokep_day2_max
-      name: "Időkép, nap2 max"
-      select: ".dailyForecastCol:nth-child(3) .max a,.dailyForecastCol:nth-child(3) .min-max-closer a:nth-child(1),.dailyForecastCol:nth-child(3) .min-max-close a:nth-child(1)"
-      device_class: temperature
-      unit_of_measurement: °C
-      value_template: *valueToTemperature
-    - unique_id: idokep_day2_min
-      name: "Időkép, nap2 min"
-      select: ".dailyForecastCol:nth-child(3) .min a,.dailyForecastCol:nth-child(3) .min-max-closer a:nth-child(2),.dailyForecastCol:nth-child(3) .min-max-close a:nth-child(2)"
-      device_class: temperature
-      unit_of_measurement: °C
-      value_template: *valueToTemperature
-    - unique_id: idokep_day2_prec
-      name: "Időkép, nap2 csapadék"
-      select: ".dailyForecastCol:nth-child(3) .mm"
-      unit_of_measurement: mm
-      value_template: *valueToPrecipitation
-      on_error:
-        value: "default"
-        default: 0
-
-    - unique_id: idokep_day3_date
-      name: "Időkép, nap3 dátum"
-      select: ".dailyForecastCol:nth-child(4) .dfDayNum"
-      value_template: >
-        {% if value | int == (now() + timedelta(days = 2)).day %}
-          {{ (now() + timedelta(days = 2)).isoformat() }}
-        {% else %}
-          {{ (now() + timedelta(days = 3)).isoformat() }}
-        {% endif %}
-    - unique_id: idokep_day3_dow
-      name: "Időkép, nap3 hét napja"
-      select: ".dailyForecastCol:nth-child(4) .dfDay"
-    - unique_id: idokep_day3_condition
-      name: "Időkép, nap3 időjárás (kategória)"
-      select: ".dailyForecastCol:nth-child(4) .forecast-icon"
-      attribute: src
-      value_template: *iconToCondition
-    - unique_id: idokep_day3_condition_hu
-      name: "Időkép, nap3 időjárás (kategória HU)"
-      select: ".dailyForecastCol:nth-child(4) .dfIconAlert a"
-      attribute: data-bs-content
-      value_template: *iconPopoverToConditionHu
-    - unique_id: idokep_day3_max
-      name: "Időkép, nap3 max"
-      select: ".dailyForecastCol:nth-child(4) .max a,.dailyForecastCol:nth-child(4) .min-max-closer a:nth-child(1),.dailyForecastCol:nth-child(4) .min-max-close a:nth-child(1)"
-      device_class: temperature
-      unit_of_measurement: °C
-      value_template: *valueToTemperature
-    - unique_id: idokep_day3_min
-      name: "Időkép, nap3 min"
-      select: ".dailyForecastCol:nth-child(4) .min a,.dailyForecastCol:nth-child(4) .min-max-closer a:nth-child(2),.dailyForecastCol:nth-child(4) .min-max-close a:nth-child(2)"
-      device_class: temperature
-      unit_of_measurement: °C
-      value_template: *valueToTemperature
-    - unique_id: idokep_day3_prec
-      name: "Időkép, nap3 csapadék"
-      select: ".dailyForecastCol:nth-child(4) .mm"
-      unit_of_measurement: mm
-      value_template: *valueToPrecipitation
-      on_error:
-        value: "default"
-        default: 0
-
-    - unique_id: idokep_day4_date
-      name: "Időkép, nap4 dátum"
-      select: ".dailyForecastCol:nth-child(5) .dfDayNum"
-      value_template: >
-        {% if value | int == (now() + timedelta(days = 3)).day %}
-          {{ (now() + timedelta(days = 3)).isoformat() }}
-        {% else %}
-          {{ (now() + timedelta(days = 4)).isoformat() }}
-        {% endif %}
-    - unique_id: idokep_day4_dow
-      name: "Időkép, nap4 hét napja"
-      select: ".dailyForecastCol:nth-child(5) .dfDay"
-    - unique_id: idokep_day4_condition
-      name: "Időkép, nap4 időjárás (kategória)"
-      select: ".dailyForecastCol:nth-child(5) .forecast-icon"
-      attribute: src
-      value_template: *iconToCondition
-    - unique_id: idokep_day4_condition_hu
-      name: "Időkép, nap4 időjárás (kategória HU)"
-      select: ".dailyForecastCol:nth-child(5) .dfIconAlert a"
-      attribute: data-bs-content
-      value_template: *iconPopoverToConditionHu
-    - unique_id: idokep_day4_max
-      name: "Időkép, nap4 max"
-      select: ".dailyForecastCol:nth-child(5) .max a,.dailyForecastCol:nth-child(5) .min-max-closer a:nth-child(1),.dailyForecastCol:nth-child(5) .min-max-close a:nth-child(1)"
-      device_class: temperature
-      unit_of_measurement: °C
-      value_template: *valueToTemperature
-    - unique_id: idokep_day4_min
-      name: "Időkép, nap4 min"
-      select: ".dailyForecastCol:nth-child(5) .min a,.dailyForecastCol:nth-child(5) .min-max-closer a:nth-child(2),.dailyForecastCol:nth-child(5) .min-max-close a:nth-child(2)"
-      device_class: temperature
-      unit_of_measurement: °C
-      value_template: *valueToTemperature
-    - unique_id: idokep_day4_prec
-      name: "Időkép, nap4 csapadék"
-      select: ".dailyForecastCol:nth-child(5) .mm"
-      unit_of_measurement: mm
-      value_template: *valueToPrecipitation
-      on_error:
-        value: "default"
-        default: 0
-
-    - unique_id: idokep_day5_date
-      name: "Időkép, nap5 dátum"
-      select: ".dailyForecastCol:nth-child(6) .dfDayNum"
-      value_template: >
-        {% if value | int == (now() + timedelta(days = 4)).day %}
-          {{ (now() + timedelta(days = 4)).isoformat() }}
-        {% else %}
-          {{ (now() + timedelta(days = 5)).isoformat() }}
-        {% endif %}
-    - unique_id: idokep_day5_dow
-      name: "Időkép, nap5 hét napja"
-      select: ".dailyForecastCol:nth-child(6) .dfDay"
-    - unique_id: idokep_day5_condition
-      name: "Időkép, nap5 időjárás (kategória)"
-      select: ".dailyForecastCol:nth-child(6) .forecast-icon"
-      attribute: src
-      value_template: *iconToCondition
-    - unique_id: idokep_day5_condition_hu
-      name: "Időkép, nap5 időjárás (kategória HU)"
-      select: ".dailyForecastCol:nth-child(6) .dfIconAlert a"
-      attribute: data-bs-content
-      value_template: *iconPopoverToConditionHu
-    - unique_id: idokep_day5_max
-      name: "Időkép, nap5 max"
-      select: ".dailyForecastCol:nth-child(6) .max a,.dailyForecastCol:nth-child(6) .min-max-closer a:nth-child(1),.dailyForecastCol:nth-child(6) .min-max-close a:nth-child(1)"
-      device_class: temperature
-      unit_of_measurement: °C
-      value_template: *valueToTemperature
-    - unique_id: idokep_day5_min
-      name: "Időkép, nap5 min"
-      select: ".dailyForecastCol:nth-child(6) .min a,.dailyForecastCol:nth-child(6) .min-max-closer a:nth-child(2),.dailyForecastCol:nth-child(6) .min-max-close a:nth-child(2)"
-      device_class: temperature
-      unit_of_measurement: °C
-      value_template: *valueToTemperature
-    - unique_id: idokep_day5_prec
-      name: "Időkép, nap5 csapadék"
-      select: ".dailyForecastCol:nth-child(6) .mm"
-      unit_of_measurement: mm
-      value_template: *valueToPrecipitation
-      on_error:
-        value: "default"
-        default: 0
-
-# a value template-ekért köszi szat8-nak
-- resource: https://www.idokep.hu/elorejelzes/Buda%C3%B6rs
-  scan_interval: 3600 # 60 percenként, hogy ne bombázzuk az oldalt
+- resource: https://www.idokep.hu/elorejelzes/T%C3%B6r%C3%B6kb%C3%A1lint
+  scan_interval: 900 # 15 percenként, hogy ne bombázzuk az oldalt
   sensor:
     - unique_id: idokep_forecast
       name: "Időkép, előrejelzés"
@@ -356,4 +279,200 @@
       attributes:
         - name: "Részletek"
           select: ".hosszutavu-elorejelzes p:nth-of-type(1)"
-          value_template: '{{ value | trim }}'
+          value_template: "{{ value | trim }}"
+    - unique_id: idokep_hourly_data
+      name: "Időkép, órás előrejelzés adatok"
+      value_template: "OK"
+      attributes:
+        # hour1
+        - name: "hour1_date"
+          select: ".new-hourly-forecast-card:nth-child(1) .new-hourly-forecast-hour"
+          value_template: >
+            {% if now() < today_at(value) %}
+              {{ (now().replace(hour= (value.split(':')[0] | int), minute=0, second=0, microsecond=0)).isoformat() }}
+            {% else %}
+              {{ (now().replace(hour= (value.split(':')[0] | int), minute=0, second=0, microsecond=0) + timedelta(days=1)).isoformat() }}
+            {% endif %}
+        - name: "hour1_condition"
+          select: ".new-hourly-forecast-card:nth-child(1) .forecast-icon"
+          attribute: src
+          value_template: *iconToCondition
+        - name: "hour1_temperature"
+          select: ".new-hourly-forecast-card:nth-child(1) .tempValue .hover-over"
+          value_template: *valueToTemperature
+        # hour2
+        - name: "hour2_date"
+          select: ".new-hourly-forecast-card:nth-child(2) .new-hourly-forecast-hour"
+          value_template: >
+            {% if now() < today_at(value) %}
+              {{ (now().replace(hour= (value.split(':')[0] | int), minute=0, second=0, microsecond=0)).isoformat() }}
+            {% else %}
+              {{ (now().replace(hour= (value.split(':')[0] | int), minute=0, second=0, microsecond=0) + timedelta(days=1)).isoformat() }}
+            {% endif %}
+        - name: "hour2_temperature"
+          select: ".new-hourly-forecast-card:nth-child(2) .tempValue .hover-over"
+          value_template: *valueToTemperature
+        - name: "hour2_condition"
+          select: ".new-hourly-forecast-card:nth-child(2) .forecast-icon"
+          attribute: src
+          value_template: *iconToCondition
+        # hour3
+        - name: "hour3_date"
+          select: ".new-hourly-forecast-card:nth-child(3) .new-hourly-forecast-hour"
+          value_template: >
+            {% if now() < today_at(value) %}
+              {{ (now().replace(hour= (value.split(':')[0] | int), minute=0, second=0, microsecond=0)).isoformat() }}
+            {% else %}
+              {{ (now().replace(hour= (value.split(':')[0] | int), minute=0, second=0, microsecond=0) + timedelta(days=1)).isoformat() }}
+            {% endif %}
+        - name: "hour3_temperature"
+          select: ".new-hourly-forecast-card:nth-child(3) .tempValue .hover-over"
+          value_template: *valueToTemperature
+        - name: "hour3_condition"
+          select: ".new-hourly-forecast-card:nth-child(3) .forecast-icon"
+          attribute: src
+          value_template: *iconToCondition
+        # hour4
+        - name: "hour4_date"
+          select: ".new-hourly-forecast-card:nth-child(4) .new-hourly-forecast-hour"
+          value_template: >
+            {% if now() < today_at(value) %}
+              {{ (now().replace(hour= (value.split(':')[0] | int), minute=0, second=0, microsecond=0)).isoformat() }}
+            {% else %}
+              {{ (now().replace(hour= (value.split(':')[0] | int), minute=0, second=0, microsecond=0) + timedelta(days=1)).isoformat() }}
+            {% endif %}
+        - name: "hour4_temperature"
+          select: ".new-hourly-forecast-card:nth-child(4) .tempValue .hover-over"
+          value_template: *valueToTemperature
+        - name: "hour4_condition"
+          select: ".new-hourly-forecast-card:nth-child(4) .forecast-icon"
+          attribute: src
+          value_template: *iconToCondition
+        # hour5
+        - name: "hour5_date"
+          select: ".new-hourly-forecast-card:nth-child(5) .new-hourly-forecast-hour"
+          value_template: >
+            {% if now() < today_at(value) %}
+              {{ (now().replace(hour= (value.split(':')[0] | int), minute=0, second=0, microsecond=0)).isoformat() }}
+            {% else %}
+              {{ (now().replace(hour= (value.split(':')[0] | int), minute=0, second=0, microsecond=0) + timedelta(days=1)).isoformat() }}
+            {% endif %}
+        - name: "hour5_temperature"
+          select: ".new-hourly-forecast-card:nth-child(5) .tempValue .hover-over"
+          value_template: *valueToTemperature
+        - name: "hour5_condition"
+          select: ".new-hourly-forecast-card:nth-child(5) .forecast-icon"
+          attribute: src
+          value_template: *iconToCondition
+        # hour6
+        - name: "hour6_date"
+          select: ".new-hourly-forecast-card:nth-child(6) .new-hourly-forecast-hour"
+          value_template: >
+            {% if now() < today_at(value) %}
+              {{ (now().replace(hour= (value.split(':')[0] | int), minute=0, second=0, microsecond=0)).isoformat() }}
+            {% else %}
+              {{ (now().replace(hour= (value.split(':')[0] | int), minute=0, second=0, microsecond=0) + timedelta(days=1)).isoformat() }}
+            {% endif %}
+        - name: "hour6_temperature"
+          select: ".new-hourly-forecast-card:nth-child(6) .tempValue .hover-over"
+          value_template: *valueToTemperature
+        - name: "hour6_condition"
+          select: ".new-hourly-forecast-card:nth-child(6) .forecast-icon"
+          attribute: src
+          value_template: *iconToCondition
+        # hour7
+        - name: "hour7_date"
+          select: ".new-hourly-forecast-card:nth-child(7) .new-hourly-forecast-hour"
+          value_template: >
+            {% if now() < today_at(value) %}
+              {{ (now().replace(hour= (value.split(':')[0] | int), minute=0, second=0, microsecond=0)).isoformat() }}
+            {% else %}
+              {{ (now().replace(hour= (value.split(':')[0] | int), minute=0, second=0, microsecond=0) + timedelta(days=1)).isoformat() }}
+            {% endif %}
+        - name: "hour7_condition"
+          select: ".new-hourly-forecast-card:nth-child(7) .forecast-icon"
+          attribute: src
+          value_template: *iconToCondition
+        - name: "hour7_temperature"
+          select: ".new-hourly-forecast-card:nth-child(7) .tempValue .hover-over"
+          value_template: *valueToTemperature
+        # hour8
+        - name: "hour8_date"
+          select: ".new-hourly-forecast-card:nth-child(8) .new-hourly-forecast-hour"
+          value_template: >
+            {% if now() < today_at(value) %}
+              {{ (now().replace(hour= (value.split(':')[0] | int), minute=0, second=0, microsecond=0)).isoformat() }}
+            {% else %}
+              {{ (now().replace(hour= (value.split(':')[0] | int), minute=0, second=0, microsecond=0) + timedelta(days=1)).isoformat() }}
+            {% endif %}
+        - name: "hour8_temperature"
+          select: ".new-hourly-forecast-card:nth-child(8) .tempValue .hover-over"
+          value_template: *valueToTemperature
+        - name: "hour8_condition"
+          select: ".new-hourly-forecast-card:nth-child(8) .forecast-icon"
+          attribute: src
+          value_template: *iconToCondition
+        # hour9
+        - name: "hour9_date"
+          select: ".new-hourly-forecast-card:nth-child(9) .new-hourly-forecast-hour"
+          value_template: >
+            {% if now() < today_at(value) %}
+              {{ (now().replace(hour= (value.split(':')[0] | int), minute=0, second=0, microsecond=0)).isoformat() }}
+            {% else %}
+              {{ (now().replace(hour= (value.split(':')[0] | int), minute=0, second=0, microsecond=0) + timedelta(days=1)).isoformat() }}
+            {% endif %}
+        - name: "hour9_temperature"
+          select: ".new-hourly-forecast-card:nth-child(9) .tempValue .hover-over"
+          value_template: *valueToTemperature
+        - name: "hour9_condition"
+          select: ".new-hourly-forecast-card:nth-child(9) .forecast-icon"
+          attribute: src
+          value_template: *iconToCondition
+        # hour10
+        - name: "hour10_date"
+          select: ".new-hourly-forecast-card:nth-child(10) .new-hourly-forecast-hour"
+          value_template: >
+            {% if now() < today_at(value) %}
+              {{ (now().replace(hour= (value.split(':')[0] | int), minute=0, second=0, microsecond=0)).isoformat() }}
+            {% else %}
+              {{ (now().replace(hour= (value.split(':')[0] | int), minute=0, second=0, microsecond=0) + timedelta(days=1)).isoformat() }}
+            {% endif %}
+        - name: "hour10_temperature"
+          select: ".new-hourly-forecast-card:nth-child(10) .tempValue .hover-over"
+          value_template: *valueToTemperature
+        - name: "hour10_condition"
+          select: ".new-hourly-forecast-card:nth-child(10) .forecast-icon"
+          attribute: src
+          value_template: *iconToCondition
+        # hour11
+        - name: "hour11_date"
+          select: ".new-hourly-forecast-card:nth-child(11) .new-hourly-forecast-hour"
+          value_template: >
+            {% if now() < today_at(value) %}
+              {{ (now().replace(hour= (value.split(':')[0] | int), minute=0, second=0, microsecond=0)).isoformat() }}
+            {% else %}
+              {{ (now().replace(hour= (value.split(':')[0] | int), minute=0, second=0, microsecond=0) + timedelta(days=1)).isoformat() }}
+            {% endif %}
+        - name: "hour11_temperature"
+          select: ".new-hourly-forecast-card:nth-child(11) .tempValue .hover-over"
+          value_template: *valueToTemperature
+        - name: "hour11_condition"
+          select: ".new-hourly-forecast-card:nth-child(11) .forecast-icon"
+          attribute: src
+          value_template: *iconToCondition
+        # hour12
+        - name: "hour12_date"
+          select: ".new-hourly-forecast-card:nth-child(12) .new-hourly-forecast-hour"
+          value_template: >
+            {% if now() < today_at(value) %}
+              {{ (now().replace(hour= (value.split(':')[0] | int), minute=0, second=0, microsecond=0)).isoformat() }}
+            {% else %}
+              {{ (now().replace(hour= (value.split(':')[0] | int), minute=0, second=0, microsecond=0) + timedelta(days=1)).isoformat() }}
+            {% endif %}
+        - name: "hour12_temperature"
+          select: ".new-hourly-forecast-card:nth-child(12) .tempValue .hover-over"
+          value_template: *valueToTemperature
+        - name: "hour12_condition"
+          select: ".new-hourly-forecast-card:nth-child(12) .forecast-icon"
+          attribute: src
+          value_template: *iconToCondition
