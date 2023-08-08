@@ -144,6 +144,11 @@
           select: ".dailyForecastCol:nth-child(2) .forecast-icon"
           attribute: src
           value_template: *iconToCondition
+        - name: day1_condition_hu
+          select: ".dailyForecastCol:nth-child(2) .dfIconAlert a"
+          attribute: data-bs-content
+          value_template: &iconPopoverToConditionHu >
+            {{ value | regex_findall('.*<img[^<]+>([^<]+)<.*') | first | trim }}
         - name: day1_max
           select: ".dailyForecastCol:nth-child(2) .max a,.dailyForecastCol:nth-child(2) .min-max-closer a:nth-child(1),.dailyForecastCol:nth-child(2) .min-max-close a:nth-child(1)"
           value_template: *valueToTemperature
@@ -176,6 +181,10 @@
           select: ".dailyForecastCol:nth-child(3) .forecast-icon"
           attribute: src
           value_template: *iconToCondition
+        - name: day2_condition_hu
+          select: ".dailyForecastCol:nth-child(3) .dfIconAlert a"
+          attribute: data-bs-content
+          value_template: *iconPopoverToConditionHu
         - name: day2_max
           select: ".dailyForecastCol:nth-child(3) .max a,.dailyForecastCol:nth-child(3) .min-max-closer a:nth-child(1),.dailyForecastCol:nth-child(3) .min-max-close a:nth-child(1)"
           value_template: *valueToTemperature
@@ -203,6 +212,10 @@
           select: ".dailyForecastCol:nth-child(4) .forecast-icon"
           attribute: src
           value_template: *iconToCondition
+        - name: day3_condition_hu
+          select: ".dailyForecastCol:nth-child(4) .dfIconAlert a"
+          attribute: data-bs-content
+          value_template: *iconPopoverToConditionHu
         - name: day3_max
           select: ".dailyForecastCol:nth-child(4) .max a,.dailyForecastCol:nth-child(4) .min-max-closer a:nth-child(1),.dailyForecastCol:nth-child(4) .min-max-close a:nth-child(1)"
           value_template: *valueToTemperature
@@ -230,6 +243,10 @@
           select: ".dailyForecastCol:nth-child(5) .forecast-icon"
           attribute: src
           value_template: *iconToCondition
+        - name: day4_condition_hu
+          select: ".dailyForecastCol:nth-child(5) .dfIconAlert a"
+          attribute: data-bs-content
+          value_template: *iconPopoverToConditionHu
         - name: day4_max
           select: ".dailyForecastCol:nth-child(5) .max a,.dailyForecastCol:nth-child(5) .min-max-closer a:nth-child(1),.dailyForecastCol:nth-child(5) .min-max-close a:nth-child(1)"
           value_template: *valueToTemperature
@@ -257,6 +274,10 @@
           select: ".dailyForecastCol:nth-child(6) .forecast-icon"
           attribute: src
           value_template: *iconToCondition
+        - name: day5_condition_hu
+          select: ".dailyForecastCol:nth-child(6) .dfIconAlert a"
+          attribute: data-bs-content
+          value_template: *iconPopoverToConditionHu
         - name: day5_max
           select: ".dailyForecastCol:nth-child(6) .max a,.dailyForecastCol:nth-child(6) .min-max-closer a:nth-child(1),.dailyForecastCol:nth-child(6) .min-max-close a:nth-child(1)"
           value_template: *valueToTemperature
