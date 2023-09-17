@@ -166,6 +166,7 @@
           on_error:
             value: "default"
             default: 0
+            log: false
         # day2
         - name: day2_date
           select: ".dailyForecastCol:nth-child(3) .dfDayNum"
@@ -197,6 +198,7 @@
           on_error:
             value: "default"
             default: 0
+            log: false
         # day3
         - name: day3_date
           select: ".dailyForecastCol:nth-child(4) .dfDayNum"
@@ -228,6 +230,7 @@
           on_error:
             value: "default"
             default: 0
+            log: false
         # day4
         - name: day4_date
           select: ".dailyForecastCol:nth-child(5) .dfDayNum"
@@ -259,6 +262,7 @@
           on_error:
             value: "default"
             default: 0
+            log: false
         # day5
         - name: day5_date
           select: ".dailyForecastCol:nth-child(6) .dfDayNum"
@@ -290,6 +294,7 @@
           on_error:
             value: "default"
             default: 0
+            log: false
 
 - resource: https://www.idokep.hu/elorejelzes/T%C3%B6r%C3%B6kb%C3%A1lint
   scan_interval: 900 # 15 percenként, hogy ne bombázzuk az oldalt
