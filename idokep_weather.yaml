@@ -1,126 +1,186 @@
 # https://www.home-assistant.io/integrations/weather.template/
 # https://developers.home-assistant.io/docs/core/entity/weather/
-#weather:
-- platform: template
-  unique_id: idokep
-  name: "Időkép"
-  condition_template: "{{ states('sensor.idokep_condition') }}"
-  temperature_template: "{{ states('sensor.idokep_temperature')}}"
-  forecast_template: >
-    {{
-      [
-        {
-          "datetime": state_attr('sensor.idokep_daily_data', 'day1_date'),
-          "temperature": state_attr('sensor.idokep_daily_data', 'day1_max') | float,
-          "templow": state_attr('sensor.idokep_daily_data', 'day1_min') | float,
-          "precipitation": state_attr('sensor.idokep_daily_data', 'day1_prec_mm') | float,
-          "condition": state_attr('sensor.idokep_daily_data', 'day1_condition')
-        },
-        {
-          "datetime": state_attr('sensor.idokep_daily_data', 'day2_date'),
-          "temperature": state_attr('sensor.idokep_daily_data', 'day2_max') | float,
-          "templow": state_attr('sensor.idokep_daily_data', 'day2_min') | float,
-          "precipitation": state_attr('sensor.idokep_daily_data', 'day2_prec_mm') | float,
-          "condition": state_attr('sensor.idokep_daily_data', 'day2_condition')
-        },
-        {
-          "datetime": state_attr('sensor.idokep_daily_data', 'day3_date'),
-          "temperature": state_attr('sensor.idokep_daily_data', 'day3_max') | float,
-          "templow": state_attr('sensor.idokep_daily_data', 'day3_min') | float,
-          "precipitation": state_attr('sensor.idokep_daily_data', 'day3_prec_mm') | float,
-          "condition": state_attr('sensor.idokep_daily_data', 'day3_condition')
-        },
-        {
-          "datetime": state_attr('sensor.idokep_daily_data', 'day4_date'),
-          "temperature": state_attr('sensor.idokep_daily_data', 'day4_max') | float,
-          "templow": state_attr('sensor.idokep_daily_data', 'day4_min') | float,
-          "precipitation": state_attr('sensor.idokep_daily_data', 'day4_prec_mm') | float,
-          "condition": state_attr('sensor.idokep_daily_data', 'day4_condition')
-        },
-        {
-          "datetime": state_attr('sensor.idokep_daily_data', 'day5_date'),
-          "temperature": state_attr('sensor.idokep_daily_data', 'day5_max') | float,
-          "templow": state_attr('sensor.idokep_daily_data', 'day5_min') | float,
-          "precipitation": state_attr('sensor.idokep_daily_data', 'day5_prec_mm') | float,
-          "condition": state_attr('sensor.idokep_daily_data', 'day5_condition')
-        }
-      ]
-    }}
-  humidity_template: "{{ state_attr('weather.otthon', 'humidity') }}"
-  pressure_template: "{{ state_attr('weather.otthon', 'pressure') }}"
-  wind_speed_template: "{{ state_attr('weather.otthon', 'wind_speed') }}"
-  wind_bearing_template: "{{ state_attr('weather.otthon', 'wind_bearing') }}"
-- platform: template
-  unique_id: idokep_hourly
-  name: "Időkép órás"
-  condition_template: "{{ states('sensor.idokep_condition') }}"
-  temperature_template: "{{ states('sensor.idokep_temperature')}}"
-  forecast_template: >
-    {{
-      [
-        {
-          "datetime": state_attr('sensor.idokep_hourly_data', 'hour1_date'),
-          "temperature": state_attr('sensor.idokep_hourly_data', 'hour1_temperature') | float,
-          "condition": state_attr('sensor.idokep_hourly_data', 'hour1_condition')
-        },
-        {
-          "datetime": state_attr('sensor.idokep_hourly_data', 'hour2_date'),
-          "temperature": state_attr('sensor.idokep_hourly_data', 'hour2_temperature') | float,
-          "condition": state_attr('sensor.idokep_hourly_data', 'hour2_condition')
-        },
-        {
-          "datetime": state_attr('sensor.idokep_hourly_data', 'hour3_date'),
-          "temperature": state_attr('sensor.idokep_hourly_data', 'hour3_temperature') | float,
-          "condition": state_attr('sensor.idokep_hourly_data', 'hour3_condition')
-        },
-        {
-          "datetime": state_attr('sensor.idokep_hourly_data', 'hour4_date'),
-          "temperature": state_attr('sensor.idokep_hourly_data', 'hour4_temperature') | float,
-          "condition": state_attr('sensor.idokep_hourly_data', 'hour4_condition')
-        },
-        {
-          "datetime": state_attr('sensor.idokep_hourly_data', 'hour5_date'),
-          "temperature": state_attr('sensor.idokep_hourly_data', 'hour5_temperature') | float,
-          "condition": state_attr('sensor.idokep_hourly_data', 'hour5_condition')
-        },
-        {
-          "datetime": state_attr('sensor.idokep_hourly_data', 'hour6_date'),
-          "temperature": state_attr('sensor.idokep_hourly_data', 'hour6_temperature') | float,
-          "condition": state_attr('sensor.idokep_hourly_data', 'hour6_condition')
-        },
-        {
-          "datetime": state_attr('sensor.idokep_hourly_data', 'hour7_date'),
-          "temperature": state_attr('sensor.idokep_hourly_data', 'hour7_temperature') | float,
-          "condition": state_attr('sensor.idokep_hourly_data', 'hour7_condition')
-        },
-        {
-          "datetime": state_attr('sensor.idokep_hourly_data', 'hour8_date'),
-          "temperature": state_attr('sensor.idokep_hourly_data', 'hour8_temperature') | float,
-          "condition": state_attr('sensor.idokep_hourly_data', 'hour8_condition')
-        },
-        {
-          "datetime": state_attr('sensor.idokep_hourly_data', 'hour9_date'),
-          "temperature": state_attr('sensor.idokep_hourly_data', 'hour9_temperature') | float,
-          "condition": state_attr('sensor.idokep_hourly_data', 'hour9_condition')
-        },
-        {
-          "datetime": state_attr('sensor.idokep_hourly_data', 'hour10_date'),
-          "temperature": state_attr('sensor.idokep_hourly_data', 'hour10_temperature') | float,
-          "condition": state_attr('sensor.idokep_hourly_data', 'hour10_condition')
-        },
-        {
-          "datetime": state_attr('sensor.idokep_hourly_data', 'hour11_date'),
-          "temperature": state_attr('sensor.idokep_hourly_data', 'hour11_temperature') | float,
-          "condition": state_attr('sensor.idokep_hourly_data', 'hour11_condition')
-        },
-        {
-          "datetime": state_attr('sensor.idokep_hourly_data', 'hour12_date'),
-          "temperature": state_attr('sensor.idokep_hourly_data', 'hour12_temperature') | float,
-          "condition": state_attr('sensor.idokep_hourly_data', 'hour12_condition')
-        }
-      ]
-    }}
-  humidity_template: "{{ state_attr('weather.otthon', 'humidity') }}"
-  pressure_template: "{{ state_attr('weather.otthon', 'pressure') }}"
-  wind_speed_template: "{{ state_attr('weather.otthon', 'wind_speed') }}"
-  wind_bearing_template: "{{ state_attr('weather.otthon', 'wind_bearing') }}"
+weather:
+  - platform: template
+    unique_id: idokep
+    name: "Időkép"
+    condition_template: "{{ states('sensor.idokep_condition') }}"
+    temperature_template: "{{ states('sensor.idokep_temperature')}}"
+    forecast_template: >
+      {{
+        [
+          {
+            "datetime": state_attr('sensor.idokep_daily_data', 'day1_date'),
+            "temperature": state_attr('sensor.idokep_daily_data', 'day1_max') | float,
+            "templow": state_attr('sensor.idokep_daily_data', 'day1_min') | float,
+            "precipitation": state_attr('sensor.idokep_daily_data', 'day1_prec_mm') | float,
+            "condition": state_attr('sensor.idokep_daily_data', 'day1_condition')
+          },
+          {
+            "datetime": state_attr('sensor.idokep_daily_data', 'day2_date'),
+            "temperature": state_attr('sensor.idokep_daily_data', 'day2_max') | float,
+            "templow": state_attr('sensor.idokep_daily_data', 'day2_min') | float,
+            "precipitation": state_attr('sensor.idokep_daily_data', 'day2_prec_mm') | float,
+            "condition": state_attr('sensor.idokep_daily_data', 'day2_condition')
+          },
+          {
+            "datetime": state_attr('sensor.idokep_daily_data', 'day3_date'),
+            "temperature": state_attr('sensor.idokep_daily_data', 'day3_max') | float,
+            "templow": state_attr('sensor.idokep_daily_data', 'day3_min') | float,
+            "precipitation": state_attr('sensor.idokep_daily_data', 'day3_prec_mm') | float,
+            "condition": state_attr('sensor.idokep_daily_data', 'day3_condition')
+          },
+          {
+            "datetime": state_attr('sensor.idokep_daily_data', 'day4_date'),
+            "temperature": state_attr('sensor.idokep_daily_data', 'day4_max') | float,
+            "templow": state_attr('sensor.idokep_daily_data', 'day4_min') | float,
+            "precipitation": state_attr('sensor.idokep_daily_data', 'day4_prec_mm') | float,
+            "condition": state_attr('sensor.idokep_daily_data', 'day4_condition')
+          },
+          {
+            "datetime": state_attr('sensor.idokep_daily_data', 'day5_date'),
+            "temperature": state_attr('sensor.idokep_daily_data', 'day5_max') | float,
+            "templow": state_attr('sensor.idokep_daily_data', 'day5_min') | float,
+            "precipitation": state_attr('sensor.idokep_daily_data', 'day5_prec_mm') | float,
+            "condition": state_attr('sensor.idokep_daily_data', 'day5_condition')
+          }
+        ]
+      }}
+    humidity_template: "{{ state_attr('weather.otthon', 'humidity') }}"
+    pressure_template: "{{ state_attr('weather.otthon', 'pressure') }}"
+    wind_speed_template: "{{ state_attr('weather.otthon', 'wind_speed') }}"
+    wind_bearing_template: "{{ state_attr('weather.otthon', 'wind_bearing') }}"
+  - platform: template
+    unique_id: idokep_hourly
+    name: "Időkép órás"
+    condition_template: "{{ states('sensor.idokep_condition') }}"
+    temperature_template: "{{ states('sensor.idokep_temperature')}}"
+    forecast_template: >
+      {{
+        [
+          {
+            "datetime": state_attr('sensor.idokep_hourly_data', 'hour1_date'),
+            "temperature": state_attr('sensor.idokep_hourly_data', 'hour1_temperature') | float,
+            "condition": state_attr('sensor.idokep_hourly_data', 'hour1_condition')
+          },
+          {
+            "datetime": state_attr('sensor.idokep_hourly_data', 'hour2_date'),
+            "temperature": state_attr('sensor.idokep_hourly_data', 'hour2_temperature') | float,
+            "condition": state_attr('sensor.idokep_hourly_data', 'hour2_condition')
+          },
+          {
+            "datetime": state_attr('sensor.idokep_hourly_data', 'hour3_date'),
+            "temperature": state_attr('sensor.idokep_hourly_data', 'hour3_temperature') | float,
+            "condition": state_attr('sensor.idokep_hourly_data', 'hour3_condition')
+          },
+          {
+            "datetime": state_attr('sensor.idokep_hourly_data', 'hour4_date'),
+            "temperature": state_attr('sensor.idokep_hourly_data', 'hour4_temperature') | float,
+            "condition": state_attr('sensor.idokep_hourly_data', 'hour4_condition')
+          },
+          {
+            "datetime": state_attr('sensor.idokep_hourly_data', 'hour5_date'),
+            "temperature": state_attr('sensor.idokep_hourly_data', 'hour5_temperature') | float,
+            "condition": state_attr('sensor.idokep_hourly_data', 'hour5_condition')
+          },
+          {
+            "datetime": state_attr('sensor.idokep_hourly_data', 'hour6_date'),
+            "temperature": state_attr('sensor.idokep_hourly_data', 'hour6_temperature') | float,
+            "condition": state_attr('sensor.idokep_hourly_data', 'hour6_condition')
+          },
+          {
+            "datetime": state_attr('sensor.idokep_hourly_data', 'hour7_date'),
+            "temperature": state_attr('sensor.idokep_hourly_data', 'hour7_temperature') | float,
+            "condition": state_attr('sensor.idokep_hourly_data', 'hour7_condition')
+          },
+          {
+            "datetime": state_attr('sensor.idokep_hourly_data', 'hour8_date'),
+            "temperature": state_attr('sensor.idokep_hourly_data', 'hour8_temperature') | float,
+            "condition": state_attr('sensor.idokep_hourly_data', 'hour8_condition')
+          },
+          {
+            "datetime": state_attr('sensor.idokep_hourly_data', 'hour9_date'),
+            "temperature": state_attr('sensor.idokep_hourly_data', 'hour9_temperature') | float,
+            "condition": state_attr('sensor.idokep_hourly_data', 'hour9_condition')
+          },
+          {
+            "datetime": state_attr('sensor.idokep_hourly_data', 'hour10_date'),
+            "temperature": state_attr('sensor.idokep_hourly_data', 'hour10_temperature') | float,
+            "condition": state_attr('sensor.idokep_hourly_data', 'hour10_condition')
+          },
+          {
+            "datetime": state_attr('sensor.idokep_hourly_data', 'hour11_date'),
+            "temperature": state_attr('sensor.idokep_hourly_data', 'hour11_temperature') | float,
+            "condition": state_attr('sensor.idokep_hourly_data', 'hour11_condition')
+          },
+          {
+            "datetime": state_attr('sensor.idokep_hourly_data', 'hour12_date'),
+            "temperature": state_attr('sensor.idokep_hourly_data', 'hour12_temperature') | float,
+            "condition": state_attr('sensor.idokep_hourly_data', 'hour12_condition')
+          },
+          {
+            "datetime": state_attr('sensor.idokep_hourly_data', 'hour13_date'),
+            "temperature": state_attr('sensor.idokep_hourly_data', 'hour13_temperature') | float,
+            "condition": state_attr('sensor.idokep_hourly_data', 'hour13_condition')
+          },
+          {
+            "datetime": state_attr('sensor.idokep_hourly_data', 'hour14_date'),
+            "temperature": state_attr('sensor.idokep_hourly_data', 'hour14_temperature') | float,
+            "condition": state_attr('sensor.idokep_hourly_data', 'hour14_condition')
+          },
+          {
+            "datetime": state_attr('sensor.idokep_hourly_data', 'hour15_date'),
+            "temperature": state_attr('sensor.idokep_hourly_data', 'hour15_temperature') | float,
+            "condition": state_attr('sensor.idokep_hourly_data', 'hour15_condition')
+          },
+          {
+            "datetime": state_attr('sensor.idokep_hourly_data', 'hour16_date'),
+            "temperature": state_attr('sensor.idokep_hourly_data', 'hour16_temperature') | float,
+            "condition": state_attr('sensor.idokep_hourly_data', 'hour16_condition')
+          },
+          {
+            "datetime": state_attr('sensor.idokep_hourly_data', 'hour17_date'),
+            "temperature": state_attr('sensor.idokep_hourly_data', 'hour17_temperature') | float,
+            "condition": state_attr('sensor.idokep_hourly_data', 'hour17_condition')
+          },
+          {
+            "datetime": state_attr('sensor.idokep_hourly_data', 'hour18_date'),
+            "temperature": state_attr('sensor.idokep_hourly_data', 'hour18_temperature') | float,
+            "condition": state_attr('sensor.idokep_hourly_data', 'hour18_condition')
+          },
+          {
+            "datetime": state_attr('sensor.idokep_hourly_data', 'hour19_date'),
+            "temperature": state_attr('sensor.idokep_hourly_data', 'hour19_temperature') | float,
+            "condition": state_attr('sensor.idokep_hourly_data', 'hour19_condition')
+          },
+          {
+            "datetime": state_attr('sensor.idokep_hourly_data', 'hour20_date'),
+            "temperature": state_attr('sensor.idokep_hourly_data', 'hour20_temperature') | float,
+            "condition": state_attr('sensor.idokep_hourly_data', 'hour20_condition')
+          },
+          {
+            "datetime": state_attr('sensor.idokep_hourly_data', 'hour21_date'),
+            "temperature": state_attr('sensor.idokep_hourly_data', 'hour21_temperature') | float,
+            "condition": state_attr('sensor.idokep_hourly_data', 'hour21_condition')
+          },
+          {
+            "datetime": state_attr('sensor.idokep_hourly_data', 'hour22_date'),
+            "temperature": state_attr('sensor.idokep_hourly_data', 'hour22_temperature') | float,
+            "condition": state_attr('sensor.idokep_hourly_data', 'hour22_condition')
+          },
+          {
+            "datetime": state_attr('sensor.idokep_hourly_data', 'hour23_date'),
+            "temperature": state_attr('sensor.idokep_hourly_data', 'hour23_temperature') | float,
+            "condition": state_attr('sensor.idokep_hourly_data', 'hour23_condition')
+          },
+          {
+            "datetime": state_attr('sensor.idokep_hourly_data', 'hour24_date'),
+            "temperature": state_attr('sensor.idokep_hourly_data', 'hour24_temperature') | float,
+            "condition": state_attr('sensor.idokep_hourly_data', 'hour24_condition')
+          }
+        ]
+      }}
+    humidity_template: "{{ state_attr('weather.otthon', 'humidity') }}"
+    pressure_template: "{{ state_attr('weather.otthon', 'pressure') }}"
+    wind_speed_template: "{{ state_attr('weather.otthon', 'wind_speed') }}"
+    wind_bearing_template: "{{ state_attr('weather.otthon', 'wind_bearing') }}"
