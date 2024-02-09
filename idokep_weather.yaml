@@ -6,7 +6,7 @@
   name: "Időkép"
   condition_template: "{{ states('sensor.idokep_condition') }}"
   temperature_template: "{{ states('sensor.idokep_temperature')}}"
-  forecast_template: >
+  forecast_daily_template: >
     {{
       [
         {
@@ -55,7 +55,7 @@
   name: "Időkép órás"
   condition_template: "{{ states('sensor.idokep_condition') }}"
   temperature_template: "{{ states('sensor.idokep_temperature')}}"
-  forecast_template: >
+  forecast_hourly_template: >
     {{
       [
         {
