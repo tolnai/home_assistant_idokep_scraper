@@ -20,17 +20,22 @@
 # Az ikonok kódjai:
 # 0xx - nappal; 3xx - éjszaka
 # 010 - Derült
+# 011 - Pára
 # 021 - Gyengén felhős
 # 022 - Közepesen felhős
 # 023 - Erősen felhős
 # 030 - Borult
+# 040 - Ködszitálás
 # 041 - Szitálás
 # 042 - Gyenge eső
 # 043 - Eső
 # 043s - Eső viharos széllel
 # 051 - Havas eső
+# 052 - Ónos eső
 # 061 - Havazás
+# 062 - Havazás
 # 081 - Zápor
+# 083 - Hózápor
 # 088 - Jégeső
 # 090 - Zivatar
 # 092 - Száraz zivatar
@@ -58,6 +63,10 @@
           sunny
         {% elif value == '/assets/forecast-icons/310.svg' %}
           clear-night
+        {% elif value == '/assets/forecast-icons/011.svg' %}
+          cloudy
+        {% elif value == '/assets/forecast-icons/311.svg' %}
+          cloudy
         {% elif value == '/assets/forecast-icons/021.svg' %}
           partlycloudy
         {% elif value == '/assets/forecast-icons/321.svg' %}
@@ -74,6 +83,10 @@
           cloudy
         {% elif value == '/assets/forecast-icons/330.svg' %}
           cloudy
+        {% elif value == '/assets/forecast-icons/040.svg' %}
+          rainy
+        {% elif value == '/assets/forecast-icons/340.svg' %}
+          rainy
         {% elif value == '/assets/forecast-icons/041.svg' %}
           rainy
         {% elif value == '/assets/forecast-icons/341.svg' %}
@@ -94,9 +107,21 @@
           snowy-rainy
         {% elif value == '/assets/forecast-icons/351.svg' %}
           snowy-rainy
+        {% elif value == '/assets/forecast-icons/052.svg' %}
+          snowy-rainy
+        {% elif value == '/assets/forecast-icons/352.svg' %}
+          snowy-rainy
         {% elif value == '/assets/forecast-icons/061.svg' %}
           snowy
         {% elif value == '/assets/forecast-icons/361.svg' %}
+          snowy
+        {% elif value == '/assets/forecast-icons/062.svg' %}
+          snowy
+        {% elif value == '/assets/forecast-icons/362.svg' %}
+          snowy
+        {% elif value == '/assets/forecast-icons/083.svg' %}
+          snowy
+        {% elif value == '/assets/forecast-icons/383.svg' %}
           snowy
         {% elif value == '/assets/forecast-icons/081.svg' %}
           rainy
@@ -115,6 +140,8 @@
         {% elif value == '/assets/forecast-icons/392.svg' %}
           lightning
         {% elif value == '/assets/forecast-icons/100.svg' %}
+          fog
+        {% elif value == '/assets/forecast-icons/400.svg' %}
           fog
         {% else %}
           unknown
