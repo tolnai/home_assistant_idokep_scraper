@@ -1,5 +1,8 @@
 # Időkép weather integration for HA
 
+⚠️ Breaking change: A jobb konfig elkülönítés miatt áttértem arra, hogy package-be rakom az időképes
+dolgokat. Emiatt frissült a felhasználás szekció.
+
 Az időkép oldaláról scrape-pel lehet adatokat szenzorokba kinyerni. Az általam használt konfigok ebben a mappában találhatóak.
 
 FONTOS: Az időjárás típusa (napos, felhős, esik, stb.) az ikonokból került visszafejtésre, és a lista NEM BIZTOS, HOGY TELJES.
@@ -14,10 +17,18 @@ Példa egyaránt felhasználva a rövid (órás) és a hosszú (napi) előrejelz
 
 - ha még nincs, telepítsd a [HACS-t](https://hacs.xyz/)
 - telepítsd a Multiscrape integrációt HACS-ben
-- másold be a sorokat a `configuration.yaml`-ből a tiédbe (File Editor addon)
-- vedd fel a plusz yaml file-okat a `configuration.yaml` mellé
+- másold fel a packages mappás (vagyis tedd az idokep_*.yaml fájlokat egy packages/idokep mappába a HA-ban)
 - győződj meg, hogy van egy másik időjárás integráció, amire néhány érték fallback-el (az `idokep_weather.yaml`-ben a `weather.otthon` lecserélendő a sajátodra, vagy azokat a sorokat törölni kell)
 - a good_morning script egy példa, hogyan használjuk fel az eredményt egy media player-rel, spotify-jal összekötve, és google cloud TTS-t használva (ez a fizetős TTS, de ez ad jobb magyar hangot, és normál kereteken belül még az ingyenes limiten belül lehet maradni)
+
+A yaml fájlokat egy package-be csoportosítva:
+
+- jobban egymás mellé rakhatók és elkülöníthetők az összetartozó fájlok, illetve
+- nem kell külön include-olni megfelelő root elembe, hanem a yaml-ben lehet a gyökér elem típus is (pl. `multiscrape`)
+
+- másold be a sorokat a `configuration.yaml`-ből a tiédbe (File Editor addon)
+  - az időképes config sorok ebből hiányoznak
+- vedd fel a plusz yaml file-okat a `configuration.yaml` mellé
 
 ## Chat-GPT
 
