@@ -1,5 +1,8 @@
 # ...
 
+homeassistant:
+  packages: !include_dir_named packages/
+
 script: !include good_morning_script.yaml
 
 tts: !include google_cloud_tts.yaml

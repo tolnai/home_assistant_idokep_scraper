@@ -19,6 +19,7 @@ Példa egyaránt felhasználva a rövid (órás) és a hosszú (napi) előrejelz
 - telepítsd a Multiscrape integrációt HACS-ben
 - másold fel a packages mappás (vagyis tedd az idokep_*.yaml fájlokat egy packages/idokep mappába a HA-ban)
 - győződj meg, hogy van egy másik időjárás integráció, amire néhány érték fallback-el (az `idokep_weather.yaml`-ben a `weather.otthon` lecserélendő a sajátodra, vagy azokat a sorokat törölni kell)
+- a packages mappa-struktúrát a `homeassistant.yaml`-ban található `packages` szekcióval lehet aktiválni
 - a good_morning script egy példa, hogyan használjuk fel az eredményt egy media player-rel, spotify-jal összekötve, és google cloud TTS-t használva (ez a fizetős TTS, de ez ad jobb magyar hangot, és normál kereteken belül még az ingyenes limiten belül lehet maradni)
 
 A yaml fájlokat egy package-be csoportosítva:
@@ -29,6 +30,113 @@ A yaml fájlokat egy package-be csoportosítva:
 - másold be a sorokat a `configuration.yaml`-ből a tiédbe (File Editor addon)
   - az időképes config sorok ebből hiányoznak
 - vedd fel a plusz yaml file-okat a `configuration.yaml` mellé
+
+## Minta kártya konfigok
+
+Alább néhány HACS-es kártya konfigja.
+
+### Sima aktuális időjárás kártya
+
+![Sima aktuális időjárás kártya](/assets/idokep1.png)
+
+```yaml
+- type: custom:weather-card
+  entity: weather.idokep
+  number_of_forecasts: '5'
+  current: true
+  details: true
+  forecast: false
+  hourly_forecast: false
+```
+
+### Órás előzmény + előrejelzés kártya
+
+![Órás előzmény + előrejelzés kártya](/assets/idokep2.png)
+
+```yaml
+- type: custom:apexcharts-card
+  graph_span: 48h
+  now:
+    show: true
+  span:
+    start: hour
+    offset: '-1d'
+  all_series_config:
+    stroke_width: 3
+    show:
+      datalabels: true
+  apex_config:
+    legend:
+      show: false
+    dataLabels:
+      formatter: |
+        EVAL:function(value, { seriesIndex, dataPointIndex, w }) {
+          return value;
+        }
+  series:
+    - entity: sensor.idokep_temperature
+      name: Hőmérséklet
+      extend_to: false
+    - entity: sensor.idokep_hourly_data
+      name: Előrejelzés
+      data_generator: |
+        const data = [];
+        for (let i = 1; i <= 24; i++) {
+          data.push([new Date(entity.attributes[`hour${i}_date`]).getTime(), entity.attributes[`hour${i}_temperature`]])
+        }
+        return data;
+```
+
+### Napi előrejelzés
+
+![Napi előrejelzés](/assets/idokep3.png)
+
+```yaml
+- type: custom:clock-weather-card
+  entity: weather.idokep_2
+  hide_clock: true
+  locale: hu
+  weather_icon_type: fill
+  hide_today_section: true
+```
+
+### Radar
+
+Bónusz, nem időképes forrás, de az időkép app-ból elmaradhatatlan a radar, íme egy példa
+
+![Radar](/assets/idokep4.png)
+
+```yaml
+- type: custom:weather-radar-card
+  data_source: RainViewer-UniversalBlue
+  map_style: Voyager
+  zoom_level: 8
+  marker_latitude: 47.4394497
+  marker_longitude: 18.8695576
+  show_marker: true
+  static_map: false
+  show_scale: false
+  show_zoom: true
+  show_playback: true
+  show_range: false
+  square_map: false
+  show_recenter: true
+  extra_labels: false
+```
+
+Némely kártyát én kinyithatóra csináltam, mert nem nézegetem mindig, és így gyorsabban is tölt be a
+felület, de mégis ott van szükség esetén.
+
+```yaml
+- type: custom:expander-card
+  title: Radar
+  cards:
+    - type: ...
+      ...
+  clear: false
+  child-padding: '0'
+  padding: '0'
+```
 
 ## Chat-GPT
 
