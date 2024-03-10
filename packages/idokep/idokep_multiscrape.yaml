@@ -346,13 +346,16 @@ multiscrape:
               {% else %}
                 {{ (now().replace(hour= (value.split(':')[0] | int), minute=0, second=0, microsecond=0) + timedelta(days=1)).isoformat() }}
               {% endif %}
+          - name: "hour1_temperature"
+            select: ".new-hourly-forecast-card:nth-child(1) .tempValue .hover-over"
+            value_template: *valueToTemperature
           - name: "hour1_condition"
             select: ".new-hourly-forecast-card:nth-child(1) .forecast-icon"
             attribute: src
             value_template: *iconToCondition
-          - name: "hour1_temperature"
-            select: ".new-hourly-forecast-card:nth-child(1) .tempValue .hover-over"
-            value_template: *valueToTemperature
+          - name: "hour1_condition_hu"
+            select: ".new-hourly-forecast-card:nth-child(1) .w-100"
+            attribute: data-bs-content
           # hour2
           - name: "hour2_date"
             select: ".new-hourly-forecast-card:nth-child(2) .new-hourly-forecast-hour"
@@ -369,6 +372,9 @@ multiscrape:
             select: ".new-hourly-forecast-card:nth-child(2) .forecast-icon"
             attribute: src
             value_template: *iconToCondition
+          - name: "hour2_condition_hu"
+            select: ".new-hourly-forecast-card:nth-child(2) .w-100"
+            attribute: data-bs-content
           # hour3
           - name: "hour3_date"
             select: ".new-hourly-forecast-card:nth-child(3) .new-hourly-forecast-hour"
@@ -385,6 +391,9 @@ multiscrape:
             select: ".new-hourly-forecast-card:nth-child(3) .forecast-icon"
             attribute: src
             value_template: *iconToCondition
+          - name: "hour3_condition_hu"
+            select: ".new-hourly-forecast-card:nth-child(3) .w-100"
+            attribute: data-bs-content
           # hour4
           - name: "hour4_date"
             select: ".new-hourly-forecast-card:nth-child(4) .new-hourly-forecast-hour"
@@ -401,6 +410,9 @@ multiscrape:
             select: ".new-hourly-forecast-card:nth-child(4) .forecast-icon"
             attribute: src
             value_template: *iconToCondition
+          - name: "hour4_condition_hu"
+            select: ".new-hourly-forecast-card:nth-child(4) .w-100"
+            attribute: data-bs-content
           # hour5
           - name: "hour5_date"
             select: ".new-hourly-forecast-card:nth-child(5) .new-hourly-forecast-hour"
@@ -417,6 +429,9 @@ multiscrape:
             select: ".new-hourly-forecast-card:nth-child(5) .forecast-icon"
             attribute: src
             value_template: *iconToCondition
+          - name: "hour5_condition_hu"
+            select: ".new-hourly-forecast-card:nth-child(5) .w-100"
+            attribute: data-bs-content
           # hour6
           - name: "hour6_date"
             select: ".new-hourly-forecast-card:nth-child(6) .new-hourly-forecast-hour"
@@ -433,6 +448,9 @@ multiscrape:
             select: ".new-hourly-forecast-card:nth-child(6) .forecast-icon"
             attribute: src
             value_template: *iconToCondition
+          - name: "hour6_condition_hu"
+            select: ".new-hourly-forecast-card:nth-child(6) .w-100"
+            attribute: data-bs-content
           # hour7
           - name: "hour7_date"
             select: ".new-hourly-forecast-card:nth-child(7) .new-hourly-forecast-hour"
@@ -449,6 +467,9 @@ multiscrape:
           - name: "hour7_temperature"
             select: ".new-hourly-forecast-card:nth-child(7) .tempValue .hover-over"
             value_template: *valueToTemperature
+          - name: "hour7_condition_hu"
+            select: ".new-hourly-forecast-card:nth-child(7) .w-100"
+            attribute: data-bs-content
           # hour8
           - name: "hour8_date"
             select: ".new-hourly-forecast-card:nth-child(8) .new-hourly-forecast-hour"
@@ -465,6 +486,9 @@ multiscrape:
             select: ".new-hourly-forecast-card:nth-child(8) .forecast-icon"
             attribute: src
             value_template: *iconToCondition
+          - name: "hour8_condition_hu"
+            select: ".new-hourly-forecast-card:nth-child(8) .w-100"
+            attribute: data-bs-content
           # hour9
           - name: "hour9_date"
             select: ".new-hourly-forecast-card:nth-child(9) .new-hourly-forecast-hour"
@@ -481,6 +505,9 @@ multiscrape:
             select: ".new-hourly-forecast-card:nth-child(9) .forecast-icon"
             attribute: src
             value_template: *iconToCondition
+          - name: "hour9_condition_hu"
+            select: ".new-hourly-forecast-card:nth-child(9) .w-100"
+            attribute: data-bs-content
           # hour10
           - name: "hour10_date"
             select: ".new-hourly-forecast-card:nth-child(10) .new-hourly-forecast-hour"
@@ -497,6 +524,9 @@ multiscrape:
             select: ".new-hourly-forecast-card:nth-child(10) .forecast-icon"
             attribute: src
             value_template: *iconToCondition
+          - name: "hour10_condition_hu"
+            select: ".new-hourly-forecast-card:nth-child(10) .w-100"
+            attribute: data-bs-content
           # hour11
           - name: "hour11_date"
             select: ".new-hourly-forecast-card:nth-child(11) .new-hourly-forecast-hour"
@@ -513,6 +543,9 @@ multiscrape:
             select: ".new-hourly-forecast-card:nth-child(11) .forecast-icon"
             attribute: src
             value_template: *iconToCondition
+          - name: "hour11_condition_hu"
+            select: ".new-hourly-forecast-card:nth-child(11) .w-100"
+            attribute: data-bs-content
           # hour12
           - name: "hour12_date"
             select: ".new-hourly-forecast-card:nth-child(12) .new-hourly-forecast-hour"
@@ -529,6 +562,9 @@ multiscrape:
             select: ".new-hourly-forecast-card:nth-child(12) .forecast-icon"
             attribute: src
             value_template: *iconToCondition
+          - name: "hour12_condition_hu"
+            select: ".new-hourly-forecast-card:nth-child(12) .w-100"
+            attribute: data-bs-content
           # hour13
           - name: "hour13_date"
             select: ".new-hourly-forecast-card:nth-child(13) .new-hourly-forecast-hour"
@@ -545,6 +581,9 @@ multiscrape:
             select: ".new-hourly-forecast-card:nth-child(13) .forecast-icon"
             attribute: src
             value_template: *iconToCondition
+          - name: "hour13_condition_hu"
+            select: ".new-hourly-forecast-card:nth-child(13) .w-100"
+            attribute: data-bs-content
           # hour14
           - name: "hour14_date"
             select: ".new-hourly-forecast-card:nth-child(14) .new-hourly-forecast-hour"
@@ -561,6 +600,9 @@ multiscrape:
             select: ".new-hourly-forecast-card:nth-child(14) .forecast-icon"
             attribute: src
             value_template: *iconToCondition
+          - name: "hour14_condition_hu"
+            select: ".new-hourly-forecast-card:nth-child(14) .w-100"
+            attribute: data-bs-content
           # hour15
           - name: "hour15_date"
             select: ".new-hourly-forecast-card:nth-child(15) .new-hourly-forecast-hour"
@@ -577,6 +619,9 @@ multiscrape:
             select: ".new-hourly-forecast-card:nth-child(15) .forecast-icon"
             attribute: src
             value_template: *iconToCondition
+          - name: "hour15_condition_hu"
+            select: ".new-hourly-forecast-card:nth-child(15) .w-100"
+            attribute: data-bs-content
           # hour16
           - name: "hour16_date"
             select: ".new-hourly-forecast-card:nth-child(16) .new-hourly-forecast-hour"
@@ -593,6 +638,9 @@ multiscrape:
             select: ".new-hourly-forecast-card:nth-child(16) .forecast-icon"
             attribute: src
             value_template: *iconToCondition
+          - name: "hour16_condition_hu"
+            select: ".new-hourly-forecast-card:nth-child(16) .w-100"
+            attribute: data-bs-content
           # hour17
           - name: "hour17_date"
             select: ".new-hourly-forecast-card:nth-child(17) .new-hourly-forecast-hour"
@@ -609,6 +657,9 @@ multiscrape:
             select: ".new-hourly-forecast-card:nth-child(17) .forecast-icon"
             attribute: src
             value_template: *iconToCondition
+          - name: "hour17_condition_hu"
+            select: ".new-hourly-forecast-card:nth-child(17) .w-100"
+            attribute: data-bs-content
           # hour18
           - name: "hour18_date"
             select: ".new-hourly-forecast-card:nth-child(18) .new-hourly-forecast-hour"
@@ -625,6 +676,9 @@ multiscrape:
             select: ".new-hourly-forecast-card:nth-child(18) .forecast-icon"
             attribute: src
             value_template: *iconToCondition
+          - name: "hour18_condition_hu"
+            select: ".new-hourly-forecast-card:nth-child(18) .w-100"
+            attribute: data-bs-content
           # hour19
           - name: "hour19_date"
             select: ".new-hourly-forecast-card:nth-child(19) .new-hourly-forecast-hour"
@@ -641,6 +695,9 @@ multiscrape:
             select: ".new-hourly-forecast-card:nth-child(19) .forecast-icon"
             attribute: src
             value_template: *iconToCondition
+          - name: "hour19_condition_hu"
+            select: ".new-hourly-forecast-card:nth-child(19) .w-100"
+            attribute: data-bs-content
           # hour20
           - name: "hour20_date"
             select: ".new-hourly-forecast-card:nth-child(20) .new-hourly-forecast-hour"
@@ -657,6 +714,9 @@ multiscrape:
             select: ".new-hourly-forecast-card:nth-child(20) .forecast-icon"
             attribute: src
             value_template: *iconToCondition
+          - name: "hour20_condition_hu"
+            select: ".new-hourly-forecast-card:nth-child(20) .w-100"
+            attribute: data-bs-content
           # hour21
           - name: "hour21_date"
             select: ".new-hourly-forecast-card:nth-child(21) .new-hourly-forecast-hour"
@@ -673,6 +733,9 @@ multiscrape:
             select: ".new-hourly-forecast-card:nth-child(21) .forecast-icon"
             attribute: src
             value_template: *iconToCondition
+          - name: "hour21_condition_hu"
+            select: ".new-hourly-forecast-card:nth-child(21) .w-100"
+            attribute: data-bs-content
           # hour22
           - name: "hour22_date"
             select: ".new-hourly-forecast-card:nth-child(22) .new-hourly-forecast-hour"
@@ -689,6 +752,9 @@ multiscrape:
             select: ".new-hourly-forecast-card:nth-child(22) .forecast-icon"
             attribute: src
             value_template: *iconToCondition
+          - name: "hour22_condition_hu"
+            select: ".new-hourly-forecast-card:nth-child(22) .w-100"
+            attribute: data-bs-content
           # hour23
           - name: "hour23_date"
             select: ".new-hourly-forecast-card:nth-child(23) .new-hourly-forecast-hour"
@@ -705,6 +771,9 @@ multiscrape:
             select: ".new-hourly-forecast-card:nth-child(23) .forecast-icon"
             attribute: src
             value_template: *iconToCondition
+          - name: "hour23_condition_hu"
+            select: ".new-hourly-forecast-card:nth-child(23) .w-100"
+            attribute: data-bs-content
           # hour24
           - name: "hour24_date"
             select: ".new-hourly-forecast-card:nth-child(24) .new-hourly-forecast-hour"
@@ -721,3 +790,6 @@ multiscrape:
             select: ".new-hourly-forecast-card:nth-child(24) .forecast-icon"
             attribute: src
             value_template: *iconToCondition
+          - name: "hour24_condition_hu"
+            select: ".new-hourly-forecast-card:nth-child(24) .w-100"
+            attribute: data-bs-content
