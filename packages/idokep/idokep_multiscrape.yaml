@@ -40,6 +40,7 @@
 # 090 - Zivatar
 # 092 - Száraz zivatar
 # 100 - Köd
+# 101 - Porvihar
 
 multiscrape:
   - resource: https://www.idokep.hu/idojaras/T%C3%B6r%C3%B6kb%C3%A1lint
@@ -143,6 +144,10 @@ multiscrape:
             fog
           {% elif value == '/assets/forecast-icons/400.svg' %}
             fog
+          {% elif value == '/assets/forecast-icons/101.svg' %}
+            windy
+          {% elif value == '/assets/forecast-icons/401.svg' %}
+            windy
           {% else %}
             unknown
           {% endif %}
