@@ -71,7 +71,8 @@ Alább néhány HACS-es kártya konfigja.
     dataLabels:
       formatter: |
         EVAL:function(value, { seriesIndex, dataPointIndex, w }) {
-          return value;
+          if (seriesIndex === 0) return value;
+          return [value, w.config.series[seriesIndex].data[dataPointIndex][2]];
         }
   series:
     - entity: sensor.idokep_temperature
@@ -80,9 +81,27 @@ Alább néhány HACS-es kártya konfigja.
     - entity: sensor.idokep_hourly_data
       name: Előrejelzés
       data_generator: |
+        const conditionToIcon = {
+          "clear-night": "🌙",
+          "cloudy": "☁️",
+          "exceptional": "⚠️",
+          "fog": "🌫️",
+          "hail": "🌨️",
+          "lightning": "🌩️",
+          "lightning-rainy": "⛈️",
+          "partlycloudy": "⛅",
+          "pouring": "🌧️",
+          "rainy": "🌧️",
+          "snowy": "🌨️",
+          "snowy-rainy": "🌨️",
+          "sunny": "☀️",
+          "windy": "",
+          "windy-variant": "",
+        };
         const data = [];
         for (let i = 1; i <= 24; i++) {
-          data.push([new Date(entity.attributes[`hour${i}_date`]).getTime(), entity.attributes[`hour${i}_temperature`]])
+          const condition = entity.attributes[`hour${i}_condition`];
+          data.push([new Date(entity.attributes[`hour${i}_date`]).getTime(), entity.attributes[`hour${i}_temperature`], conditionToIcon[condition] || ''])
         }
         return data;
 ```
