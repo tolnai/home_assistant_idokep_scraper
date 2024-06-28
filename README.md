@@ -72,7 +72,8 @@ Alább néhány HACS-es kártya konfigja.
       formatter: |
         EVAL:function(value, { seriesIndex, dataPointIndex, w }) {
           if (seriesIndex === 0) return value;
-          return [value, w.config.series[seriesIndex].data[dataPointIndex][2]];
+          const icon = w.config.series[seriesIndex].data[dataPointIndex][2];
+          return icon? [value, icon] : value;
         }
   series:
     - entity: sensor.idokep_temperature
