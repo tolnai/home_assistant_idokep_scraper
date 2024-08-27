@@ -61,121 +61,145 @@ weather:
           {
             "datetime": state_attr('sensor.idokep_hourly_data', 'hour1_date'),
             "temperature": state_attr('sensor.idokep_hourly_data', 'hour1_temperature') | float,
+            "precipitation_probability": state_attr('sensor.idokep_hourly_data', 'hour1_prec_percent') | default(0) | float,
             "condition": state_attr('sensor.idokep_hourly_data', 'hour1_condition')
           },
           {
             "datetime": state_attr('sensor.idokep_hourly_data', 'hour2_date'),
             "temperature": state_attr('sensor.idokep_hourly_data', 'hour2_temperature') | float,
+            "precipitation_probability": state_attr('sensor.idokep_hourly_data', 'hour2_prec_percent') | default(0) | float,
             "condition": state_attr('sensor.idokep_hourly_data', 'hour2_condition')
           },
           {
             "datetime": state_attr('sensor.idokep_hourly_data', 'hour3_date'),
             "temperature": state_attr('sensor.idokep_hourly_data', 'hour3_temperature') | float,
+            "precipitation_probability": state_attr('sensor.idokep_hourly_data', 'hour3_prec_percent') | default(0) | float,
             "condition": state_attr('sensor.idokep_hourly_data', 'hour3_condition')
           },
           {
             "datetime": state_attr('sensor.idokep_hourly_data', 'hour4_date'),
             "temperature": state_attr('sensor.idokep_hourly_data', 'hour4_temperature') | float,
+            "precipitation_probability": state_attr('sensor.idokep_hourly_data', 'hour4_prec_percent') | default(0) | float,
             "condition": state_attr('sensor.idokep_hourly_data', 'hour4_condition')
           },
           {
             "datetime": state_attr('sensor.idokep_hourly_data', 'hour5_date'),
             "temperature": state_attr('sensor.idokep_hourly_data', 'hour5_temperature') | float,
+            "precipitation_probability": state_attr('sensor.idokep_hourly_data', 'hour5_prec_percent') | default(0) | float,
             "condition": state_attr('sensor.idokep_hourly_data', 'hour5_condition')
           },
           {
             "datetime": state_attr('sensor.idokep_hourly_data', 'hour6_date'),
             "temperature": state_attr('sensor.idokep_hourly_data', 'hour6_temperature') | float,
+            "precipitation_probability": state_attr('sensor.idokep_hourly_data', 'hour6_prec_percent') | default(0) | float,
             "condition": state_attr('sensor.idokep_hourly_data', 'hour6_condition')
           },
           {
             "datetime": state_attr('sensor.idokep_hourly_data', 'hour7_date'),
             "temperature": state_attr('sensor.idokep_hourly_data', 'hour7_temperature') | float,
+            "precipitation_probability": state_attr('sensor.idokep_hourly_data', 'hour7_prec_percent') | default(0) | float,
             "condition": state_attr('sensor.idokep_hourly_data', 'hour7_condition')
           },
           {
             "datetime": state_attr('sensor.idokep_hourly_data', 'hour8_date'),
             "temperature": state_attr('sensor.idokep_hourly_data', 'hour8_temperature') | float,
+            "precipitation_probability": state_attr('sensor.idokep_hourly_data', 'hour8_prec_percent') | default(0) | float,
             "condition": state_attr('sensor.idokep_hourly_data', 'hour8_condition')
           },
           {
             "datetime": state_attr('sensor.idokep_hourly_data', 'hour9_date'),
             "temperature": state_attr('sensor.idokep_hourly_data', 'hour9_temperature') | float,
+            "precipitation_probability": state_attr('sensor.idokep_hourly_data', 'hour9_prec_percent') | default(0) | float,
             "condition": state_attr('sensor.idokep_hourly_data', 'hour9_condition')
           },
           {
             "datetime": state_attr('sensor.idokep_hourly_data', 'hour10_date'),
             "temperature": state_attr('sensor.idokep_hourly_data', 'hour10_temperature') | float,
+            "precipitation_probability": state_attr('sensor.idokep_hourly_data', 'hour10_prec_percent') | default(0) | float,
             "condition": state_attr('sensor.idokep_hourly_data', 'hour10_condition')
           },
           {
             "datetime": state_attr('sensor.idokep_hourly_data', 'hour11_date'),
             "temperature": state_attr('sensor.idokep_hourly_data', 'hour11_temperature') | float,
+            "precipitation_probability": state_attr('sensor.idokep_hourly_data', 'hour11_prec_percent') | default(0) | float,
             "condition": state_attr('sensor.idokep_hourly_data', 'hour11_condition')
           },
           {
             "datetime": state_attr('sensor.idokep_hourly_data', 'hour12_date'),
             "temperature": state_attr('sensor.idokep_hourly_data', 'hour12_temperature') | float,
+            "precipitation_probability": state_attr('sensor.idokep_hourly_data', 'hour12_prec_percent') | default(0) | float,
             "condition": state_attr('sensor.idokep_hourly_data', 'hour12_condition')
           },
           {
             "datetime": state_attr('sensor.idokep_hourly_data', 'hour13_date'),
             "temperature": state_attr('sensor.idokep_hourly_data', 'hour13_temperature') | float,
+            "precipitation_probability": state_attr('sensor.idokep_hourly_data', 'hour13_prec_percent') | default(0) | float,
             "condition": state_attr('sensor.idokep_hourly_data', 'hour13_condition')
           },
           {
             "datetime": state_attr('sensor.idokep_hourly_data', 'hour14_date'),
             "temperature": state_attr('sensor.idokep_hourly_data', 'hour14_temperature') | float,
+            "precipitation_probability": state_attr('sensor.idokep_hourly_data', 'hour14_prec_percent') | default(0) | float,
             "condition": state_attr('sensor.idokep_hourly_data', 'hour14_condition')
           },
           {
             "datetime": state_attr('sensor.idokep_hourly_data', 'hour15_date'),
             "temperature": state_attr('sensor.idokep_hourly_data', 'hour15_temperature') | float,
+            "precipitation_probability": state_attr('sensor.idokep_hourly_data', 'hour15_prec_percent') | default(0) | float,
             "condition": state_attr('sensor.idokep_hourly_data', 'hour15_condition')
           },
           {
             "datetime": state_attr('sensor.idokep_hourly_data', 'hour16_date'),
             "temperature": state_attr('sensor.idokep_hourly_data', 'hour16_temperature') | float,
+            "precipitation_probability": state_attr('sensor.idokep_hourly_data', 'hour16_prec_percent') | default(0) | float,
             "condition": state_attr('sensor.idokep_hourly_data', 'hour16_condition')
           },
           {
             "datetime": state_attr('sensor.idokep_hourly_data', 'hour17_date'),
             "temperature": state_attr('sensor.idokep_hourly_data', 'hour17_temperature') | float,
+            "precipitation_probability": state_attr('sensor.idokep_hourly_data', 'hour17_prec_percent') | default(0) | float,
             "condition": state_attr('sensor.idokep_hourly_data', 'hour17_condition')
           },
           {
             "datetime": state_attr('sensor.idokep_hourly_data', 'hour18_date'),
             "temperature": state_attr('sensor.idokep_hourly_data', 'hour18_temperature') | float,
+            "precipitation_probability": state_attr('sensor.idokep_hourly_data', 'hour18_prec_percent') | default(0) | float,
             "condition": state_attr('sensor.idokep_hourly_data', 'hour18_condition')
           },
           {
             "datetime": state_attr('sensor.idokep_hourly_data', 'hour19_date'),
             "temperature": state_attr('sensor.idokep_hourly_data', 'hour19_temperature') | float,
+            "precipitation_probability": state_attr('sensor.idokep_hourly_data', 'hour19_prec_percent') | default(0) | float,
             "condition": state_attr('sensor.idokep_hourly_data', 'hour19_condition')
           },
           {
             "datetime": state_attr('sensor.idokep_hourly_data', 'hour20_date'),
             "temperature": state_attr('sensor.idokep_hourly_data', 'hour20_temperature') | float,
+            "precipitation_probability": state_attr('sensor.idokep_hourly_data', 'hour20_prec_percent') | default(0) | float,
             "condition": state_attr('sensor.idokep_hourly_data', 'hour20_condition')
           },
           {
             "datetime": state_attr('sensor.idokep_hourly_data', 'hour21_date'),
             "temperature": state_attr('sensor.idokep_hourly_data', 'hour21_temperature') | float,
+            "precipitation_probability": state_attr('sensor.idokep_hourly_data', 'hour21_prec_percent') | default(0) | float,
             "condition": state_attr('sensor.idokep_hourly_data', 'hour21_condition')
           },
           {
             "datetime": state_attr('sensor.idokep_hourly_data', 'hour22_date'),
             "temperature": state_attr('sensor.idokep_hourly_data', 'hour22_temperature') | float,
+            "precipitation_probability": state_attr('sensor.idokep_hourly_data', 'hour22_prec_percent') | default(0) | float,
             "condition": state_attr('sensor.idokep_hourly_data', 'hour22_condition')
           },
           {
             "datetime": state_attr('sensor.idokep_hourly_data', 'hour23_date'),
             "temperature": state_attr('sensor.idokep_hourly_data', 'hour23_temperature') | float,
+            "precipitation_probability": state_attr('sensor.idokep_hourly_data', 'hour23_prec_percent') | default(0) | float,
             "condition": state_attr('sensor.idokep_hourly_data', 'hour23_condition')
           },
           {
             "datetime": state_attr('sensor.idokep_hourly_data', 'hour24_date'),
             "temperature": state_attr('sensor.idokep_hourly_data', 'hour24_temperature') | float,
+            "precipitation_probability": state_attr('sensor.idokep_hourly_data', 'hour24_prec_percent') | default(0) | float,
             "condition": state_attr('sensor.idokep_hourly_data', 'hour24_condition')
           }
         ]
