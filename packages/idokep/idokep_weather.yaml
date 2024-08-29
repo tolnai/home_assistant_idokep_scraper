@@ -43,6 +43,41 @@ weather:
             "templow": state_attr('sensor.idokep_daily_data', 'day5_min') | float,
             "precipitation": state_attr('sensor.idokep_daily_data', 'day5_prec_mm') | default(0) | float,
             "condition": state_attr('sensor.idokep_daily_data', 'day5_condition')
+          },
+          {
+            "datetime": state_attr('sensor.idokep_daily_data', 'day6_date'),
+            "temperature": state_attr('sensor.idokep_daily_data', 'day6_max') | float,
+            "templow": state_attr('sensor.idokep_daily_data', 'day6_min') | float,
+            "precipitation": state_attr('sensor.idokep_daily_data', 'day6_prec_mm') | default(0) | float,
+            "condition": state_attr('sensor.idokep_daily_data', 'day6_condition')
+          },
+          {
+            "datetime": state_attr('sensor.idokep_daily_data', 'day7_date'),
+            "temperature": state_attr('sensor.idokep_daily_data', 'day7_max') | float,
+            "templow": state_attr('sensor.idokep_daily_data', 'day7_min') | float,
+            "precipitation": state_attr('sensor.idokep_daily_data', 'day7_prec_mm') | default(0) | float,
+            "condition": state_attr('sensor.idokep_daily_data', 'day7_condition')
+          },
+          {
+            "datetime": state_attr('sensor.idokep_daily_data', 'day8_date'),
+            "temperature": state_attr('sensor.idokep_daily_data', 'day8_max') | float,
+            "templow": state_attr('sensor.idokep_daily_data', 'day8_min') | float,
+            "precipitation": state_attr('sensor.idokep_daily_data', 'day8_prec_mm') | default(0) | float,
+            "condition": state_attr('sensor.idokep_daily_data', 'day8_condition')
+          },
+          {
+            "datetime": state_attr('sensor.idokep_daily_data', 'day9_date'),
+            "temperature": state_attr('sensor.idokep_daily_data', 'day9_max') | float,
+            "templow": state_attr('sensor.idokep_daily_data', 'day9_min') | float,
+            "precipitation": state_attr('sensor.idokep_daily_data', 'day9_prec_mm') | default(0) | float,
+            "condition": state_attr('sensor.idokep_daily_data', 'day9_condition')
+          },
+          {
+            "datetime": state_attr('sensor.idokep_daily_data', 'day10_date'),
+            "temperature": state_attr('sensor.idokep_daily_data', 'day10_max') | float,
+            "templow": state_attr('sensor.idokep_daily_data', 'day10_min') | float,
+            "precipitation": state_attr('sensor.idokep_daily_data', 'day10_prec_mm') | default(0) | float,
+            "condition": state_attr('sensor.idokep_daily_data', 'day10_condition')
           }
         ]
       }}

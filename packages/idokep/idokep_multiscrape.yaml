@@ -327,6 +327,166 @@ multiscrape:
               value: "default"
               default: 0
               log: false
+          # day6
+          - name: day6_date
+            select: ".dailyForecastCol:nth-child(7) .dfDayNum"
+            value_template: >
+              {% if value | int == (now() + timedelta(days = 5)).day %}
+                {{ (now() + timedelta(days = 5)).replace(hour=0, minute=0, second=0, microsecond=0).isoformat() }}
+              {% else %}
+                {{ (now() + timedelta(days = 6)).replace(hour=0, minute=0, second=0, microsecond=0).isoformat() }}
+              {% endif %}
+          - name: day6_dow
+            select: ".dailyForecastCol:nth-child(7) .dfDay"
+          - name: day6_condition
+            select: ".dailyForecastCol:nth-child(7) .forecast-icon"
+            attribute: src
+            value_template: *iconToCondition
+          - name: day6_condition_hu
+            select: ".dailyForecastCol:nth-child(7) .dfIconAlert a"
+            attribute: data-bs-content
+            value_template: *iconPopoverToConditionHu
+          - name: day6_max
+            select: ".dailyForecastCol:nth-child(7) .max a,.dailyForecastCol:nth-child(7) .min-max-closer a:nth-child(1),.dailyForecastCol:nth-child(7) .min-max-close a:nth-child(1)"
+            value_template: *valueToTemperature
+          - name: day6_min
+            select: ".dailyForecastCol:nth-child(7) .min a,.dailyForecastCol:nth-child(7) .min-max-closer a:nth-child(2),.dailyForecastCol:nth-child(7) .min-max-close a:nth-child(2)"
+            value_template: *valueToTemperature
+          - name: day6_prec_mm
+            select: ".dailyForecastCol:nth-child(7) .mm"
+            value_template: *valueToPrecipitation
+            on_error:
+              value: "default"
+              default: 0
+              log: false
+          # day7
+          - name: day7_date
+            select: ".dailyForecastCol:nth-child(8) .dfDayNum"
+            value_template: >
+              {% if value | int == (now() + timedelta(days = 6)).day %}
+                {{ (now() + timedelta(days = 6)).replace(hour=0, minute=0, second=0, microsecond=0).isoformat() }}
+              {% else %}
+                {{ (now() + timedelta(days = 7)).replace(hour=0, minute=0, second=0, microsecond=0).isoformat() }}
+              {% endif %}
+          - name: day7_dow
+            select: ".dailyForecastCol:nth-child(8) .dfDay"
+          - name: day7_condition
+            select: ".dailyForecastCol:nth-child(8) .forecast-icon"
+            attribute: src
+            value_template: *iconToCondition
+          - name: day7_condition_hu
+            select: ".dailyForecastCol:nth-child(8) .dfIconAlert a"
+            attribute: data-bs-content
+            value_template: *iconPopoverToConditionHu
+          - name: day7_max
+            select: ".dailyForecastCol:nth-child(8) .max a,.dailyForecastCol:nth-child(8) .min-max-closer a:nth-child(1),.dailyForecastCol:nth-child(8) .min-max-close a:nth-child(1)"
+            value_template: *valueToTemperature
+          - name: day7_min
+            select: ".dailyForecastCol:nth-child(8) .min a,.dailyForecastCol:nth-child(8) .min-max-closer a:nth-child(2),.dailyForecastCol:nth-child(8) .min-max-close a:nth-child(2)"
+            value_template: *valueToTemperature
+          - name: day7_prec_mm
+            select: ".dailyForecastCol:nth-child(8) .mm"
+            value_template: *valueToPrecipitation
+            on_error:
+              value: "default"
+              default: 0
+              log: false
+          # day8
+          - name: day8_date
+            select: ".dailyForecastCol:nth-child(9) .dfDayNum"
+            value_template: >
+              {% if value | int == (now() + timedelta(days = 7)).day %}
+                {{ (now() + timedelta(days = 7)).replace(hour=0, minute=0, second=0, microsecond=0).isoformat() }}
+              {% else %}
+                {{ (now() + timedelta(days = 8)).replace(hour=0, minute=0, second=0, microsecond=0).isoformat() }}
+              {% endif %}
+          - name: day8_dow
+            select: ".dailyForecastCol:nth-child(9) .dfDay"
+          - name: day8_condition
+            select: ".dailyForecastCol:nth-child(9) .forecast-icon"
+            attribute: src
+            value_template: *iconToCondition
+          - name: day8_condition_hu
+            select: ".dailyForecastCol:nth-child(9) .dfIconAlert a"
+            attribute: data-bs-content
+            value_template: *iconPopoverToConditionHu
+          - name: day8_max
+            select: ".dailyForecastCol:nth-child(9) .max a,.dailyForecastCol:nth-child(9) .min-max-closer a:nth-child(1),.dailyForecastCol:nth-child(9) .min-max-close a:nth-child(1)"
+            value_template: *valueToTemperature
+          - name: day8_min
+            select: ".dailyForecastCol:nth-child(9) .min a,.dailyForecastCol:nth-child(9) .min-max-closer a:nth-child(2),.dailyForecastCol:nth-child(9) .min-max-close a:nth-child(2)"
+            value_template: *valueToTemperature
+          - name: day8_prec_mm
+            select: ".dailyForecastCol:nth-child(9) .mm"
+            value_template: *valueToPrecipitation
+            on_error:
+              value: "default"
+              default: 0
+              log: false
+          # day9
+          - name: day9_date
+            select: ".dailyForecastCol:nth-child(10) .dfDayNum"
+            value_template: >
+              {% if value | int == (now() + timedelta(days = 8)).day %}
+                {{ (now() + timedelta(days = 8)).replace(hour=0, minute=0, second=0, microsecond=0).isoformat() }}
+              {% else %}
+                {{ (now() + timedelta(days = 9)).replace(hour=0, minute=0, second=0, microsecond=0).isoformat() }}
+              {% endif %}
+          - name: day9_dow
+            select: ".dailyForecastCol:nth-child(10) .dfDay"
+          - name: day9_condition
+            select: ".dailyForecastCol:nth-child(10) .forecast-icon"
+            attribute: src
+            value_template: *iconToCondition
+          - name: day9_condition_hu
+            select: ".dailyForecastCol:nth-child(10) .dfIconAlert a"
+            attribute: data-bs-content
+            value_template: *iconPopoverToConditionHu
+          - name: day9_max
+            select: ".dailyForecastCol:nth-child(10) .max a,.dailyForecastCol:nth-child(10) .min-max-closer a:nth-child(1),.dailyForecastCol:nth-child(10) .min-max-close a:nth-child(1)"
+            value_template: *valueToTemperature
+          - name: day9_min
+            select: ".dailyForecastCol:nth-child(10) .min a,.dailyForecastCol:nth-child(10) .min-max-closer a:nth-child(2),.dailyForecastCol:nth-child(10) .min-max-close a:nth-child(2)"
+            value_template: *valueToTemperature
+          - name: day9_prec_mm
+            select: ".dailyForecastCol:nth-child(10) .mm"
+            value_template: *valueToPrecipitation
+            on_error:
+              value: "default"
+              default: 0
+              log: false
+          # day10
+          - name: day10_date
+            select: ".dailyForecastCol:nth-child(11) .dfDayNum"
+            value_template: >
+              {% if value | int == (now() + timedelta(days = 9)).day %}
+                {{ (now() + timedelta(days = 9)).replace(hour=0, minute=0, second=0, microsecond=0).isoformat() }}
+              {% else %}
+                {{ (now() + timedelta(days = 10)).replace(hour=0, minute=0, second=0, microsecond=0).isoformat() }}
+              {% endif %}
+          - name: day10_dow
+            select: ".dailyForecastCol:nth-child(11) .dfDay"
+          - name: day10_condition
+            select: ".dailyForecastCol:nth-child(11) .forecast-icon"
+            attribute: src
+            value_template: *iconToCondition
+          - name: day10_condition_hu
+            select: ".dailyForecastCol:nth-child(11) .dfIconAlert a"
+            attribute: data-bs-content
+            value_template: *iconPopoverToConditionHu
+          - name: day10_max
+            select: ".dailyForecastCol:nth-child(11) .max a,.dailyForecastCol:nth-child(11) .min-max-closer a:nth-child(1),.dailyForecastCol:nth-child(11) .min-max-close a:nth-child(1)"
+            value_template: *valueToTemperature
+          - name: day10_min
+            select: ".dailyForecastCol:nth-child(11) .min a,.dailyForecastCol:nth-child(11) .min-max-closer a:nth-child(2),.dailyForecastCol:nth-child(11) .min-max-close a:nth-child(2)"
+            value_template: *valueToTemperature
+          - name: day10_prec_mm
+            select: ".dailyForecastCol:nth-child(11) .mm"
+            value_template: *valueToPrecipitation
+            on_error:
+              value: "default"
+              default: 0
+              log: false
 
   - resource: https://www.idokep.hu/elorejelzes/T%C3%B6r%C3%B6kb%C3%A1lint
     scan_interval: 900 # 15 percenként, hogy ne bombázzuk az oldalt
