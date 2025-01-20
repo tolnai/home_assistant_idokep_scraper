@@ -64,37 +64,55 @@ multiscrape:
             sunny
           {% elif value == '/assets/forecast-icons/310.svg' %}
             clear-night
+          {% elif value == '/assets/forecast-icons/310s.svg' %}
+            windy
           {% elif value == '/assets/forecast-icons/011.svg' %}
             cloudy
           {% elif value == '/assets/forecast-icons/311.svg' %}
+            cloudy
+          {% elif value == '/assets/forecast-icons/311s.svg' %}
             cloudy
           {% elif value == '/assets/forecast-icons/021.svg' %}
             partlycloudy
           {% elif value == '/assets/forecast-icons/321.svg' %}
             partlycloudy
+          {% elif value == '/assets/forecast-icons/321s.svg' %}
+            partlycloudy
           {% elif value == '/assets/forecast-icons/022.svg' %}
             partlycloudy
           {% elif value == '/assets/forecast-icons/322.svg' %}
+            partlycloudy
+          {% elif value == '/assets/forecast-icons/322s.svg' %}
             partlycloudy
           {% elif value == '/assets/forecast-icons/023.svg' %}
             cloudy
           {% elif value == '/assets/forecast-icons/323.svg' %}
             cloudy
+          {% elif value == '/assets/forecast-icons/323s.svg' %}
+            cloudy
           {% elif value == '/assets/forecast-icons/030.svg' %}
             cloudy
           {% elif value == '/assets/forecast-icons/330.svg' %}
+            cloudy
+          {% elif value == '/assets/forecast-icons/330s.svg' %}
             cloudy
           {% elif value == '/assets/forecast-icons/040.svg' %}
             rainy
           {% elif value == '/assets/forecast-icons/340.svg' %}
             rainy
+          {% elif value == '/assets/forecast-icons/340s.svg' %}
+            rainy
           {% elif value == '/assets/forecast-icons/041.svg' %}
             rainy
           {% elif value == '/assets/forecast-icons/341.svg' %}
             rainy
+          {% elif value == '/assets/forecast-icons/341s.svg' %}
+            rainy
           {% elif value == '/assets/forecast-icons/042.svg' %}
             rainy
           {% elif value == '/assets/forecast-icons/342.svg' %}
+            rainy
+          {% elif value == '/assets/forecast-icons/342s.svg' %}
             rainy
           {% elif value == '/assets/forecast-icons/043.svg' %}
             rainy
@@ -108,41 +126,95 @@ multiscrape:
             snowy-rainy
           {% elif value == '/assets/forecast-icons/351.svg' %}
             snowy-rainy
+          {% elif value == '/assets/forecast-icons/351s.svg' %}
+            snowy-rainy
           {% elif value == '/assets/forecast-icons/052.svg' %}
             snowy-rainy
           {% elif value == '/assets/forecast-icons/352.svg' %}
+            snowy-rainy
+          {% elif value == '/assets/forecast-icons/352s.svg' %}
+            snowy-rainy
+          {% elif value == '/assets/forecast-icons/053.svg' %}
+            snowy-rainy
+          {% elif value == '/assets/forecast-icons/353.svg' %}
+            snowy-rainy
+          {% elif value == '/assets/forecast-icons/353s.svg' %}
             snowy-rainy
           {% elif value == '/assets/forecast-icons/061.svg' %}
             snowy
           {% elif value == '/assets/forecast-icons/361.svg' %}
             snowy
+          {% elif value == '/assets/forecast-icons/361s.svg' %}
+            snowy
           {% elif value == '/assets/forecast-icons/062.svg' %}
             snowy
           {% elif value == '/assets/forecast-icons/362.svg' %}
             snowy
-          {% elif value == '/assets/forecast-icons/083.svg' %}
+          {% elif value == '/assets/forecast-icons/362s.svg' %}
             snowy
-          {% elif value == '/assets/forecast-icons/383.svg' %}
+          {% elif value == '/assets/forecast-icons/062s.svg' %}
+            snowy
+          {% elif value == '/assets/forecast-icons/063.svg' %}
+            snowy
+          {% elif value == '/assets/forecast-icons/363.svg' %}
+            snowy
+          {% elif value == '/assets/forecast-icons/363s.svg' %}
+            snowy
+          {% elif value == '/assets/forecast-icons/064.svg' %}
+            snowy
+          {% elif value == '/assets/forecast-icons/065.svg' %}
+            snowy
+          {% elif value == '/assets/forecast-icons/365.svg' %}
+            snowy
+          {% elif value == '/assets/forecast-icons/365s.svg' %}
             snowy
           {% elif value == '/assets/forecast-icons/081.svg' %}
             rainy
           {% elif value == '/assets/forecast-icons/381.svg' %}
             rainy
+          {% elif value == '/assets/forecast-icons/381s.svg' %}
+            rainy
+          {% elif value == '/assets/forecast-icons/083.svg' %}
+            snowy
+          {% elif value == '/assets/forecast-icons/383.svg' %}
+            snowy
+          {% elif value == '/assets/forecast-icons/383s.svg' %}
+            snowy
           {% elif value == '/assets/forecast-icons/088.svg' %}
             hail
           {% elif value == '/assets/forecast-icons/388.svg' %}
+            hail
+          {% elif value == '/assets/forecast-icons/388s.svg' %}
             hail
           {% elif value == '/assets/forecast-icons/090.svg' %}
             lightning-rainy
           {% elif value == '/assets/forecast-icons/390.svg' %}
             lightning-rainy
+          {% elif value == '/assets/forecast-icons/390s.svg' %}
+            lightning-rainy
           {% elif value == '/assets/forecast-icons/092.svg' %}
             lightning
           {% elif value == '/assets/forecast-icons/392.svg' %}
             lightning
+          {% elif value == '/assets/forecast-icons/392s.svg' %}
+            lightning
+          {% elif value == '/assets/forecast-icons/095.svg' %}
+            snowy
+          {% elif value == '/assets/forecast-icons/395.svg' %}
+            snowy
+          {% elif value == '/assets/forecast-icons/395s.svg' %}
+            snowy
+          {% elif value == '/assets/forecast-icons/099.svg' %}
+            hail
+          {% elif value == '/assets/forecast-icons/399.svg' %}
+            hail
+          {% elif value == '/assets/forecast-icons/399s.svg' %}
+            hail
           {% elif value == '/assets/forecast-icons/100.svg' %}
             fog
           {% elif value == '/assets/forecast-icons/400.svg' %}
+            fog
+          {% elif value == '/assets/forecast-icons/400s.svg' %}
             fog
           {% elif value == '/assets/forecast-icons/101.svg' %}
             windy
