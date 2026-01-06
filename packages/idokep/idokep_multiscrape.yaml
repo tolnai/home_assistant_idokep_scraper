@@ -162,6 +162,8 @@ multiscrape:
             snowy
           {% elif value == '/assets/forecast-icons/064.svg' %}
             snowy
+          {% elif value == '/assets/forecast-icons/364.svg' %}
+            snowy
           {% elif value == '/assets/forecast-icons/065.svg' %}
             snowy
           {% elif value == '/assets/forecast-icons/365.svg' %}
