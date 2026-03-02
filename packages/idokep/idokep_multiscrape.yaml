@@ -45,189 +45,198 @@
 multiscrape:
   - resource: https://www.idokep.hu/idojaras/T%C3%B6r%C3%B6kb%C3%A1lint
     scan_interval: 900 # 15 percenként, hogy ne bombázzuk az oldalt
+    #log_response: true # debugoláshoz a config/multiscrape mappába menti a legutóbbi lekért HTML-t
     sensor:
       - unique_id: idokep_temperature
         name: "Időkép, aktuális hőmérséklet"
         select: ".current-temperature"
-        value_template: &valueToTemperature '{{ value | trim | trim("˚C") | float }}'
+        value_template: &valueToTemperature '{{ value | regex_findall("(-?[0-9]+[.,]?[0-9]*)") | first | replace(",", ".") | float }}'
         device_class: temperature
         unit_of_measurement: °C
+        on_error:
+          value: last
       - unique_id: idokep_condition_hu
         name: "Időkép, aktuális időjárás"
         select: ".current-weather"
+        on_error:
+          value: last
       - unique_id: idokep_condition
         name: "Időkép, aktuális időjárás (kategória)"
         select: ".forecast-bigicon"
         attribute: src
         value_template: &iconToCondition >
-          {% if value == '/assets/forecast-icons/010.svg' %}
+          {% if value == '/assets/forecastIcons/010.svg' %}
             sunny
-          {% elif value == '/assets/forecast-icons/310.svg' %}
+          {% elif value == '/assets/forecastIcons/310.svg' %}
             clear-night
-          {% elif value == '/assets/forecast-icons/310s.svg' %}
+          {% elif value == '/assets/forecastIcons/310s.svg' %}
             windy
-          {% elif value == '/assets/forecast-icons/011.svg' %}
+          {% elif value == '/assets/forecastIcons/011.svg' %}
             cloudy
-          {% elif value == '/assets/forecast-icons/311.svg' %}
+          {% elif value == '/assets/forecastIcons/311.svg' %}
             cloudy
-          {% elif value == '/assets/forecast-icons/311s.svg' %}
+          {% elif value == '/assets/forecastIcons/311s.svg' %}
             cloudy
-          {% elif value == '/assets/forecast-icons/021.svg' %}
+          {% elif value == '/assets/forecastIcons/021.svg' %}
             partlycloudy
-          {% elif value == '/assets/forecast-icons/321.svg' %}
+          {% elif value == '/assets/forecastIcons/321.svg' %}
             partlycloudy
-          {% elif value == '/assets/forecast-icons/321s.svg' %}
+          {% elif value == '/assets/forecastIcons/321s.svg' %}
             partlycloudy
-          {% elif value == '/assets/forecast-icons/022.svg' %}
+          {% elif value == '/assets/forecastIcons/022.svg' %}
             partlycloudy
-          {% elif value == '/assets/forecast-icons/322.svg' %}
+          {% elif value == '/assets/forecastIcons/322.svg' %}
             partlycloudy
-          {% elif value == '/assets/forecast-icons/322s.svg' %}
+          {% elif value == '/assets/forecastIcons/322s.svg' %}
             partlycloudy
-          {% elif value == '/assets/forecast-icons/023.svg' %}
+          {% elif value == '/assets/forecastIcons/023.svg' %}
             cloudy
-          {% elif value == '/assets/forecast-icons/323.svg' %}
+          {% elif value == '/assets/forecastIcons/323.svg' %}
             cloudy
-          {% elif value == '/assets/forecast-icons/323s.svg' %}
+          {% elif value == '/assets/forecastIcons/323s.svg' %}
             cloudy
-          {% elif value == '/assets/forecast-icons/030.svg' %}
+          {% elif value == '/assets/forecastIcons/030.svg' %}
             cloudy
-          {% elif value == '/assets/forecast-icons/330.svg' %}
+          {% elif value == '/assets/forecastIcons/330.svg' %}
             cloudy
-          {% elif value == '/assets/forecast-icons/330s.svg' %}
+          {% elif value == '/assets/forecastIcons/330s.svg' %}
             cloudy
-          {% elif value == '/assets/forecast-icons/040.svg' %}
+          {% elif value == '/assets/forecastIcons/040.svg' %}
             rainy
-          {% elif value == '/assets/forecast-icons/340.svg' %}
+          {% elif value == '/assets/forecastIcons/340.svg' %}
             rainy
-          {% elif value == '/assets/forecast-icons/340s.svg' %}
+          {% elif value == '/assets/forecastIcons/340s.svg' %}
             rainy
-          {% elif value == '/assets/forecast-icons/041.svg' %}
+          {% elif value == '/assets/forecastIcons/041.svg' %}
             rainy
-          {% elif value == '/assets/forecast-icons/341.svg' %}
+          {% elif value == '/assets/forecastIcons/341.svg' %}
             rainy
-          {% elif value == '/assets/forecast-icons/341s.svg' %}
+          {% elif value == '/assets/forecastIcons/341s.svg' %}
             rainy
-          {% elif value == '/assets/forecast-icons/042.svg' %}
+          {% elif value == '/assets/forecastIcons/042.svg' %}
             rainy
-          {% elif value == '/assets/forecast-icons/342.svg' %}
+          {% elif value == '/assets/forecastIcons/342.svg' %}
             rainy
-          {% elif value == '/assets/forecast-icons/342s.svg' %}
+          {% elif value == '/assets/forecastIcons/342s.svg' %}
             rainy
-          {% elif value == '/assets/forecast-icons/043.svg' %}
+          {% elif value == '/assets/forecastIcons/043.svg' %}
             rainy
-          {% elif value == '/assets/forecast-icons/343.svg' %}
+          {% elif value == '/assets/forecastIcons/343.svg' %}
             rainy
-          {% elif value == '/assets/forecast-icons/043s.svg' %}
+          {% elif value == '/assets/forecastIcons/043s.svg' %}
             rainy
-          {% elif value == '/assets/forecast-icons/343s.svg' %}
+          {% elif value == '/assets/forecastIcons/343s.svg' %}
             rainy
-          {% elif value == '/assets/forecast-icons/051.svg' %}
+          {% elif value == '/assets/forecastIcons/051.svg' %}
             snowy-rainy
-          {% elif value == '/assets/forecast-icons/351.svg' %}
+          {% elif value == '/assets/forecastIcons/351.svg' %}
             snowy-rainy
-          {% elif value == '/assets/forecast-icons/351s.svg' %}
+          {% elif value == '/assets/forecastIcons/351s.svg' %}
             snowy-rainy
-          {% elif value == '/assets/forecast-icons/052.svg' %}
+          {% elif value == '/assets/forecastIcons/052.svg' %}
             snowy-rainy
-          {% elif value == '/assets/forecast-icons/352.svg' %}
+          {% elif value == '/assets/forecastIcons/352.svg' %}
             snowy-rainy
-          {% elif value == '/assets/forecast-icons/352s.svg' %}
+          {% elif value == '/assets/forecastIcons/352s.svg' %}
             snowy-rainy
-          {% elif value == '/assets/forecast-icons/053.svg' %}
+          {% elif value == '/assets/forecastIcons/053.svg' %}
             snowy-rainy
-          {% elif value == '/assets/forecast-icons/353.svg' %}
+          {% elif value == '/assets/forecastIcons/353.svg' %}
             snowy-rainy
-          {% elif value == '/assets/forecast-icons/353s.svg' %}
+          {% elif value == '/assets/forecastIcons/353s.svg' %}
             snowy-rainy
-          {% elif value == '/assets/forecast-icons/061.svg' %}
+          {% elif value == '/assets/forecastIcons/061.svg' %}
             snowy
-          {% elif value == '/assets/forecast-icons/361.svg' %}
+          {% elif value == '/assets/forecastIcons/361.svg' %}
             snowy
-          {% elif value == '/assets/forecast-icons/361s.svg' %}
+          {% elif value == '/assets/forecastIcons/361s.svg' %}
             snowy
-          {% elif value == '/assets/forecast-icons/062.svg' %}
+          {% elif value == '/assets/forecastIcons/062.svg' %}
             snowy
-          {% elif value == '/assets/forecast-icons/362.svg' %}
+          {% elif value == '/assets/forecastIcons/362.svg' %}
             snowy
-          {% elif value == '/assets/forecast-icons/362s.svg' %}
+          {% elif value == '/assets/forecastIcons/362s.svg' %}
             snowy
-          {% elif value == '/assets/forecast-icons/062s.svg' %}
+          {% elif value == '/assets/forecastIcons/062s.svg' %}
             snowy
-          {% elif value == '/assets/forecast-icons/063.svg' %}
+          {% elif value == '/assets/forecastIcons/063.svg' %}
             snowy
-          {% elif value == '/assets/forecast-icons/363.svg' %}
+          {% elif value == '/assets/forecastIcons/363.svg' %}
             snowy
-          {% elif value == '/assets/forecast-icons/363s.svg' %}
+          {% elif value == '/assets/forecastIcons/363s.svg' %}
             snowy
-          {% elif value == '/assets/forecast-icons/064.svg' %}
+          {% elif value == '/assets/forecastIcons/064.svg' %}
             snowy
-          {% elif value == '/assets/forecast-icons/065.svg' %}
+          {% elif value == '/assets/forecastIcons/065.svg' %}
             snowy
-          {% elif value == '/assets/forecast-icons/365.svg' %}
+          {% elif value == '/assets/forecastIcons/365.svg' %}
             snowy
-          {% elif value == '/assets/forecast-icons/365s.svg' %}
+          {% elif value == '/assets/forecastIcons/365s.svg' %}
             snowy
-          {% elif value == '/assets/forecast-icons/081.svg' %}
+          {% elif value == '/assets/forecastIcons/081.svg' %}
             rainy
-          {% elif value == '/assets/forecast-icons/381.svg' %}
+          {% elif value == '/assets/forecastIcons/381.svg' %}
             rainy
-          {% elif value == '/assets/forecast-icons/381s.svg' %}
+          {% elif value == '/assets/forecastIcons/381s.svg' %}
             rainy
-          {% elif value == '/assets/forecast-icons/083.svg' %}
+          {% elif value == '/assets/forecastIcons/083.svg' %}
             snowy
-          {% elif value == '/assets/forecast-icons/383.svg' %}
+          {% elif value == '/assets/forecastIcons/383.svg' %}
             snowy
-          {% elif value == '/assets/forecast-icons/383s.svg' %}
+          {% elif value == '/assets/forecastIcons/383s.svg' %}
             snowy
-          {% elif value == '/assets/forecast-icons/088.svg' %}
+          {% elif value == '/assets/forecastIcons/088.svg' %}
             hail
-          {% elif value == '/assets/forecast-icons/388.svg' %}
+          {% elif value == '/assets/forecastIcons/388.svg' %}
             hail
-          {% elif value == '/assets/forecast-icons/388s.svg' %}
+          {% elif value == '/assets/forecastIcons/388s.svg' %}
             hail
-          {% elif value == '/assets/forecast-icons/090.svg' %}
+          {% elif value == '/assets/forecastIcons/090.svg' %}
             lightning-rainy
-          {% elif value == '/assets/forecast-icons/390.svg' %}
+          {% elif value == '/assets/forecastIcons/390.svg' %}
             lightning-rainy
-          {% elif value == '/assets/forecast-icons/390s.svg' %}
+          {% elif value == '/assets/forecastIcons/390s.svg' %}
             lightning-rainy
-          {% elif value == '/assets/forecast-icons/092.svg' %}
+          {% elif value == '/assets/forecastIcons/092.svg' %}
             lightning
-          {% elif value == '/assets/forecast-icons/392.svg' %}
+          {% elif value == '/assets/forecastIcons/392.svg' %}
             lightning
-          {% elif value == '/assets/forecast-icons/392s.svg' %}
+          {% elif value == '/assets/forecastIcons/392s.svg' %}
             lightning
-          {% elif value == '/assets/forecast-icons/095.svg' %}
+          {% elif value == '/assets/forecastIcons/095.svg' %}
             snowy
-          {% elif value == '/assets/forecast-icons/395.svg' %}
+          {% elif value == '/assets/forecastIcons/395.svg' %}
             snowy
-          {% elif value == '/assets/forecast-icons/395s.svg' %}
+          {% elif value == '/assets/forecastIcons/395s.svg' %}
             snowy
-          {% elif value == '/assets/forecast-icons/099.svg' %}
+          {% elif value == '/assets/forecastIcons/099.svg' %}
             hail
-          {% elif value == '/assets/forecast-icons/399.svg' %}
+          {% elif value == '/assets/forecastIcons/399.svg' %}
             hail
-          {% elif value == '/assets/forecast-icons/399s.svg' %}
+          {% elif value == '/assets/forecastIcons/399s.svg' %}
             hail
-          {% elif value == '/assets/forecast-icons/100.svg' %}
+          {% elif value == '/assets/forecastIcons/100.svg' %}
             fog
-          {% elif value == '/assets/forecast-icons/400.svg' %}
+          {% elif value == '/assets/forecastIcons/400.svg' %}
             fog
-          {% elif value == '/assets/forecast-icons/400s.svg' %}
+          {% elif value == '/assets/forecastIcons/400s.svg' %}
             fog
-          {% elif value == '/assets/forecast-icons/101.svg' %}
+          {% elif value == '/assets/forecastIcons/101.svg' %}
             windy
-          {% elif value == '/assets/forecast-icons/401.svg' %}
+          {% elif value == '/assets/forecastIcons/401.svg' %}
             windy
           {% else %}
             unknown
           {% endif %}
+        on_error:
+          value: last
       - unique_id: idokep_alert
         name: "Időkép figyelmeztetés"
         select: "#topalertbar > a:nth-child(1)"
         on_error:
           log: false
+          value: default
+          default: ""
 
       - unique_id: idokep_daily_data
         name: "Időkép, napi előrejelzés adatok"
@@ -562,13 +571,14 @@ multiscrape:
 
   - resource: https://www.idokep.hu/elorejelzes/T%C3%B6r%C3%B6kb%C3%A1lint
     scan_interval: 900 # 15 percenként, hogy ne bombázzuk az oldalt
+    log_response: true
     sensor:
       - unique_id: idokep_forecast
         name: "Időkép, előrejelzés"
-        select: ".current-weather-short-desc"
+        select: ".bigForecastCard h4"
         attributes:
           - name: "Részletek"
-            select: ".hosszutavu-elorejelzes p:nth-of-type(1)"
+            select: ".bigForecastCard p"
             value_template: "{{ value | trim }}"
       - unique_id: idokep_hourly_data
         name: "Időkép, órás előrejelzés adatok"
@@ -576,7 +586,7 @@ multiscrape:
         attributes:
           # hour1
           - name: "hour1_date"
-            select: ".new-hourly-forecast-card:nth-child(1) .new-hourly-forecast-hour"
+            select: ".wide-hourly-forecast-card:nth-child(1) .wide-hourly-forecast-hour"
             value_template: >
               {% if now() < today_at(value) %}
                 {{ (now().replace(hour= (value.split(':')[0] | int), minute=0, second=0, microsecond=0)).isoformat() }}
@@ -584,17 +594,17 @@ multiscrape:
                 {{ (now().replace(hour= (value.split(':')[0] | int), minute=0, second=0, microsecond=0) + timedelta(days=1)).isoformat() }}
               {% endif %}
           - name: "hour1_temperature"
-            select: ".new-hourly-forecast-card:nth-child(1) .tempValue .hover-over"
+            select: ".wide-hourly-forecast-card:nth-child(1) .tempValue .hover-over"
             value_template: *valueToTemperature
           - name: "hour1_condition"
-            select: ".new-hourly-forecast-card:nth-child(1) .forecast-icon"
+            select: ".wide-hourly-forecast-card:nth-child(1) .forecast-icon"
             attribute: src
             value_template: *iconToCondition
           - name: "hour1_condition_hu"
-            select: ".new-hourly-forecast-card:nth-child(1) .w-100"
+            select: ".wide-hourly-forecast-card:nth-child(1) .w-100"
             attribute: data-bs-content
           - name: "hour1_prec_percent"
-            select: ".new-hourly-forecast-card:nth-child(1) .hourly-rain-chance a"
+            select: ".wide-hourly-forecast-card:nth-child(1) .hourly-rain-chance a"
             value_template: &valueToPercentage '{{ value | trim | trim("%") | float }}'
             on_error:
               value: "default"
@@ -602,7 +612,7 @@ multiscrape:
               log: false
           # hour2
           - name: "hour2_date"
-            select: ".new-hourly-forecast-card:nth-child(2) .new-hourly-forecast-hour"
+            select: ".wide-hourly-forecast-card:nth-child(2) .wide-hourly-forecast-hour"
             value_template: >
               {% if now() < today_at(value) %}
                 {{ (now().replace(hour= (value.split(':')[0] | int), minute=0, second=0, microsecond=0)).isoformat() }}
@@ -610,17 +620,17 @@ multiscrape:
                 {{ (now().replace(hour= (value.split(':')[0] | int), minute=0, second=0, microsecond=0) + timedelta(days=1)).isoformat() }}
               {% endif %}
           - name: "hour2_temperature"
-            select: ".new-hourly-forecast-card:nth-child(2) .tempValue .hover-over"
+            select: ".wide-hourly-forecast-card:nth-child(2) .tempValue .hover-over"
             value_template: *valueToTemperature
           - name: "hour2_condition"
-            select: ".new-hourly-forecast-card:nth-child(2) .forecast-icon"
+            select: ".wide-hourly-forecast-card:nth-child(2) .forecast-icon"
             attribute: src
             value_template: *iconToCondition
           - name: "hour2_condition_hu"
-            select: ".new-hourly-forecast-card:nth-child(2) .w-100"
+            select: ".wide-hourly-forecast-card:nth-child(2) .w-100"
             attribute: data-bs-content
           - name: "hour2_prec_percent"
-            select: ".new-hourly-forecast-card:nth-child(2) .hourly-rain-chance a"
+            select: ".wide-hourly-forecast-card:nth-child(2) .hourly-rain-chance a"
             value_template: *valueToPercentage
             on_error:
               value: "default"
@@ -628,7 +638,7 @@ multiscrape:
               log: false
           # hour3
           - name: "hour3_date"
-            select: ".new-hourly-forecast-card:nth-child(3) .new-hourly-forecast-hour"
+            select: ".wide-hourly-forecast-card:nth-child(3) .wide-hourly-forecast-hour"
             value_template: >
               {% if now() < today_at(value) %}
                 {{ (now().replace(hour= (value.split(':')[0] | int), minute=0, second=0, microsecond=0)).isoformat() }}
@@ -636,17 +646,17 @@ multiscrape:
                 {{ (now().replace(hour= (value.split(':')[0] | int), minute=0, second=0, microsecond=0) + timedelta(days=1)).isoformat() }}
               {% endif %}
           - name: "hour3_temperature"
-            select: ".new-hourly-forecast-card:nth-child(3) .tempValue .hover-over"
+            select: ".wide-hourly-forecast-card:nth-child(3) .tempValue .hover-over"
             value_template: *valueToTemperature
           - name: "hour3_condition"
-            select: ".new-hourly-forecast-card:nth-child(3) .forecast-icon"
+            select: ".wide-hourly-forecast-card:nth-child(3) .forecast-icon"
             attribute: src
             value_template: *iconToCondition
           - name: "hour3_condition_hu"
-            select: ".new-hourly-forecast-card:nth-child(3) .w-100"
+            select: ".wide-hourly-forecast-card:nth-child(3) .w-100"
             attribute: data-bs-content
           - name: "hour3_prec_percent"
-            select: ".new-hourly-forecast-card:nth-child(3) .hourly-rain-chance a"
+            select: ".wide-hourly-forecast-card:nth-child(3) .hourly-rain-chance a"
             value_template: *valueToPercentage
             on_error:
               value: "default"
@@ -654,7 +664,7 @@ multiscrape:
               log: false
           # hour4
           - name: "hour4_date"
-            select: ".new-hourly-forecast-card:nth-child(4) .new-hourly-forecast-hour"
+            select: ".wide-hourly-forecast-card:nth-child(4) .wide-hourly-forecast-hour"
             value_template: >
               {% if now() < today_at(value) %}
                 {{ (now().replace(hour= (value.split(':')[0] | int), minute=0, second=0, microsecond=0)).isoformat() }}
@@ -662,17 +672,17 @@ multiscrape:
                 {{ (now().replace(hour= (value.split(':')[0] | int), minute=0, second=0, microsecond=0) + timedelta(days=1)).isoformat() }}
               {% endif %}
           - name: "hour4_temperature"
-            select: ".new-hourly-forecast-card:nth-child(4) .tempValue .hover-over"
+            select: ".wide-hourly-forecast-card:nth-child(4) .tempValue .hover-over"
             value_template: *valueToTemperature
           - name: "hour4_condition"
-            select: ".new-hourly-forecast-card:nth-child(4) .forecast-icon"
+            select: ".wide-hourly-forecast-card:nth-child(4) .forecast-icon"
             attribute: src
             value_template: *iconToCondition
           - name: "hour4_condition_hu"
-            select: ".new-hourly-forecast-card:nth-child(4) .w-100"
+            select: ".wide-hourly-forecast-card:nth-child(4) .w-100"
             attribute: data-bs-content
           - name: "hour4_prec_percent"
-            select: ".new-hourly-forecast-card:nth-child(4) .hourly-rain-chance a"
+            select: ".wide-hourly-forecast-card:nth-child(4) .hourly-rain-chance a"
             value_template: *valueToPercentage
             on_error:
               value: "default"
@@ -680,7 +690,7 @@ multiscrape:
               log: false
           # hour5
           - name: "hour5_date"
-            select: ".new-hourly-forecast-card:nth-child(5) .new-hourly-forecast-hour"
+            select: ".wide-hourly-forecast-card:nth-child(5) .wide-hourly-forecast-hour"
             value_template: >
               {% if now() < today_at(value) %}
                 {{ (now().replace(hour= (value.split(':')[0] | int), minute=0, second=0, microsecond=0)).isoformat() }}
@@ -688,17 +698,17 @@ multiscrape:
                 {{ (now().replace(hour= (value.split(':')[0] | int), minute=0, second=0, microsecond=0) + timedelta(days=1)).isoformat() }}
               {% endif %}
           - name: "hour5_temperature"
-            select: ".new-hourly-forecast-card:nth-child(5) .tempValue .hover-over"
+            select: ".wide-hourly-forecast-card:nth-child(5) .tempValue .hover-over"
             value_template: *valueToTemperature
           - name: "hour5_condition"
-            select: ".new-hourly-forecast-card:nth-child(5) .forecast-icon"
+            select: ".wide-hourly-forecast-card:nth-child(5) .forecast-icon"
             attribute: src
             value_template: *iconToCondition
           - name: "hour5_condition_hu"
-            select: ".new-hourly-forecast-card:nth-child(5) .w-100"
+            select: ".wide-hourly-forecast-card:nth-child(5) .w-100"
             attribute: data-bs-content
           - name: "hour5_prec_percent"
-            select: ".new-hourly-forecast-card:nth-child(5) .hourly-rain-chance a"
+            select: ".wide-hourly-forecast-card:nth-child(5) .hourly-rain-chance a"
             value_template: *valueToPercentage
             on_error:
               value: "default"
@@ -706,7 +716,7 @@ multiscrape:
               log: false
           # hour6
           - name: "hour6_date"
-            select: ".new-hourly-forecast-card:nth-child(6) .new-hourly-forecast-hour"
+            select: ".wide-hourly-forecast-card:nth-child(6) .wide-hourly-forecast-hour"
             value_template: >
               {% if now() < today_at(value) %}
                 {{ (now().replace(hour= (value.split(':')[0] | int), minute=0, second=0, microsecond=0)).isoformat() }}
@@ -714,17 +724,17 @@ multiscrape:
                 {{ (now().replace(hour= (value.split(':')[0] | int), minute=0, second=0, microsecond=0) + timedelta(days=1)).isoformat() }}
               {% endif %}
           - name: "hour6_temperature"
-            select: ".new-hourly-forecast-card:nth-child(6) .tempValue .hover-over"
+            select: ".wide-hourly-forecast-card:nth-child(6) .tempValue .hover-over"
             value_template: *valueToTemperature
           - name: "hour6_condition"
-            select: ".new-hourly-forecast-card:nth-child(6) .forecast-icon"
+            select: ".wide-hourly-forecast-card:nth-child(6) .forecast-icon"
             attribute: src
             value_template: *iconToCondition
           - name: "hour6_condition_hu"
-            select: ".new-hourly-forecast-card:nth-child(6) .w-100"
+            select: ".wide-hourly-forecast-card:nth-child(6) .w-100"
             attribute: data-bs-content
           - name: "hour6_prec_percent"
-            select: ".new-hourly-forecast-card:nth-child(6) .hourly-rain-chance a"
+            select: ".wide-hourly-forecast-card:nth-child(6) .hourly-rain-chance a"
             value_template: *valueToPercentage
             on_error:
               value: "default"
@@ -732,7 +742,7 @@ multiscrape:
               log: false
           # hour7
           - name: "hour7_date"
-            select: ".new-hourly-forecast-card:nth-child(7) .new-hourly-forecast-hour"
+            select: ".wide-hourly-forecast-card:nth-child(7) .wide-hourly-forecast-hour"
             value_template: >
               {% if now() < today_at(value) %}
                 {{ (now().replace(hour= (value.split(':')[0] | int), minute=0, second=0, microsecond=0)).isoformat() }}
@@ -740,17 +750,17 @@ multiscrape:
                 {{ (now().replace(hour= (value.split(':')[0] | int), minute=0, second=0, microsecond=0) + timedelta(days=1)).isoformat() }}
               {% endif %}
           - name: "hour7_condition"
-            select: ".new-hourly-forecast-card:nth-child(7) .forecast-icon"
+            select: ".wide-hourly-forecast-card:nth-child(7) .forecast-icon"
             attribute: src
             value_template: *iconToCondition
           - name: "hour7_temperature"
-            select: ".new-hourly-forecast-card:nth-child(7) .tempValue .hover-over"
+            select: ".wide-hourly-forecast-card:nth-child(7) .tempValue .hover-over"
             value_template: *valueToTemperature
           - name: "hour7_condition_hu"
-            select: ".new-hourly-forecast-card:nth-child(7) .w-100"
+            select: ".wide-hourly-forecast-card:nth-child(7) .w-100"
             attribute: data-bs-content
           - name: "hour7_prec_percent"
-            select: ".new-hourly-forecast-card:nth-child(7) .hourly-rain-chance a"
+            select: ".wide-hourly-forecast-card:nth-child(7) .hourly-rain-chance a"
             value_template: *valueToPercentage
             on_error:
               value: "default"
@@ -758,7 +768,7 @@ multiscrape:
               log: false
           # hour8
           - name: "hour8_date"
-            select: ".new-hourly-forecast-card:nth-child(8) .new-hourly-forecast-hour"
+            select: ".wide-hourly-forecast-card:nth-child(8) .wide-hourly-forecast-hour"
             value_template: >
               {% if now() < today_at(value) %}
                 {{ (now().replace(hour= (value.split(':')[0] | int), minute=0, second=0, microsecond=0)).isoformat() }}
@@ -766,17 +776,17 @@ multiscrape:
                 {{ (now().replace(hour= (value.split(':')[0] | int), minute=0, second=0, microsecond=0) + timedelta(days=1)).isoformat() }}
               {% endif %}
           - name: "hour8_temperature"
-            select: ".new-hourly-forecast-card:nth-child(8) .tempValue .hover-over"
+            select: ".wide-hourly-forecast-card:nth-child(8) .tempValue .hover-over"
             value_template: *valueToTemperature
           - name: "hour8_condition"
-            select: ".new-hourly-forecast-card:nth-child(8) .forecast-icon"
+            select: ".wide-hourly-forecast-card:nth-child(8) .forecast-icon"
             attribute: src
             value_template: *iconToCondition
           - name: "hour8_condition_hu"
-            select: ".new-hourly-forecast-card:nth-child(8) .w-100"
+            select: ".wide-hourly-forecast-card:nth-child(8) .w-100"
             attribute: data-bs-content
           - name: "hour8_prec_percent"
-            select: ".new-hourly-forecast-card:nth-child(8) .hourly-rain-chance a"
+            select: ".wide-hourly-forecast-card:nth-child(8) .hourly-rain-chance a"
             value_template: *valueToPercentage
             on_error:
               value: "default"
@@ -784,7 +794,7 @@ multiscrape:
               log: false
           # hour9
           - name: "hour9_date"
-            select: ".new-hourly-forecast-card:nth-child(9) .new-hourly-forecast-hour"
+            select: ".wide-hourly-forecast-card:nth-child(9) .wide-hourly-forecast-hour"
             value_template: >
               {% if now() < today_at(value) %}
                 {{ (now().replace(hour= (value.split(':')[0] | int), minute=0, second=0, microsecond=0)).isoformat() }}
@@ -792,17 +802,17 @@ multiscrape:
                 {{ (now().replace(hour= (value.split(':')[0] | int), minute=0, second=0, microsecond=0) + timedelta(days=1)).isoformat() }}
               {% endif %}
           - name: "hour9_temperature"
-            select: ".new-hourly-forecast-card:nth-child(9) .tempValue .hover-over"
+            select: ".wide-hourly-forecast-card:nth-child(9) .tempValue .hover-over"
             value_template: *valueToTemperature
           - name: "hour9_condition"
-            select: ".new-hourly-forecast-card:nth-child(9) .forecast-icon"
+            select: ".wide-hourly-forecast-card:nth-child(9) .forecast-icon"
             attribute: src
             value_template: *iconToCondition
           - name: "hour9_condition_hu"
-            select: ".new-hourly-forecast-card:nth-child(9) .w-100"
+            select: ".wide-hourly-forecast-card:nth-child(9) .w-100"
             attribute: data-bs-content
           - name: "hour9_prec_percent"
-            select: ".new-hourly-forecast-card:nth-child(9) .hourly-rain-chance a"
+            select: ".wide-hourly-forecast-card:nth-child(9) .hourly-rain-chance a"
             value_template: *valueToPercentage
             on_error:
               value: "default"
@@ -810,7 +820,7 @@ multiscrape:
               log: false
           # hour10
           - name: "hour10_date"
-            select: ".new-hourly-forecast-card:nth-child(10) .new-hourly-forecast-hour"
+            select: ".wide-hourly-forecast-card:nth-child(10) .wide-hourly-forecast-hour"
             value_template: >
               {% if now() < today_at(value) %}
                 {{ (now().replace(hour= (value.split(':')[0] | int), minute=0, second=0, microsecond=0)).isoformat() }}
@@ -818,17 +828,17 @@ multiscrape:
                 {{ (now().replace(hour= (value.split(':')[0] | int), minute=0, second=0, microsecond=0) + timedelta(days=1)).isoformat() }}
               {% endif %}
           - name: "hour10_temperature"
-            select: ".new-hourly-forecast-card:nth-child(10) .tempValue .hover-over"
+            select: ".wide-hourly-forecast-card:nth-child(10) .tempValue .hover-over"
             value_template: *valueToTemperature
           - name: "hour10_condition"
-            select: ".new-hourly-forecast-card:nth-child(10) .forecast-icon"
+            select: ".wide-hourly-forecast-card:nth-child(10) .forecast-icon"
             attribute: src
             value_template: *iconToCondition
           - name: "hour10_condition_hu"
-            select: ".new-hourly-forecast-card:nth-child(10) .w-100"
+            select: ".wide-hourly-forecast-card:nth-child(10) .w-100"
             attribute: data-bs-content
           - name: "hour10_prec_percent"
-            select: ".new-hourly-forecast-card:nth-child(10) .hourly-rain-chance a"
+            select: ".wide-hourly-forecast-card:nth-child(10) .hourly-rain-chance a"
             value_template: *valueToPercentage
             on_error:
               value: "default"
@@ -836,7 +846,7 @@ multiscrape:
               log: false
           # hour11
           - name: "hour11_date"
-            select: ".new-hourly-forecast-card:nth-child(11) .new-hourly-forecast-hour"
+            select: ".wide-hourly-forecast-card:nth-child(11) .wide-hourly-forecast-hour"
             value_template: >
               {% if now() < today_at(value) %}
                 {{ (now().replace(hour= (value.split(':')[0] | int), minute=0, second=0, microsecond=0)).isoformat() }}
@@ -844,17 +854,17 @@ multiscrape:
                 {{ (now().replace(hour= (value.split(':')[0] | int), minute=0, second=0, microsecond=0) + timedelta(days=1)).isoformat() }}
               {% endif %}
           - name: "hour11_temperature"
-            select: ".new-hourly-forecast-card:nth-child(11) .tempValue .hover-over"
+            select: ".wide-hourly-forecast-card:nth-child(11) .tempValue .hover-over"
             value_template: *valueToTemperature
           - name: "hour11_condition"
-            select: ".new-hourly-forecast-card:nth-child(11) .forecast-icon"
+            select: ".wide-hourly-forecast-card:nth-child(11) .forecast-icon"
             attribute: src
             value_template: *iconToCondition
           - name: "hour11_condition_hu"
-            select: ".new-hourly-forecast-card:nth-child(11) .w-100"
+            select: ".wide-hourly-forecast-card:nth-child(11) .w-100"
             attribute: data-bs-content
           - name: "hour11_prec_percent"
-            select: ".new-hourly-forecast-card:nth-child(11) .hourly-rain-chance a"
+            select: ".wide-hourly-forecast-card:nth-child(11) .hourly-rain-chance a"
             value_template: *valueToPercentage
             on_error:
               value: "default"
@@ -862,7 +872,7 @@ multiscrape:
               log: false
           # hour12
           - name: "hour12_date"
-            select: ".new-hourly-forecast-card:nth-child(12) .new-hourly-forecast-hour"
+            select: ".wide-hourly-forecast-card:nth-child(12) .wide-hourly-forecast-hour"
             value_template: >
               {% if now() < today_at(value) %}
                 {{ (now().replace(hour= (value.split(':')[0] | int), minute=0, second=0, microsecond=0)).isoformat() }}
@@ -870,17 +880,17 @@ multiscrape:
                 {{ (now().replace(hour= (value.split(':')[0] | int), minute=0, second=0, microsecond=0) + timedelta(days=1)).isoformat() }}
               {% endif %}
           - name: "hour12_temperature"
-            select: ".new-hourly-forecast-card:nth-child(12) .tempValue .hover-over"
+            select: ".wide-hourly-forecast-card:nth-child(12) .tempValue .hover-over"
             value_template: *valueToTemperature
           - name: "hour12_condition"
-            select: ".new-hourly-forecast-card:nth-child(12) .forecast-icon"
+            select: ".wide-hourly-forecast-card:nth-child(12) .forecast-icon"
             attribute: src
             value_template: *iconToCondition
           - name: "hour12_condition_hu"
-            select: ".new-hourly-forecast-card:nth-child(12) .w-100"
+            select: ".wide-hourly-forecast-card:nth-child(12) .w-100"
             attribute: data-bs-content
           - name: "hour12_prec_percent"
-            select: ".new-hourly-forecast-card:nth-child(12) .hourly-rain-chance a"
+            select: ".wide-hourly-forecast-card:nth-child(12) .hourly-rain-chance a"
             value_template: *valueToPercentage
             on_error:
               value: "default"
@@ -888,7 +898,7 @@ multiscrape:
               log: false
           # hour13
           - name: "hour13_date"
-            select: ".new-hourly-forecast-card:nth-child(13) .new-hourly-forecast-hour"
+            select: ".wide-hourly-forecast-card:nth-child(13) .wide-hourly-forecast-hour"
             value_template: >
               {% if now() < today_at(value) %}
                 {{ (now().replace(hour= (value.split(':')[0] | int), minute=0, second=0, microsecond=0)).isoformat() }}
@@ -896,17 +906,17 @@ multiscrape:
                 {{ (now().replace(hour= (value.split(':')[0] | int), minute=0, second=0, microsecond=0) + timedelta(days=1)).isoformat() }}
               {% endif %}
           - name: "hour13_temperature"
-            select: ".new-hourly-forecast-card:nth-child(13) .tempValue .hover-over"
+            select: ".wide-hourly-forecast-card:nth-child(13) .tempValue .hover-over"
             value_template: *valueToTemperature
           - name: "hour13_condition"
-            select: ".new-hourly-forecast-card:nth-child(13) .forecast-icon"
+            select: ".wide-hourly-forecast-card:nth-child(13) .forecast-icon"
             attribute: src
             value_template: *iconToCondition
           - name: "hour13_condition_hu"
-            select: ".new-hourly-forecast-card:nth-child(13) .w-100"
+            select: ".wide-hourly-forecast-card:nth-child(13) .w-100"
             attribute: data-bs-content
           - name: "hour13_prec_percent"
-            select: ".new-hourly-forecast-card:nth-child(13) .hourly-rain-chance a"
+            select: ".wide-hourly-forecast-card:nth-child(13) .hourly-rain-chance a"
             value_template: *valueToPercentage
             on_error:
               value: "default"
@@ -914,7 +924,7 @@ multiscrape:
               log: false
           # hour14
           - name: "hour14_date"
-            select: ".new-hourly-forecast-card:nth-child(14) .new-hourly-forecast-hour"
+            select: ".wide-hourly-forecast-card:nth-child(14) .wide-hourly-forecast-hour"
             value_template: >
               {% if now() < today_at(value) %}
                 {{ (now().replace(hour= (value.split(':')[0] | int), minute=0, second=0, microsecond=0)).isoformat() }}
@@ -922,17 +932,17 @@ multiscrape:
                 {{ (now().replace(hour= (value.split(':')[0] | int), minute=0, second=0, microsecond=0) + timedelta(days=1)).isoformat() }}
               {% endif %}
           - name: "hour14_temperature"
-            select: ".new-hourly-forecast-card:nth-child(14) .tempValue .hover-over"
+            select: ".wide-hourly-forecast-card:nth-child(14) .tempValue .hover-over"
             value_template: *valueToTemperature
           - name: "hour14_condition"
-            select: ".new-hourly-forecast-card:nth-child(14) .forecast-icon"
+            select: ".wide-hourly-forecast-card:nth-child(14) .forecast-icon"
             attribute: src
             value_template: *iconToCondition
           - name: "hour14_condition_hu"
-            select: ".new-hourly-forecast-card:nth-child(14) .w-100"
+            select: ".wide-hourly-forecast-card:nth-child(14) .w-100"
             attribute: data-bs-content
           - name: "hour14_prec_percent"
-            select: ".new-hourly-forecast-card:nth-child(14) .hourly-rain-chance a"
+            select: ".wide-hourly-forecast-card:nth-child(14) .hourly-rain-chance a"
             value_template: *valueToPercentage
             on_error:
               value: "default"
@@ -940,7 +950,7 @@ multiscrape:
               log: false
           # hour15
           - name: "hour15_date"
-            select: ".new-hourly-forecast-card:nth-child(15) .new-hourly-forecast-hour"
+            select: ".wide-hourly-forecast-card:nth-child(15) .wide-hourly-forecast-hour"
             value_template: >
               {% if now() < today_at(value) %}
                 {{ (now().replace(hour= (value.split(':')[0] | int), minute=0, second=0, microsecond=0)).isoformat() }}
@@ -948,17 +958,17 @@ multiscrape:
                 {{ (now().replace(hour= (value.split(':')[0] | int), minute=0, second=0, microsecond=0) + timedelta(days=1)).isoformat() }}
               {% endif %}
           - name: "hour15_temperature"
-            select: ".new-hourly-forecast-card:nth-child(15) .tempValue .hover-over"
+            select: ".wide-hourly-forecast-card:nth-child(15) .tempValue .hover-over"
             value_template: *valueToTemperature
           - name: "hour15_condition"
-            select: ".new-hourly-forecast-card:nth-child(15) .forecast-icon"
+            select: ".wide-hourly-forecast-card:nth-child(15) .forecast-icon"
             attribute: src
             value_template: *iconToCondition
           - name: "hour15_condition_hu"
-            select: ".new-hourly-forecast-card:nth-child(15) .w-100"
+            select: ".wide-hourly-forecast-card:nth-child(15) .w-100"
             attribute: data-bs-content
           - name: "hour15_prec_percent"
-            select: ".new-hourly-forecast-card:nth-child(15) .hourly-rain-chance a"
+            select: ".wide-hourly-forecast-card:nth-child(15) .hourly-rain-chance a"
             value_template: *valueToPercentage
             on_error:
               value: "default"
@@ -966,7 +976,7 @@ multiscrape:
               log: false
           # hour16
           - name: "hour16_date"
-            select: ".new-hourly-forecast-card:nth-child(16) .new-hourly-forecast-hour"
+            select: ".wide-hourly-forecast-card:nth-child(16) .wide-hourly-forecast-hour"
             value_template: >
               {% if now() < today_at(value) %}
                 {{ (now().replace(hour= (value.split(':')[0] | int), minute=0, second=0, microsecond=0)).isoformat() }}
@@ -974,17 +984,17 @@ multiscrape:
                 {{ (now().replace(hour= (value.split(':')[0] | int), minute=0, second=0, microsecond=0) + timedelta(days=1)).isoformat() }}
               {% endif %}
           - name: "hour16_temperature"
-            select: ".new-hourly-forecast-card:nth-child(16) .tempValue .hover-over"
+            select: ".wide-hourly-forecast-card:nth-child(16) .tempValue .hover-over"
             value_template: *valueToTemperature
           - name: "hour16_condition"
-            select: ".new-hourly-forecast-card:nth-child(16) .forecast-icon"
+            select: ".wide-hourly-forecast-card:nth-child(16) .forecast-icon"
             attribute: src
             value_template: *iconToCondition
           - name: "hour16_condition_hu"
-            select: ".new-hourly-forecast-card:nth-child(16) .w-100"
+            select: ".wide-hourly-forecast-card:nth-child(16) .w-100"
             attribute: data-bs-content
           - name: "hour16_prec_percent"
-            select: ".new-hourly-forecast-card:nth-child(16) .hourly-rain-chance a"
+            select: ".wide-hourly-forecast-card:nth-child(16) .hourly-rain-chance a"
             value_template: *valueToPercentage
             on_error:
               value: "default"
@@ -992,7 +1002,7 @@ multiscrape:
               log: false
           # hour17
           - name: "hour17_date"
-            select: ".new-hourly-forecast-card:nth-child(17) .new-hourly-forecast-hour"
+            select: ".wide-hourly-forecast-card:nth-child(17) .wide-hourly-forecast-hour"
             value_template: >
               {% if now() < today_at(value) %}
                 {{ (now().replace(hour= (value.split(':')[0] | int), minute=0, second=0, microsecond=0)).isoformat() }}
@@ -1000,17 +1010,17 @@ multiscrape:
                 {{ (now().replace(hour= (value.split(':')[0] | int), minute=0, second=0, microsecond=0) + timedelta(days=1)).isoformat() }}
               {% endif %}
           - name: "hour17_temperature"
-            select: ".new-hourly-forecast-card:nth-child(17) .tempValue .hover-over"
+            select: ".wide-hourly-forecast-card:nth-child(17) .tempValue .hover-over"
             value_template: *valueToTemperature
           - name: "hour17_condition"
-            select: ".new-hourly-forecast-card:nth-child(17) .forecast-icon"
+            select: ".wide-hourly-forecast-card:nth-child(17) .forecast-icon"
             attribute: src
             value_template: *iconToCondition
           - name: "hour17_condition_hu"
-            select: ".new-hourly-forecast-card:nth-child(17) .w-100"
+            select: ".wide-hourly-forecast-card:nth-child(17) .w-100"
             attribute: data-bs-content
           - name: "hour17_prec_percent"
-            select: ".new-hourly-forecast-card:nth-child(17) .hourly-rain-chance a"
+            select: ".wide-hourly-forecast-card:nth-child(17) .hourly-rain-chance a"
             value_template: *valueToPercentage
             on_error:
               value: "default"
@@ -1018,7 +1028,7 @@ multiscrape:
               log: false
           # hour18
           - name: "hour18_date"
-            select: ".new-hourly-forecast-card:nth-child(18) .new-hourly-forecast-hour"
+            select: ".wide-hourly-forecast-card:nth-child(18) .wide-hourly-forecast-hour"
             value_template: >
               {% if now() < today_at(value) %}
                 {{ (now().replace(hour= (value.split(':')[0] | int), minute=0, second=0, microsecond=0)).isoformat() }}
@@ -1026,17 +1036,17 @@ multiscrape:
                 {{ (now().replace(hour= (value.split(':')[0] | int), minute=0, second=0, microsecond=0) + timedelta(days=1)).isoformat() }}
               {% endif %}
           - name: "hour18_temperature"
-            select: ".new-hourly-forecast-card:nth-child(18) .tempValue .hover-over"
+            select: ".wide-hourly-forecast-card:nth-child(18) .tempValue .hover-over"
             value_template: *valueToTemperature
           - name: "hour18_condition"
-            select: ".new-hourly-forecast-card:nth-child(18) .forecast-icon"
+            select: ".wide-hourly-forecast-card:nth-child(18) .forecast-icon"
             attribute: src
             value_template: *iconToCondition
           - name: "hour18_condition_hu"
-            select: ".new-hourly-forecast-card:nth-child(18) .w-100"
+            select: ".wide-hourly-forecast-card:nth-child(18) .w-100"
             attribute: data-bs-content
           - name: "hour18_prec_percent"
-            select: ".new-hourly-forecast-card:nth-child(18) .hourly-rain-chance a"
+            select: ".wide-hourly-forecast-card:nth-child(18) .hourly-rain-chance a"
             value_template: *valueToPercentage
             on_error:
               value: "default"
@@ -1044,7 +1054,7 @@ multiscrape:
               log: false
           # hour19
           - name: "hour19_date"
-            select: ".new-hourly-forecast-card:nth-child(19) .new-hourly-forecast-hour"
+            select: ".wide-hourly-forecast-card:nth-child(19) .wide-hourly-forecast-hour"
             value_template: >
               {% if now() < today_at(value) %}
                 {{ (now().replace(hour= (value.split(':')[0] | int), minute=0, second=0, microsecond=0)).isoformat() }}
@@ -1052,17 +1062,17 @@ multiscrape:
                 {{ (now().replace(hour= (value.split(':')[0] | int), minute=0, second=0, microsecond=0) + timedelta(days=1)).isoformat() }}
               {% endif %}
           - name: "hour19_temperature"
-            select: ".new-hourly-forecast-card:nth-child(19) .tempValue .hover-over"
+            select: ".wide-hourly-forecast-card:nth-child(19) .tempValue .hover-over"
             value_template: *valueToTemperature
           - name: "hour19_condition"
-            select: ".new-hourly-forecast-card:nth-child(19) .forecast-icon"
+            select: ".wide-hourly-forecast-card:nth-child(19) .forecast-icon"
             attribute: src
             value_template: *iconToCondition
           - name: "hour19_condition_hu"
-            select: ".new-hourly-forecast-card:nth-child(19) .w-100"
+            select: ".wide-hourly-forecast-card:nth-child(19) .w-100"
             attribute: data-bs-content
           - name: "hour19_prec_percent"
-            select: ".new-hourly-forecast-card:nth-child(19) .hourly-rain-chance a"
+            select: ".wide-hourly-forecast-card:nth-child(19) .hourly-rain-chance a"
             value_template: *valueToPercentage
             on_error:
               value: "default"
@@ -1070,7 +1080,7 @@ multiscrape:
               log: false
           # hour20
           - name: "hour20_date"
-            select: ".new-hourly-forecast-card:nth-child(20) .new-hourly-forecast-hour"
+            select: ".wide-hourly-forecast-card:nth-child(20) .wide-hourly-forecast-hour"
             value_template: >
               {% if now() < today_at(value) %}
                 {{ (now().replace(hour= (value.split(':')[0] | int), minute=0, second=0, microsecond=0)).isoformat() }}
@@ -1078,17 +1088,17 @@ multiscrape:
                 {{ (now().replace(hour= (value.split(':')[0] | int), minute=0, second=0, microsecond=0) + timedelta(days=1)).isoformat() }}
               {% endif %}
           - name: "hour20_temperature"
-            select: ".new-hourly-forecast-card:nth-child(20) .tempValue .hover-over"
+            select: ".wide-hourly-forecast-card:nth-child(20) .tempValue .hover-over"
             value_template: *valueToTemperature
           - name: "hour20_condition"
-            select: ".new-hourly-forecast-card:nth-child(20) .forecast-icon"
+            select: ".wide-hourly-forecast-card:nth-child(20) .forecast-icon"
             attribute: src
             value_template: *iconToCondition
           - name: "hour20_condition_hu"
-            select: ".new-hourly-forecast-card:nth-child(20) .w-100"
+            select: ".wide-hourly-forecast-card:nth-child(20) .w-100"
             attribute: data-bs-content
           - name: "hour20_prec_percent"
-            select: ".new-hourly-forecast-card:nth-child(20) .hourly-rain-chance a"
+            select: ".wide-hourly-forecast-card:nth-child(20) .hourly-rain-chance a"
             value_template: *valueToPercentage
             on_error:
               value: "default"
@@ -1096,7 +1106,7 @@ multiscrape:
               log: false
           # hour21
           - name: "hour21_date"
-            select: ".new-hourly-forecast-card:nth-child(21) .new-hourly-forecast-hour"
+            select: ".wide-hourly-forecast-card:nth-child(21) .wide-hourly-forecast-hour"
             value_template: >
               {% if now() < today_at(value) %}
                 {{ (now().replace(hour= (value.split(':')[0] | int), minute=0, second=0, microsecond=0)).isoformat() }}
@@ -1104,17 +1114,17 @@ multiscrape:
                 {{ (now().replace(hour= (value.split(':')[0] | int), minute=0, second=0, microsecond=0) + timedelta(days=1)).isoformat() }}
               {% endif %}
           - name: "hour21_temperature"
-            select: ".new-hourly-forecast-card:nth-child(21) .tempValue .hover-over"
+            select: ".wide-hourly-forecast-card:nth-child(21) .tempValue .hover-over"
             value_template: *valueToTemperature
           - name: "hour21_condition"
-            select: ".new-hourly-forecast-card:nth-child(21) .forecast-icon"
+            select: ".wide-hourly-forecast-card:nth-child(21) .forecast-icon"
             attribute: src
             value_template: *iconToCondition
           - name: "hour21_condition_hu"
-            select: ".new-hourly-forecast-card:nth-child(21) .w-100"
+            select: ".wide-hourly-forecast-card:nth-child(21) .w-100"
             attribute: data-bs-content
           - name: "hour21_prec_percent"
-            select: ".new-hourly-forecast-card:nth-child(21) .hourly-rain-chance a"
+            select: ".wide-hourly-forecast-card:nth-child(21) .hourly-rain-chance a"
             value_template: *valueToPercentage
             on_error:
               value: "default"
@@ -1122,7 +1132,7 @@ multiscrape:
               log: false
           # hour22
           - name: "hour22_date"
-            select: ".new-hourly-forecast-card:nth-child(22) .new-hourly-forecast-hour"
+            select: ".wide-hourly-forecast-card:nth-child(22) .wide-hourly-forecast-hour"
             value_template: >
               {% if now() < today_at(value) %}
                 {{ (now().replace(hour= (value.split(':')[0] | int), minute=0, second=0, microsecond=0)).isoformat() }}
@@ -1130,17 +1140,17 @@ multiscrape:
                 {{ (now().replace(hour= (value.split(':')[0] | int), minute=0, second=0, microsecond=0) + timedelta(days=1)).isoformat() }}
               {% endif %}
           - name: "hour22_temperature"
-            select: ".new-hourly-forecast-card:nth-child(22) .tempValue .hover-over"
+            select: ".wide-hourly-forecast-card:nth-child(22) .tempValue .hover-over"
             value_template: *valueToTemperature
           - name: "hour22_condition"
-            select: ".new-hourly-forecast-card:nth-child(22) .forecast-icon"
+            select: ".wide-hourly-forecast-card:nth-child(22) .forecast-icon"
             attribute: src
             value_template: *iconToCondition
           - name: "hour22_condition_hu"
-            select: ".new-hourly-forecast-card:nth-child(22) .w-100"
+            select: ".wide-hourly-forecast-card:nth-child(22) .w-100"
             attribute: data-bs-content
           - name: "hour22_prec_percent"
-            select: ".new-hourly-forecast-card:nth-child(22) .hourly-rain-chance a"
+            select: ".wide-hourly-forecast-card:nth-child(22) .hourly-rain-chance a"
             value_template: *valueToPercentage
             on_error:
               value: "default"
@@ -1148,7 +1158,7 @@ multiscrape:
               log: false
           # hour23
           - name: "hour23_date"
-            select: ".new-hourly-forecast-card:nth-child(23) .new-hourly-forecast-hour"
+            select: ".wide-hourly-forecast-card:nth-child(23) .wide-hourly-forecast-hour"
             value_template: >
               {% if now() < today_at(value) %}
                 {{ (now().replace(hour= (value.split(':')[0] | int), minute=0, second=0, microsecond=0)).isoformat() }}
@@ -1156,17 +1166,17 @@ multiscrape:
                 {{ (now().replace(hour= (value.split(':')[0] | int), minute=0, second=0, microsecond=0) + timedelta(days=1)).isoformat() }}
               {% endif %}
           - name: "hour23_temperature"
-            select: ".new-hourly-forecast-card:nth-child(23) .tempValue .hover-over"
+            select: ".wide-hourly-forecast-card:nth-child(23) .tempValue .hover-over"
             value_template: *valueToTemperature
           - name: "hour23_condition"
-            select: ".new-hourly-forecast-card:nth-child(23) .forecast-icon"
+            select: ".wide-hourly-forecast-card:nth-child(23) .forecast-icon"
             attribute: src
             value_template: *iconToCondition
           - name: "hour23_condition_hu"
-            select: ".new-hourly-forecast-card:nth-child(23) .w-100"
+            select: ".wide-hourly-forecast-card:nth-child(23) .w-100"
             attribute: data-bs-content
           - name: "hour23_prec_percent"
-            select: ".new-hourly-forecast-card:nth-child(23) .hourly-rain-chance a"
+            select: ".wide-hourly-forecast-card:nth-child(23) .hourly-rain-chance a"
             value_template: *valueToPercentage
             on_error:
               value: "default"
@@ -1174,7 +1184,7 @@ multiscrape:
               log: false
           # hour24
           - name: "hour24_date"
-            select: ".new-hourly-forecast-card:nth-child(24) .new-hourly-forecast-hour"
+            select: ".wide-hourly-forecast-card:nth-child(24) .wide-hourly-forecast-hour"
             value_template: >
               {% if now() < today_at(value) %}
                 {{ (now().replace(hour= (value.split(':')[0] | int), minute=0, second=0, microsecond=0)).isoformat() }}
@@ -1182,17 +1192,17 @@ multiscrape:
                 {{ (now().replace(hour= (value.split(':')[0] | int), minute=0, second=0, microsecond=0) + timedelta(days=1)).isoformat() }}
               {% endif %}
           - name: "hour24_temperature"
-            select: ".new-hourly-forecast-card:nth-child(24) .tempValue .hover-over"
+            select: ".wide-hourly-forecast-card:nth-child(24) .tempValue .hover-over"
             value_template: *valueToTemperature
           - name: "hour24_condition"
-            select: ".new-hourly-forecast-card:nth-child(24) .forecast-icon"
+            select: ".wide-hourly-forecast-card:nth-child(24) .forecast-icon"
             attribute: src
             value_template: *iconToCondition
           - name: "hour24_condition_hu"
-            select: ".new-hourly-forecast-card:nth-child(24) .w-100"
+            select: ".wide-hourly-forecast-card:nth-child(24) .w-100"
             attribute: data-bs-content
           - name: "hour24_prec_percent"
-            select: ".new-hourly-forecast-card:nth-child(24) .hourly-rain-chance a"
+            select: ".wide-hourly-forecast-card:nth-child(24) .hourly-rain-chance a"
             value_template: *valueToPercentage
             on_error:
               value: "default"
