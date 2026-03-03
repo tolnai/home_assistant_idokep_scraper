@@ -43,7 +43,7 @@
 # 101 - Porvihar
 
 multiscrape:
-  - resource: https://www.idokep.hu/idojaras/T%C3%B6r%C3%B6kb%C3%A1lint
+  - resource: !secret idokep_idojaras_url
     scan_interval: 900 # 15 percenként, hogy ne bombázzuk az oldalt
     #log_response: true # debugoláshoz a config/multiscrape mappába menti a legutóbbi lekért HTML-t
     sensor:
@@ -567,7 +567,7 @@ multiscrape:
               default: 0
               log: false
 
-  - resource: https://www.idokep.hu/elorejelzes/T%C3%B6r%C3%B6kb%C3%A1lint
+  - resource: !secret idokep_elorejelzes_url
     scan_interval: 900 # 15 percenként, hogy ne bombázzuk az oldalt
     #log_response: true # debugoláshoz a config/multiscrape mappába menti a legutóbbi lekért HTML-t
     sensor:
