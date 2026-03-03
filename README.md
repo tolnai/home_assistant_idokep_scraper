@@ -10,7 +10,7 @@ FONTOS: Az Időképről nem minden adatot nyertem eddig ki (főleg a típus, hő
 
 Példa egyaránt felhasználva a rövid (órás) és a hosszú (napi) előrejelzéseket:
 
-| ![Minta](/assets/sample.png) | ![Még egy minta](/assets/sample2.png) |
+![Minta](/assets/sample.png) ![Még egy minta](/assets/sample2.png)
 
 ## Változások
 
