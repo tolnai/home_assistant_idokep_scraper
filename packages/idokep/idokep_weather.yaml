@@ -1,3 +1,5 @@
+# Időkép multiscrape config - https://github.com/tolnai/home_assistant_idokep_scraper - v1.0.0
+#
 # https://www.home-assistant.io/integrations/weather.template/
 # https://developers.home-assistant.io/docs/core/entity/weather/
 template:

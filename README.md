@@ -14,7 +14,7 @@ Példa egyaránt felhasználva a rövid (órás) és a hosszú (napi) előrejelz
 
 ## Változások
 
-- 2026.03.03: Breaking - Városnév kivezetése secret változóba, a könnyebb frissítések miatt (+ egy új példa)
+- **v1.0.0** / 2026.03.03: Breaking - Városnév kivezetése secret változóba, a könnyebb frissítések miatt (+ egy új példa)
 - 2026.03.02: Frissítés az idokep.hu új designja/elnevezései miatt
 - 2025.12.15: Weather template syntax frissítése az új HA verzióhoz
 - 2024.08.27: Csapadék támogatás
