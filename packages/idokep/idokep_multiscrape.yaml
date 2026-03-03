@@ -235,8 +235,6 @@ multiscrape:
         select: "#topalertbar > a:nth-child(1)"
         on_error:
           log: false
-          value: default
-          default: ""
 
       - unique_id: idokep_daily_data
         name: "Időkép, napi előrejelzés adatok"
@@ -571,7 +569,7 @@ multiscrape:
 
   - resource: https://www.idokep.hu/elorejelzes/T%C3%B6r%C3%B6kb%C3%A1lint
     scan_interval: 900 # 15 percenként, hogy ne bombázzuk az oldalt
-    log_response: true
+    #log_response: true # debugoláshoz a config/multiscrape mappába menti a legutóbbi lekért HTML-t
     sensor:
       - unique_id: idokep_forecast
         name: "Időkép, előrejelzés"
