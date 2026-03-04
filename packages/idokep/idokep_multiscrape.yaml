@@ -1,4 +1,4 @@
-# Időkép multiscrape config - https://github.com/tolnai/home_assistant_idokep_scraper - v1.0.0
+# Időkép multiscrape config - https://github.com/tolnai/home_assistant_idokep_scraper - v1.0.1
 #
 # https://developers.home-assistant.io/docs/core/entity/weather/
 # clear-night     Clear night
@@ -234,7 +234,7 @@ multiscrape:
           value: last
       - unique_id: idokep_alert
         name: "Időkép figyelmeztetés"
-        select: "#topalertbar > a:nth-child(1)"
+        select: "#topalertbar > a:nth-child(1),.inlineWeatherAlert"
         on_error:
           log: false
 
