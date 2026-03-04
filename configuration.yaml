@@ -1,7 +1,7 @@
 # ...
 
 homeassistant:
-  packages: !include_dir_named packages/
+  packages: !include_dir_named packages
 
 script: !include good_morning_script.yaml
 

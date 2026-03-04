@@ -14,7 +14,7 @@ Példa egyaránt felhasználva a rövid (órás) és a hosszú (napi) előrejelz
 
 ## Változások
 
-- **v1.0.1** / 2026.03.04: Riasztás szelektor is frissítve
+- **v1.0.2** / 2026.03.04: Riasztás szelektor is frissítve + Trim
 - v1.0.0 / 2026.03.03: Breaking - Városnév kivezetése secret változóba, a könnyebb frissítések miatt (+ egy új példa)
 - 2026.03.02: Frissítés az idokep.hu új designja/elnevezései miatt
 - 2025.12.15: Weather template syntax frissítése az új HA verzióhoz
@@ -42,7 +42,7 @@ Aktiváld a package-eket ha még nem tetted meg korábban a `configuration.yaml`
 
 ```yaml
 homeassistant:
-  packages: !include_dir_named packages/
+  packages: !include_dir_named packages
 ```
 
 ### URL beállítás secret-tel
