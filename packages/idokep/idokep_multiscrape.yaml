@@ -240,7 +240,7 @@ multiscrape:
           - name: condition_code
             select: ".forecast-bigicon"
             attribute: src
-            value_template: "{{ value | replace('/assets/forecast-icons/','',1) | replace('.svg','',1) }}"
+            value_template: "{{ value | replace('/assets/forecastIcons/','',1) | replace('.svg','',1) }}"
       - unique_id: idokep_alert
         name: "Időkép figyelmeztetés"
         select: "#topalertbar > a:nth-child(1),.inlineWeatherAlert"
