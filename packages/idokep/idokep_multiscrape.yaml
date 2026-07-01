@@ -233,14 +233,14 @@ multiscrape:
         on_error:
           value: last
         attributes:
-          - name: pic_url
+          - name: condition_icon_url
             select: ".forecast-bigicon"
             attribute: src
             value_template: "{{ value }}"
           - name: condition_code
             select: ".forecast-bigicon"
             attribute: src
-            value_template: "{{ value | replace('/assets/forecastIcons/','',1) | replace('.svg','',1) }}"
+            value_template: &valueToIconCode "{{ value | replace('/assets/forecastIcons/','',1) | replace('.svg','',1) }}"
       - unique_id: idokep_alert
         name: "Időkép figyelmeztetés"
         select: "#topalertbar > a:nth-child(1),.inlineWeatherAlert"
@@ -270,7 +270,7 @@ multiscrape:
           - name: day1_condition_icon
             select: ".dailyForecastCol:nth-child(2) .forecast-icon"
             attribute: src
-            value_template: "{{ value | replace('/assets/forecastIcons/','',1) | replace('.svg','',1) }}"
+            value_template: *valueToIconCode
           - name: day1_condition_hu
             select: ".dailyForecastCol:nth-child(2) .dfIconAlert a"
             attribute: data-bs-content
@@ -312,7 +312,7 @@ multiscrape:
           - name: day2_condition_icon
             select: ".dailyForecastCol:nth-child(3) .forecast-icon"
             attribute: src
-            value_template: "{{ value | replace('/assets/forecastIcons/','',1) | replace('.svg','',1) }}"
+            value_template: *valueToIconCode
           - name: day2_condition_hu
             select: ".dailyForecastCol:nth-child(3) .dfIconAlert a"
             attribute: data-bs-content
@@ -348,7 +348,7 @@ multiscrape:
           - name: day3_condition_icon
             select: ".dailyForecastCol:nth-child(4) .forecast-icon"
             attribute: src
-            value_template: "{{ value | replace('/assets/forecastIcons/','',1) | replace('.svg','',1) }}"
+            value_template: *valueToIconCode
           - name: day3_condition_hu
             select: ".dailyForecastCol:nth-child(4) .dfIconAlert a"
             attribute: data-bs-content
@@ -384,7 +384,7 @@ multiscrape:
           - name: day4_condition_icon
             select: ".dailyForecastCol:nth-child(5) .forecast-icon"
             attribute: src
-            value_template: "{{ value | replace('/assets/forecastIcons/','',1) | replace('.svg','',1) }}"
+            value_template: *valueToIconCode
           - name: day4_condition_hu
             select: ".dailyForecastCol:nth-child(5) .dfIconAlert a"
             attribute: data-bs-content
@@ -420,7 +420,7 @@ multiscrape:
           - name: day5_condition_icon
             select: ".dailyForecastCol:nth-child(6) .forecast-icon"
             attribute: src
-            value_template: "{{ value | replace('/assets/forecastIcons/','',1) | replace('.svg','',1) }}"
+            value_template: *valueToIconCode
           - name: day5_condition_hu
             select: ".dailyForecastCol:nth-child(6) .dfIconAlert a"
             attribute: data-bs-content
@@ -456,7 +456,7 @@ multiscrape:
           - name: day6_condition_icon
             select: ".dailyForecastCol:nth-child(7) .forecast-icon"
             attribute: src
-            value_template: "{{ value | replace('/assets/forecastIcons/','',1) | replace('.svg','',1) }}"
+            value_template: *valueToIconCode
           - name: day6_condition_hu
             select: ".dailyForecastCol:nth-child(7) .dfIconAlert a"
             attribute: data-bs-content
@@ -492,7 +492,7 @@ multiscrape:
           - name: day7_condition_icon
             select: ".dailyForecastCol:nth-child(8) .forecast-icon"
             attribute: src
-            value_template: "{{ value | replace('/assets/forecastIcons/','',1) | replace('.svg','',1) }}"
+            value_template: *valueToIconCode
           - name: day7_condition_hu
             select: ".dailyForecastCol:nth-child(8) .dfIconAlert a"
             attribute: data-bs-content
@@ -528,7 +528,7 @@ multiscrape:
           - name: day8_condition_icon
             select: ".dailyForecastCol:nth-child(9) .forecast-icon"
             attribute: src
-            value_template: "{{ value | replace('/assets/forecastIcons/','',1) | replace('.svg','',1) }}"
+            value_template: *valueToIconCode
           - name: day8_condition_hu
             select: ".dailyForecastCol:nth-child(9) .dfIconAlert a"
             attribute: data-bs-content
@@ -564,7 +564,7 @@ multiscrape:
           - name: day9_condition_icon
             select: ".dailyForecastCol:nth-child(10) .forecast-icon"
             attribute: src
-            value_template: "{{ value | replace('/assets/forecastIcons/','',1) | replace('.svg','',1) }}"
+            value_template: *valueToIconCode
           - name: day9_condition_hu
             select: ".dailyForecastCol:nth-child(10) .dfIconAlert a"
             attribute: data-bs-content
@@ -600,7 +600,7 @@ multiscrape:
           - name: day10_condition_icon
             select: ".dailyForecastCol:nth-child(11) .forecast-icon"
             attribute: src
-            value_template: "{{ value | replace('/assets/forecastIcons/','',1) | replace('.svg','',1) }}"
+            value_template: *valueToIconCode
           - name: day10_condition_hu
             select: ".dailyForecastCol:nth-child(11) .dfIconAlert a"
             attribute: data-bs-content
@@ -656,7 +656,7 @@ multiscrape:
           - name: "hour1_condition_icon"
             select: ".wide-hourly-forecast-card:nth-child(1) .forecast-icon"
             attribute: src
-            value_template: "{{ value | replace('/assets/forecastIcons/','',1) | replace('.svg','',1) }}"
+            value_template: *valueToIconCode
           - name: "hour1_prec_percent"
             select: ".wide-hourly-forecast-card:nth-child(1) .hourly-rain-chance a"
             value_template: &valueToPercentage '{{ value | trim | trim("%") | float }}'
@@ -686,7 +686,7 @@ multiscrape:
           - name: "hour2_condition_icon"
             select: ".wide-hourly-forecast-card:nth-child(2) .forecast-icon"
             attribute: src
-            value_template: "{{ value | replace('/assets/forecastIcons/','',1) | replace('.svg','',1) }}"
+            value_template: *valueToIconCode
           - name: "hour2_prec_percent"
             select: ".wide-hourly-forecast-card:nth-child(2) .hourly-rain-chance a"
             value_template: *valueToPercentage
@@ -716,7 +716,7 @@ multiscrape:
           - name: "hour3_condition_icon"
             select: ".wide-hourly-forecast-card:nth-child(3) .forecast-icon"
             attribute: src
-            value_template: "{{ value | replace('/assets/forecastIcons/','',1) | replace('.svg','',1) }}"
+            value_template: *valueToIconCode
           - name: "hour3_prec_percent"
             select: ".wide-hourly-forecast-card:nth-child(3) .hourly-rain-chance a"
             value_template: *valueToPercentage
@@ -746,7 +746,7 @@ multiscrape:
           - name: "hour4_condition_icon"
             select: ".wide-hourly-forecast-card:nth-child(4) .forecast-icon"
             attribute: src
-            value_template: "{{ value | replace('/assets/forecastIcons/','',1) | replace('.svg','',1) }}"
+            value_template: *valueToIconCode
           - name: "hour4_prec_percent"
             select: ".wide-hourly-forecast-card:nth-child(4) .hourly-rain-chance a"
             value_template: *valueToPercentage
@@ -776,7 +776,7 @@ multiscrape:
           - name: "hour5_condition_icon"
             select: ".wide-hourly-forecast-card:nth-child(5) .forecast-icon"
             attribute: src
-            value_template: "{{ value | replace('/assets/forecastIcons/','',1) | replace('.svg','',1) }}"
+            value_template: *valueToIconCode
           - name: "hour5_prec_percent"
             select: ".wide-hourly-forecast-card:nth-child(5) .hourly-rain-chance a"
             value_template: *valueToPercentage
@@ -806,7 +806,7 @@ multiscrape:
           - name: "hour6_condition_icon"
             select: ".wide-hourly-forecast-card:nth-child(6) .forecast-icon"
             attribute: src
-            value_template: "{{ value | replace('/assets/forecastIcons/','',1) | replace('.svg','',1) }}"
+            value_template: *valueToIconCode
           - name: "hour6_prec_percent"
             select: ".wide-hourly-forecast-card:nth-child(6) .hourly-rain-chance a"
             value_template: *valueToPercentage
@@ -836,7 +836,7 @@ multiscrape:
           - name: "hour7_condition_icon"
             select: ".wide-hourly-forecast-card:nth-child(7) .forecast-icon"
             attribute: src
-            value_template: "{{ value | replace('/assets/forecastIcons/','',1) | replace('.svg','',1) }}"
+            value_template: *valueToIconCode
           - name: "hour7_prec_percent"
             select: ".wide-hourly-forecast-card:nth-child(7) .hourly-rain-chance a"
             value_template: *valueToPercentage
@@ -866,7 +866,7 @@ multiscrape:
           - name: "hour8_condition_icon"
             select: ".wide-hourly-forecast-card:nth-child(8) .forecast-icon"
             attribute: src
-            value_template: "{{ value | replace('/assets/forecastIcons/','',1) | replace('.svg','',1) }}"
+            value_template: *valueToIconCode
           - name: "hour8_prec_percent"
             select: ".wide-hourly-forecast-card:nth-child(8) .hourly-rain-chance a"
             value_template: *valueToPercentage
@@ -896,7 +896,7 @@ multiscrape:
           - name: "hour9_condition_icon"
             select: ".wide-hourly-forecast-card:nth-child(9) .forecast-icon"
             attribute: src
-            value_template: "{{ value | replace('/assets/forecastIcons/','',1) | replace('.svg','',1) }}"
+            value_template: *valueToIconCode
           - name: "hour9_prec_percent"
             select: ".wide-hourly-forecast-card:nth-child(9) .hourly-rain-chance a"
             value_template: *valueToPercentage
@@ -926,7 +926,7 @@ multiscrape:
           - name: "hour10_condition_icon"
             select: ".wide-hourly-forecast-card:nth-child(10) .forecast-icon"
             attribute: src
-            value_template: "{{ value | replace('/assets/forecastIcons/','',1) | replace('.svg','',1) }}"
+            value_template: *valueToIconCode
           - name: "hour10_prec_percent"
             select: ".wide-hourly-forecast-card:nth-child(10) .hourly-rain-chance a"
             value_template: *valueToPercentage
@@ -956,7 +956,7 @@ multiscrape:
           - name: "hour11_condition_icon"
             select: ".wide-hourly-forecast-card:nth-child(11) .forecast-icon"
             attribute: src
-            value_template: "{{ value | replace('/assets/forecastIcons/','',1) | replace('.svg','',1) }}"
+            value_template: *valueToIconCode
           - name: "hour11_prec_percent"
             select: ".wide-hourly-forecast-card:nth-child(11) .hourly-rain-chance a"
             value_template: *valueToPercentage
@@ -986,7 +986,7 @@ multiscrape:
           - name: "hour12_condition_icon"
             select: ".wide-hourly-forecast-card:nth-child(12) .forecast-icon"
             attribute: src
-            value_template: "{{ value | replace('/assets/forecastIcons/','',1) | replace('.svg','',1) }}"
+            value_template: *valueToIconCode
           - name: "hour12_prec_percent"
             select: ".wide-hourly-forecast-card:nth-child(12) .hourly-rain-chance a"
             value_template: *valueToPercentage
@@ -1016,7 +1016,7 @@ multiscrape:
           - name: "hour13_condition_icon"
             select: ".wide-hourly-forecast-card:nth-child(13) .forecast-icon"
             attribute: src
-            value_template: "{{ value | replace('/assets/forecastIcons/','',1) | replace('.svg','',1) }}"
+            value_template: *valueToIconCode
           - name: "hour13_prec_percent"
             select: ".wide-hourly-forecast-card:nth-child(13) .hourly-rain-chance a"
             value_template: *valueToPercentage
@@ -1046,7 +1046,7 @@ multiscrape:
           - name: "hour14_condition_icon"
             select: ".wide-hourly-forecast-card:nth-child(14) .forecast-icon"
             attribute: src
-            value_template: "{{ value | replace('/assets/forecastIcons/','',1) | replace('.svg','',1) }}"
+            value_template: *valueToIconCode
           - name: "hour14_prec_percent"
             select: ".wide-hourly-forecast-card:nth-child(14) .hourly-rain-chance a"
             value_template: *valueToPercentage
@@ -1076,7 +1076,7 @@ multiscrape:
           - name: "hour15_condition_icon"
             select: ".wide-hourly-forecast-card:nth-child(15) .forecast-icon"
             attribute: src
-            value_template: "{{ value | replace('/assets/forecastIcons/','',1) | replace('.svg','',1) }}"
+            value_template: *valueToIconCode
           - name: "hour15_prec_percent"
             select: ".wide-hourly-forecast-card:nth-child(15) .hourly-rain-chance a"
             value_template: *valueToPercentage
@@ -1106,7 +1106,7 @@ multiscrape:
           - name: "hour16_condition_icon"
             select: ".wide-hourly-forecast-card:nth-child(16) .forecast-icon"
             attribute: src
-            value_template: "{{ value | replace('/assets/forecastIcons/','',1) | replace('.svg','',1) }}"
+            value_template: *valueToIconCode
           - name: "hour16_prec_percent"
             select: ".wide-hourly-forecast-card:nth-child(16) .hourly-rain-chance a"
             value_template: *valueToPercentage
@@ -1136,7 +1136,7 @@ multiscrape:
           - name: "hour17_condition_icon"
             select: ".wide-hourly-forecast-card:nth-child(17) .forecast-icon"
             attribute: src
-            value_template: "{{ value | replace('/assets/forecastIcons/','',1) | replace('.svg','',1) }}"
+            value_template: *valueToIconCode
           - name: "hour17_prec_percent"
             select: ".wide-hourly-forecast-card:nth-child(17) .hourly-rain-chance a"
             value_template: *valueToPercentage
@@ -1166,7 +1166,7 @@ multiscrape:
           - name: "hour18_condition_icon"
             select: ".wide-hourly-forecast-card:nth-child(18) .forecast-icon"
             attribute: src
-            value_template: "{{ value | replace('/assets/forecastIcons/','',1) | replace('.svg','',1) }}"
+            value_template: *valueToIconCode
           - name: "hour18_prec_percent"
             select: ".wide-hourly-forecast-card:nth-child(18) .hourly-rain-chance a"
             value_template: *valueToPercentage
@@ -1196,7 +1196,7 @@ multiscrape:
           - name: "hour19_condition_icon"
             select: ".wide-hourly-forecast-card:nth-child(19) .forecast-icon"
             attribute: src
-            value_template: "{{ value | replace('/assets/forecastIcons/','',1) | replace('.svg','',1) }}"
+            value_template: *valueToIconCode
           - name: "hour19_prec_percent"
             select: ".wide-hourly-forecast-card:nth-child(19) .hourly-rain-chance a"
             value_template: *valueToPercentage
@@ -1226,7 +1226,7 @@ multiscrape:
           - name: "hour20_condition_icon"
             select: ".wide-hourly-forecast-card:nth-child(20) .forecast-icon"
             attribute: src
-            value_template: "{{ value | replace('/assets/forecastIcons/','',1) | replace('.svg','',1) }}"
+            value_template: *valueToIconCode
           - name: "hour20_prec_percent"
             select: ".wide-hourly-forecast-card:nth-child(20) .hourly-rain-chance a"
             value_template: *valueToPercentage
@@ -1256,7 +1256,7 @@ multiscrape:
           - name: "hour21_condition_icon"
             select: ".wide-hourly-forecast-card:nth-child(21) .forecast-icon"
             attribute: src
-            value_template: "{{ value | replace('/assets/forecastIcons/','',1) | replace('.svg','',1) }}"
+            value_template: *valueToIconCode
           - name: "hour21_prec_percent"
             select: ".wide-hourly-forecast-card:nth-child(21) .hourly-rain-chance a"
             value_template: *valueToPercentage
@@ -1286,7 +1286,7 @@ multiscrape:
           - name: "hour22_condition_icon"
             select: ".wide-hourly-forecast-card:nth-child(22) .forecast-icon"
             attribute: src
-            value_template: "{{ value | replace('/assets/forecastIcons/','',1) | replace('.svg','',1) }}"
+            value_template: *valueToIconCode
           - name: "hour22_prec_percent"
             select: ".wide-hourly-forecast-card:nth-child(22) .hourly-rain-chance a"
             value_template: *valueToPercentage
@@ -1316,7 +1316,7 @@ multiscrape:
           - name: "hour23_condition_icon"
             select: ".wide-hourly-forecast-card:nth-child(23) .forecast-icon"
             attribute: src
-            value_template: "{{ value | replace('/assets/forecastIcons/','',1) | replace('.svg','',1) }}"
+            value_template: *valueToIconCode
           - name: "hour23_prec_percent"
             select: ".wide-hourly-forecast-card:nth-child(23) .hourly-rain-chance a"
             value_template: *valueToPercentage
@@ -1346,7 +1346,7 @@ multiscrape:
           - name: "hour24_condition_icon"
             select: ".wide-hourly-forecast-card:nth-child(24) .forecast-icon"
             attribute: src
-            value_template: "{{ value | replace('/assets/forecastIcons/','',1) | replace('.svg','',1) }}"
+            value_template: *valueToIconCode
           - name: "hour24_prec_percent"
             select: ".wide-hourly-forecast-card:nth-child(24) .hourly-rain-chance a"
             value_template: *valueToPercentage
