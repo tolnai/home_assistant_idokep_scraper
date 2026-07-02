@@ -241,6 +241,7 @@ multiscrape:
 
       - unique_id: idokep_daily_data
         name: "Időkép, napi előrejelzés adatok"
+        select: "html"
         value_template: "OK"
         attributes:
           # day1
@@ -583,6 +584,7 @@ multiscrape:
             value_template: "{{ value | trim }}"
       - unique_id: idokep_hourly_data
         name: "Időkép, órás előrejelzés adatok"
+        select: "html"
         value_template: "OK"
         attributes:
           # hour1
