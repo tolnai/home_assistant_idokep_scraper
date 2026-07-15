@@ -48,6 +48,12 @@ multiscrape:
   - resource: !secret idokep_idojaras_url
     scan_interval: 900 # 15 percenként, hogy ne bombázzuk az oldalt
     #log_response: true # debugoláshoz a config/multiscrape mappába menti a legutóbbi lekért HTML-t
+    headers:
+      User-Agent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+      Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8"
+      Accept-Language: "hu-HU,hu;q=0.9,en-US;q=0.8,en;q=0.7"
+      Referer: "https://idokep.hu"
+      Connection: "keep-alive"
     sensor:
       - unique_id: idokep_temperature
         name: "Időkép, aktuális hőmérséklet"
@@ -574,6 +580,12 @@ multiscrape:
   - resource: !secret idokep_elorejelzes_url
     scan_interval: 900 # 15 percenként, hogy ne bombázzuk az oldalt
     #log_response: true # debugoláshoz a config/multiscrape mappába menti a legutóbbi lekért HTML-t
+    headers:
+      User-Agent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+      Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8"
+      Accept-Language: "hu-HU,hu;q=0.9,en-US;q=0.8,en;q=0.7"
+      Referer: "https://idokep.hu"
+      Connection: "keep-alive"
     sensor:
       - unique_id: idokep_forecast
         name: "Időkép, előrejelzés"
