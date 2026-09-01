@@ -244,6 +244,11 @@ multiscrape:
         value_template: "{{ value | trim }}"
         on_error:
           log: false
+      - unique_id: idokep_what_to_wear
+        name: "Időkép, ajánlott öltözet"
+        select: ".what-to-wear"
+        on_error:
+          value: last
 
       - unique_id: idokep_daily_data
         name: "Időkép, napi előrejelzés adatok"
