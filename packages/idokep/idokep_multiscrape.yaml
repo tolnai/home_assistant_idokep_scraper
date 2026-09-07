@@ -237,7 +237,7 @@ multiscrape:
             select: ".forecast-bigicon"
             attribute: src
             value_template: "{{ value }}"
-          - name: condition_code
+          - name: condition_icon
             select: ".forecast-bigicon"
             attribute: src
             value_template: &valueToIconCode "{{ value | replace('/assets/forecastIcons/','',1) | replace('.svg','',1) }}"
